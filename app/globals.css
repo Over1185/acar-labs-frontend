@@ -1,26 +1,225 @@
+/* Importar Fuente Montserrat */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* --- Tipografía --- */
+  --font-main: 'Montserrat', sans-serif;
+
+  /* --- Marca Base (Logo Mode Claro) --- */
+  --brand-deep-blue: #003366;
+  /* ACAR - Azul Marino Profundo */
+  --brand-slate-blue: #4A708B;
+  /* Labs - Azul Pizarra */
+  --brand-ice-blue: #A7C7E7;
+  /* Modo Oscuro - Azul Hielo */
+
+  /* --- Estados (Semántica) --- */
+  --status-success: #10B981;
+  /* Verde moderno */
+  --status-warning: #F59E0B;
+  /* Ámbar/Naranja */
+  --status-error: #EF4444;
+  /* Rojo moderno */
+
+  /* ========== LIGHT MODE ========== */
+  --bg-page: #FFFFFF;
+  --bg-surface: #F8FAFC;
+  /* Gris muy suave */
+  --bg-surface-hover: #F1F5F9;
+  /* Hover state */
+
+  --text-main: #334155;
+  /* Gris azulado oscuro */
+  --text-secondary: #64748B;
+  /* Gris azulado medio */
+  --text-heading: #003366;
+  /* Azul Marino (color logo) */
+
+  --border-color: #E2E8F0;
+  /* Bordes suaves */
+  --border-hover: #CBD5E1;
+  /* Bordes hover */
+
+  --btn-primary-bg: #003366;
+  /* Botones principales */
+  --btn-primary-hover: #00254D;
+  /* Hover más oscuro */
+  --btn-secondary-bg: #4A708B;
+  /* Botones secundarios */
+  --btn-secondary-hover: #3A5A6F;
+  /* Hover secundario */
+  --btn-text: #FFFFFF;
+
+  --link-color: #003366;
+  /* Links color logo */
+  --link-hover: #4A708B;
+
+  --shadow-sm: rgba(0, 51, 102, 0.05);
+  --shadow-md: rgba(0, 51, 102, 0.1);
+  --shadow-lg: rgba(0, 51, 102, 0.15);
+
+  /* Variables compatibilidad */
+  --background: var(--bg-page);
+  --foreground: var(--text-main);
+  --primary: var(--brand-deep-blue);
+}
+
+/* ========== DARK MODE ========== */
+[data-theme="dark"],
+.dark {
+  --bg-page: #0A0A0A;
+  /* Negro profundo */
+  --bg-surface: #1A1A1A;
+  /* Gris muy oscuro */
+  --bg-surface-hover: #252525;
+  /* Hover state */
+
+  --text-main: #E5E7EB;
+  /* Gris muy claro */
+  --text-secondary: #9CA3AF;
+  /* Gris medio */
+  --text-heading: #FFFFFF;
+  /* Blanco puro (como logo) */
+
+  --border-color: #2A2A2A;
+  /* Bordes oscuros */
+  --border-hover: #3F3F3F;
+  /* Bordes hover */
+
+  --btn-primary-bg: #A7C7E7;
+  /* Azul Hielo (logo oscuro) */
+  --btn-primary-hover: #8FB5D9;
+  /* Hover más intenso */
+  --btn-secondary-bg: #4A708B;
+  /* Azul pizarra */
+  --btn-secondary-hover: #5A80A0;
+  /* Hover secundario */
+  --btn-text: #0A0A0A;
+  /* Texto oscuro en botones claros */
+
+  --link-color: #A7C7E7;
+  /* Links azul hielo */
+  --link-hover: #FFFFFF;
+
+  --shadow-sm: rgba(0, 0, 0, 0.2);
+  --shadow-md: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.4);
+
+  /* Variables compatibilidad */
+  --background: var(--bg-page);
+  --foreground: var(--text-main);
+  --primary: var(--brand-ice-blue);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-primary: var(--primary);
+  --font-sans: var(--font-main);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Selection - ACAR brand colors */
+::selection {
+  background-color: #003366;
+  color: #FFFFFF;
+}
+
+.dark ::selection {
+  background-color: #A7C7E7;
+  color: #0A0A0A;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Animation classes */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.6s ease-out forwards;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

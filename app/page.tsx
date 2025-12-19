@@ -1,65 +1,441 @@
 import Image from "next/image";
+import Link from "next/link";
+import SearchBar from "@/components/ui/SearchBar";
+import FeatureCard from "@/components/ui/FeatureCard";
+
+// Mock data for featured clinics (will be replaced with API data)
+const mockClinics = [
+  {
+    id: 1,
+    name: "Hospital Metropolitano",
+    ruc: "1790123456001",
+    address: { city: "Quito", province: "Pichincha" },
+  },
+  {
+    id: 2,
+    name: "Clínica Santa María",
+    ruc: "1790234567001",
+    address: { city: "Guayaquil", province: "Guayas" },
+  },
+  {
+    id: 3,
+    name: "Laboratorio CliniLab",
+    ruc: "1790345678001",
+    address: { city: "Cuenca", province: "Azuay" },
+  },
+  {
+    id: 4,
+    name: "Centro Médico Integral",
+    ruc: "1790456789001",
+    address: { city: "Quito", province: "Pichincha" },
+  },
+];
+
+// Mock data for popular services
+const popularServices = [
+  { id: 1, name: "Análisis de Sangre", icon: "🩸", count: 150 },
+  { id: 2, name: "Rayos X", icon: "🦴", count: 89 },
+  { id: 3, name: "Medicina General", icon: "🩺", count: 234 },
+  { id: 4, name: "Ecografía", icon: "📊", count: 67 },
+  { id: 5, name: "Cardiología", icon: "❤️", count: 45 },
+  { id: 6, name: "Laboratorio Clínico", icon: "🔬", count: 178 },
+];
+
+// Stats data
+const stats = [
+  { value: "500+", label: "Clínicas registradas" },
+  { value: "10,000+", label: "Citas agendadas" },
+  { value: "50+", label: "Ciudades" },
+  { value: "98%", label: "Satisfacción" },
+];
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="bg-[var(--bg-page)]">
+      {/* Hero Section */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#003366] via-[#004C7F] to-[#4A708B]">
+        {/* Decorative Pattern */}
+        <div className="absolute inset-0 opacity-[0.07]">
+          <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+              <pattern id="hero-grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" />
+              </pattern>
+            </defs>
+            <rect width="100" height="100" fill="url(#hero-grid)" />
+          </svg>
+        </div>
+
+        {/* Decorative Circles */}
+        <div className="absolute top-20 left-10 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+
+        {/* Content */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
+          {/* Logo Icon */}
+          <div className="flex justify-center mb-8 animate-fade-in">
+            <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-xl">
+              <Image
+                src="/Icon-White.svg"
+                alt="ACAR Labs"
+                width={48}
+                height={48}
+                className="w-12 h-12"
+              />
+            </div>
+          </div>
+
+          {/* Heading */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+            Tu salud, <span className="text-white/90">nuestra prioridad</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-lg sm:text-xl text-white/75 max-w-2xl mx-auto mb-12">
+            Encuentra y agenda citas en las mejores clínicas, hospitales y laboratorios de Ecuador.
+            Fácil, rápido y seguro.
           </p>
+
+          {/* Search Bar */}
+          <div className="mb-8">
+            <SearchBar />
+          </div>
+
+          {/* Popular Searches */}
+          <div className="flex flex-wrap justify-center gap-3 text-sm">
+            <span className="text-white/60">Búsquedas populares:</span>
+            {["Análisis de sangre", "Rayos X", "Medicina general", "Ecografía"].map((term) => (
+              <Link
+                key={term}
+                href={`/clinicas?q=${encodeURIComponent(term)}`}
+                className="px-4 py-1.5 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors"
+              >
+                {term}
+              </Link>
+            ))}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+          <svg
+            className="w-6 h-6 text-white/60"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 14l-7 7m0 0l-7-7m7 7V3"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </svg>
         </div>
-      </main>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-16 bg-[var(--bg-surface)] border-y border-[var(--border-color)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-[var(--btn-primary-bg)]">
+                  {stat.value}
+                </div>
+                <div className="mt-2 text-sm text-[var(--text-secondary)]">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Popular Services Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[var(--text-heading)]">
+              Servicios Populares
+            </h2>
+            <p className="mt-3 text-[var(--text-secondary)] max-w-2xl mx-auto">
+              Explora los servicios más buscados por nuestros usuarios
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {popularServices.map((service) => (
+              <Link
+                key={service.id}
+                href={`/servicios?q=${encodeURIComponent(service.name)}`}
+                className="group flex flex-col items-center p-6 bg-white dark:bg-[var(--bg-surface)] rounded-2xl border border-[var(--border-color)] hover:border-[var(--btn-primary-bg)] transition-all hover:shadow-lg"
+              >
+                <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                  {service.icon}
+                </span>
+                <span className="text-sm font-medium text-[var(--text-heading)] text-center">
+                  {service.name}
+                </span>
+                <span className="text-xs text-[var(--text-secondary)] mt-1">
+                  {service.count} clínicas
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Clinics Section */}
+      <section className="py-20 bg-[var(--bg-surface)]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-12">
+            <div>
+              <h2 className="text-3xl font-bold text-[var(--text-heading)]">
+                Clínicas Destacadas
+              </h2>
+              <p className="mt-2 text-[var(--text-secondary)]">
+                Las mejores opciones verificadas por ACAR Labs
+              </p>
+            </div>
+            <Link
+              href="/clinicas"
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-[var(--link-color)] border border-[var(--link-color)] rounded-full hover:bg-[var(--btn-primary-bg)] hover:text-[var(--btn-text)] hover:border-[var(--btn-primary-bg)] transition-all"
+            >
+              Ver todas
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {mockClinics.map((clinic, index) => (
+              <Link
+                key={clinic.id}
+                href={`/clinicas/${clinic.id}`}
+                className="group block bg-white dark:bg-[var(--bg-surface)] rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--btn-primary-bg)] transition-all duration-300 hover:shadow-xl"
+              >
+                {/* Image Placeholder */}
+                <div className="relative h-40 bg-gradient-to-br from-[#003366] to-[#4A708B]">
+                  {/* Decorative Pattern */}
+                  <div className="absolute inset-0 opacity-[0.08]">
+                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <pattern id={`grid-${clinic.id}`} width="10" height="10" patternUnits="userSpaceOnUse">
+                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5" />
+                      </pattern>
+                      <rect width="100" height="100" fill={`url(#grid-${clinic.id})`} />
+                    </svg>
+                  </div>
+
+                  {/* Medical Cross Icon */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                      <svg
+                        className="w-8 h-8 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-2 10h-4v4h-2v-4H7v-2h4V7h2v4h4v2z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Featured Badge for first item */}
+                  {index === 0 && (
+                    <div className="absolute top-4 left-4">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 bg-[var(--status-success)] text-white text-xs font-semibold rounded-full">
+                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        Destacado
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="p-5">
+                  <h3 className="text-lg font-bold text-[var(--text-heading)] group-hover:text-[var(--link-hover)] transition-colors line-clamp-1">
+                    {clinic.name}
+                  </h3>
+
+                  {/* Location */}
+                  <div className="flex items-center gap-2 mt-2 text-sm text-[var(--text-secondary)]">
+                    <svg
+                      className="w-4 h-4 shrink-0 text-[var(--btn-secondary-bg)]"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                    <span className="line-clamp-1">
+                      {clinic.address.city}, {clinic.address.province}
+                    </span>
+                  </div>
+
+                  {/* CTA */}
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-color)]">
+                    <span className="text-sm font-medium text-[var(--link-color)]">
+                      Ver servicios
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-[var(--bg-surface)] flex items-center justify-center group-hover:bg-[var(--btn-primary-bg)] transition-colors">
+                      <svg
+                        className="w-4 h-4 text-[var(--link-color)] group-hover:text-white transition-colors"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-[var(--text-heading)]">
+              ¿Por qué elegir ACAR Labs?
+            </h2>
+            <p className="mt-3 text-[var(--text-main)] opacity-70 max-w-2xl mx-auto">
+              La plataforma más completa para gestionar tu salud en Ecuador
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <FeatureCard
+              icon={
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              }
+              title="Búsqueda Inteligente"
+              description="Encuentra clínicas, hospitales y laboratorios cerca de ti con filtros avanzados por especialidad, ubicación y disponibilidad."
+            />
+            <FeatureCard
+              icon={
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              }
+              title="Agenda en Segundos"
+              description="Reserva tu cita en pocos clics. Visualiza horarios disponibles en tiempo real y recibe confirmación instantánea."
+            />
+            <FeatureCard
+              icon={
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                </svg>
+              }
+              title="100% Seguro"
+              description="Tu información personal y médica está protegida con los más altos estándares de seguridad y encriptación."
+            />
+            <FeatureCard
+              icon={
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+              }
+              title="Recordatorios"
+              description="Recibe notificaciones automáticas para no olvidar tus citas. Te avisamos con anticipación por email y SMS."
+            />
+            <FeatureCard
+              icon={
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                </svg>
+              }
+              title="Historial Digital"
+              description="Accede a tu historial de citas y resultados de laboratorio desde cualquier dispositivo, en cualquier momento."
+            />
+            <FeatureCard
+              icon={
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z" />
+                </svg>
+              }
+              title="Soporte 24/7"
+              description="Nuestro equipo está disponible las 24 horas para ayudarte con cualquier duda o inconveniente que tengas."
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-br from-[#003366] via-[#004C7F] to-[#4A708B] relative overflow-hidden">
+        {/* Decorative Elements */}
+        <div className="absolute top-0 left-0 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
+            ¿Listo para cuidar tu salud?
+          </h2>
+          <p className="text-lg text-white/75 mb-8 max-w-2xl mx-auto">
+            Únete a miles de ecuatorianos que ya confían en ACAR Labs para gestionar sus citas médicas.
+            Es gratis y solo toma un minuto.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/registro"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#003366] font-semibold rounded-full hover:bg-white/95 transition-all shadow-lg hover:shadow-xl"
+            >
+              Crear cuenta gratis
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M13 7l5 5m0 0l-5 5m5-5H6"
+                />
+              </svg>
+            </Link>
+            <Link
+              href="/clinicas"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border-2 border-white/40 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/60 transition-all"
+            >
+              Explorar clínicas
+            </Link>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
