@@ -6,9 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "db:setup": "tsx scripts/setup-db.js",
+    "db:seed": "tsx scripts/setup-db.js --seed",
+    "db:reset": "tsx scripts/setup-db.js --reset --seed"
   },
   "dependencies": {
+    "@libsql/client": "0.15.15",
+    "@upstash/redis": "1.35.8",
+    "bcryptjs": "3.0.3",
+    "jose": "6.1.3",
     "next": "16.1.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
@@ -18,9 +25,11 @@
     "@types/node": "25.0.3",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
+    "dotenv": "17.2.3",
     "eslint": "9.39.2",
     "eslint-config-next": "16.1.1",
     "tailwindcss": "4.1.18",
+    "tsx": "^4.21.0",
     "typescript": "5.9.3"
   }
 }
