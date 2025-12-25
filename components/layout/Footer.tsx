@@ -5,7 +5,7 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-[var(--bg-surface)] dark:bg-[#0a0a0a] border-t border-[var(--border-color)]">
+        <footer className="bg-[#003366] dark:bg-[#0a1929] border-t border-[#00509e]/30 dark:border-gray-800/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Brand Column */}
@@ -16,17 +16,10 @@ export default function Footer() {
                                 alt="ACAR Labs"
                                 width={120}
                                 height={35}
-                                className="h-8 w-auto dark:hidden"
-                            />
-                            <Image
-                                src="/ACAR Labs-Black.svg"
-                                alt="ACAR Labs"
-                                width={120}
-                                height={35}
-                                className="h-8 w-auto hidden dark:block"
+                                className="h-8 w-auto"
                             />
                         </Link>
-                        <p className="mt-4 text-sm text-[var(--text-secondary)]">
+                        <p className="mt-4 text-sm text-white/80 dark:text-gray-300">
                             Tu plataforma de confianza para gestionar citas médicas en Ecuador.
                             Conectamos pacientes con los mejores profesionales de la salud.
                         </p>
@@ -36,7 +29,7 @@ export default function Footer() {
                                 href="https://facebook.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[var(--text-main)] opacity-60 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
                                 aria-label="Facebook"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -47,7 +40,7 @@ export default function Footer() {
                                 href="https://instagram.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[var(--text-main)] opacity-60 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
                                 aria-label="Instagram"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -58,8 +51,8 @@ export default function Footer() {
                                 href="https://twitter.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[var(--text-main)] opacity-60 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
-                                aria-label="Twitter"
+                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                aria-label="Twitter/X"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
@@ -69,7 +62,7 @@ export default function Footer() {
                                 href="https://linkedin.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-[var(--text-main)] opacity-60 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
                                 aria-label="LinkedIn"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -81,14 +74,14 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-sm font-bold text-[var(--text-heading)] uppercase tracking-wider">
+                        <h3 className="text-sm font-bold text-white dark:text-gray-200 uppercase tracking-wider">
                             Enlaces Rápidos
                         </h3>
                         <ul className="mt-4 space-y-3">
                             <li>
                                 <Link
                                     href="/clinicas"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
                                     Buscar Clínicas
                                 </Link>
@@ -96,7 +89,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/servicios"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
                                     Servicios Médicos
                                 </Link>
@@ -104,155 +97,143 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/especialidades"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
                                     Especialidades
                                 </Link>
                             </li>
                             <li>
                                 <Link
-                                    href="/citas"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                    href="/nosotros"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
-                                    Mis Citas
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
-
-                    {/* Support */}
-                    <div>
-                        <h3 className="text-sm font-bold text-[var(--text-heading)] uppercase tracking-wider">
-                            Soporte
-                        </h3>
-                        <ul className="mt-4 space-y-3">
-                            <li>
-                                <Link
-                                    href="/ayuda"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
-                                >
-                                    Centro de Ayuda
+                                    Nosotros
                                 </Link>
                             </li>
                             <li>
                                 <Link
                                     href="/contacto"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
                                     Contacto
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/faq"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
-                                >
-                                    Preguntas Frecuentes
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="/terminos"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
-                                >
-                                    Términos y Condiciones
                                 </Link>
                             </li>
                         </ul>
                     </div>
 
-                    {/* Contact */}
+                    {/* For Patients */}
                     <div>
-                        <h3 className="text-sm font-bold text-[var(--text-heading)] uppercase tracking-wider">
-                            Contacto
+                        <h3 className="text-sm font-bold text-white dark:text-gray-200 uppercase tracking-wider">
+                            Para Pacientes
                         </h3>
                         <ul className="mt-4 space-y-3">
-                            <li className="flex items-start gap-3">
-                                <svg
-                                    className="w-5 h-5 text-[var(--brand-deep-blue)] dark:text-[var(--link-color)] flex-shrink-0 mt-0.5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
+                            <li>
+                                <Link
+                                    href="/registro"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                                    />
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                                    />
-                                </svg>
-                                <span className="text-sm text-[var(--text-main)] opacity-70">
-                                    Quito, Ecuador
-                                </span>
+                                    Registrarse
+                                </Link>
                             </li>
-                            <li className="flex items-start gap-3">
-                                <svg
-                                    className="w-5 h-5 text-[var(--brand-deep-blue)] dark:text-[var(--link-color)] flex-shrink-0 mt-0.5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
+                            <li>
+                                <Link
+                                    href="/login"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                                    />
-                                </svg>
-                                <a
-                                    href="mailto:contacto@acarlabs.com"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
-                                >
-                                    contacto@acarlabs.com
-                                </a>
+                                    Iniciar Sesión
+                                </Link>
                             </li>
-                            <li className="flex items-start gap-3">
-                                <svg
-                                    className="w-5 h-5 text-[var(--brand-deep-blue)] dark:text-[var(--link-color)] flex-shrink-0 mt-0.5"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
+                            <li>
+                                <Link
+                                    href="/mis-citas"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth={2}
-                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                                    />
-                                </svg>
-                                <a
-                                    href="tel:+593999999999"
-                                    className="text-sm text-[var(--text-main)] opacity-70 hover:opacity-100 hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] transition-all"
+                                    Mis Citas
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/historial"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
                                 >
-                                    +593 99 999 9999
-                                </a>
+                                    Historial Médico
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/ayuda"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                >
+                                    Ayuda
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {/* Legal */}
+                    <div>
+                        <h3 className="text-sm font-bold text-white dark:text-gray-200 uppercase tracking-wider">
+                            Legal
+                        </h3>
+                        <ul className="mt-4 space-y-3">
+                            <li>
+                                <Link
+                                    href="/privacidad"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                >
+                                    Política de Privacidad
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/terminos"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                >
+                                    Términos de Uso
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/cookies"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                >
+                                    Política de Cookies
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    href="/seguridad"
+                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                >
+                                    Seguridad
+                                </Link>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-12 pt-8 border-t border-[var(--border-color)]">
+                <div className="mt-12 pt-8 border-t border-white/10 dark:border-gray-800">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-sm text-[var(--text-main)] opacity-60">
-                            © {currentYear} ACAR Studio. Todos los derechos reservados.
+                        <p className="text-sm text-white/70 dark:text-gray-400">
+                            © {currentYear} ACAR Labs. Todos los derechos reservados.
                         </p>
                         <div className="flex gap-6">
                             <Link
                                 href="/privacidad"
-                                className="text-sm text-[var(--text-main)] opacity-60 hover:opacity-100 transition-opacity"
+                                className="text-sm text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
                             >
-                                Política de Privacidad
+                                Privacidad
+                            </Link>
+                            <Link
+                                href="/terminos"
+                                className="text-sm text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                            >
+                                Términos
                             </Link>
                             <Link
                                 href="/cookies"
-                                className="text-sm text-[var(--text-main)] opacity-60 hover:opacity-100 transition-opacity"
+                                className="text-sm text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
                             >
                                 Cookies
                             </Link>

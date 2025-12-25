@@ -30,16 +30,16 @@ export default function Header() {
     return (
         <header
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
-                ? 'bg-white/95 dark:bg-[#121212]/95 backdrop-blur-md shadow-md'
-                : 'bg-transparent'
+                    ? 'bg-white/98 dark:bg-[#0a1929]/98 backdrop-blur-md shadow-lg border-b border-gray-200/50 dark:border-gray-800/50'
+                    : 'bg-gradient-to-b from-[#003366]/95 to-[#003366]/80 dark:from-[#0a1929]/95 dark:to-[#0a1929]/80 backdrop-blur-sm'
                 }`}
         >
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16 md:h-20">
                     {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
+                    <Link href="/" className="flex items-center gap-2 transition-transform hover:scale-105">
                         <Image
-                            src={isDarkMode ? '/ACAR Labs-Black.svg' : '/ACAR Labs-White.svg'}
+                            src={isScrolled && !isDarkMode ? '/ACAR Labs-Black.svg' : '/ACAR Labs-White.svg'}
                             alt="ACAR Labs"
                             width={140}
                             height={40}
@@ -52,25 +52,37 @@ export default function Header() {
                     <nav className="hidden md:flex items-center gap-8">
                         <Link
                             href="/"
-                            className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] font-medium transition-colors"
+                            className={`text-sm font-medium transition-colors ${isScrolled
+                                    ? 'text-gray-700 hover:text-[#003366] dark:text-gray-300 dark:hover:text-white'
+                                    : 'text-white/90 hover:text-white'
+                                }`}
                         >
                             Inicio
                         </Link>
                         <Link
                             href="/clinicas"
-                            className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] font-medium transition-colors"
+                            className={`text-sm font-medium transition-colors ${isScrolled
+                                    ? 'text-gray-700 hover:text-[#003366] dark:text-gray-300 dark:hover:text-white'
+                                    : 'text-white/90 hover:text-white'
+                                }`}
                         >
                             Clínicas
                         </Link>
                         <Link
                             href="/servicios"
-                            className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] font-medium transition-colors"
+                            className={`text-sm font-medium transition-colors ${isScrolled
+                                    ? 'text-gray-700 hover:text-[#003366] dark:text-gray-300 dark:hover:text-white'
+                                    : 'text-white/90 hover:text-white'
+                                }`}
                         >
                             Servicios
                         </Link>
                         <Link
                             href="/nosotros"
-                            className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] dark:hover:text-[var(--link-color)] font-medium transition-colors"
+                            className={`text-sm font-medium transition-colors ${isScrolled
+                                    ? 'text-gray-700 hover:text-[#003366] dark:text-gray-300 dark:hover:text-white'
+                                    : 'text-white/90 hover:text-white'
+                                }`}
                         >
                             Nosotros
                         </Link>
@@ -81,7 +93,10 @@ export default function Header() {
                         {/* Dark Mode Toggle */}
                         <button
                             onClick={toggleDarkMode}
-                            className="p-2 rounded-full hover:bg-[var(--bg-surface)] transition-colors"
+                            className={`p-2 rounded-full transition-colors ${isScrolled
+                                    ? 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                                    : 'hover:bg-white/10'
+                                }`}
                             aria-label="Cambiar tema"
                         >
                             {isDarkMode ? (
@@ -98,7 +113,7 @@ export default function Header() {
                                 </svg>
                             ) : (
                                 <svg
-                                    className="w-5 h-5 text-[var(--brand-deep-blue)]"
+                                    className={isScrolled ? 'w-5 h-5 text-gray-700' : 'w-5 h-5 text-white/90'}
                                     fill="currentColor"
                                     viewBox="0 0 20 20"
                                 >
@@ -110,7 +125,10 @@ export default function Header() {
                         {/* Login Button */}
                         <Link
                             href="/login"
-                            className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-[var(--link-color)] border border-[var(--link-color)] rounded-full hover:bg-[var(--btn-primary-bg)] hover:text-[var(--btn-text)] hover:border-[var(--btn-primary-bg)] transition-all"
+                            className={`hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium border rounded-full transition-all ${isScrolled
+                                    ? 'text-[#003366] border-[#003366] hover:bg-[#003366] hover:text-white dark:text-blue-400 dark:border-blue-400 dark:hover:bg-blue-400 dark:hover:text-white'
+                                    : 'text-white border-white hover:bg-white hover:text-[#003366]'
+                                }`}
                         >
                             Iniciar Sesión
                         </Link>
@@ -118,7 +136,10 @@ export default function Header() {
                         {/* Register Button */}
                         <Link
                             href="/registro"
-                            className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium text-[var(--btn-text)] bg-[var(--btn-primary-bg)] rounded-full hover:bg-[var(--btn-primary-hover)] transition-all shadow-lg shadow-[var(--shadow-lg)]"
+                            className={`hidden sm:inline-flex items-center px-4 py-2 text-sm font-medium rounded-full transition-all shadow-lg ${isScrolled
+                                    ? 'text-white bg-[#003366] hover:bg-[#00509e] dark:bg-blue-600 dark:hover:bg-blue-700'
+                                    : 'text-[#003366] bg-white hover:bg-gray-100'
+                                }`}
                         >
                             Registrarse
                         </Link>
@@ -126,12 +147,15 @@ export default function Header() {
                         {/* Mobile Menu Button */}
                         <button
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="md:hidden p-2 rounded-lg hover:bg-[var(--bg-surface)] transition-colors"
+                            className={`md:hidden p-2 rounded-lg transition-colors ${isScrolled
+                                    ? 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                                    : 'hover:bg-white/10'
+                                }`}
                             aria-label="Menú"
                         >
                             {isMobileMenuOpen ? (
                                 <svg
-                                    className="w-6 h-6 text-[var(--text-main)]"
+                                    className={isScrolled ? 'w-6 h-6 text-gray-700 dark:text-gray-300' : 'w-6 h-6 text-white'}
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -145,7 +169,7 @@ export default function Header() {
                                 </svg>
                             ) : (
                                 <svg
-                                    className="w-6 h-6 text-[var(--text-main)]"
+                                    className={isScrolled ? 'w-6 h-6 text-gray-700 dark:text-gray-300' : 'w-6 h-6 text-white'}
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -164,47 +188,47 @@ export default function Header() {
 
                 {/* Mobile Menu */}
                 {isMobileMenuOpen && (
-                    <div className="md:hidden py-4 border-t border-[var(--border-color)]">
+                    <div className="md:hidden py-4 border-t border-gray-200/50 dark:border-gray-800/50 bg-white dark:bg-[#0a1929]">
                         <nav className="flex flex-col gap-4">
                             <Link
                                 href="/"
-                                className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] font-medium transition-colors"
+                                className="text-gray-700 dark:text-gray-300 hover:text-[#003366] dark:hover:text-white font-medium transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Inicio
                             </Link>
                             <Link
                                 href="/clinicas"
-                                className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] font-medium transition-colors"
+                                className="text-gray-700 dark:text-gray-300 hover:text-[#003366] dark:hover:text-white font-medium transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Clínicas
                             </Link>
                             <Link
                                 href="/servicios"
-                                className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] font-medium transition-colors"
+                                className="text-gray-700 dark:text-gray-300 hover:text-[#003366] dark:hover:text-white font-medium transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Servicios
                             </Link>
                             <Link
                                 href="/nosotros"
-                                className="text-[var(--text-main)] hover:text-[var(--brand-deep-blue)] font-medium transition-colors"
+                                className="text-gray-700 dark:text-gray-300 hover:text-[#003366] dark:hover:text-white font-medium transition-colors"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
                                 Nosotros
                             </Link>
-                            <div className="flex flex-col gap-2 pt-4 border-t border-[var(--border-color)]">
+                            <div className="flex flex-col gap-2 pt-4 border-t border-gray-200/50 dark:border-gray-800/50">
                                 <Link
                                     href="/login"
-                                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[var(--brand-deep-blue)] border border-[var(--brand-deep-blue)] rounded-full hover:bg-[var(--brand-deep-blue)] hover:text-white transition-all"
+                                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-[#003366] dark:text-blue-400 border border-[#003366] dark:border-blue-400 rounded-full hover:bg-[#003366] dark:hover:bg-blue-400 hover:text-white transition-all"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     Iniciar Sesión
                                 </Link>
                                 <Link
                                     href="/registro"
-                                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[var(--brand-deep-blue)] rounded-full hover:bg-[var(--btn-primary-hover)] transition-all"
+                                    className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-[#003366] dark:bg-blue-600 rounded-full hover:bg-[#00509e] dark:hover:bg-blue-700 transition-all"
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >
                                     Registrarse

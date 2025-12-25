@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   description: "Encuentra y agenda citas en las mejores clínicas, hospitales y laboratorios de Ecuador. Tu salud, nuestra prioridad.",
   keywords: "citas médicas, clínicas Ecuador, hospitales, laboratorios, salud, ACAR Labs",
   authors: [{ name: "ACAR Studio" }],
+  icons: {
+    icon: [
+      { url: '/Icon-Black.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
+      { url: '/Icon-White.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' },
+    ],
+  },
   openGraph: {
     title: "ACAR Labs | Gestión de Citas Médicas",
     description: "Encuentra y agenda citas en las mejores clínicas, hospitales y laboratorios de Ecuador.",
