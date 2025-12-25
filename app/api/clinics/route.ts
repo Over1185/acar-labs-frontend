@@ -24,10 +24,31 @@ export async function GET() {
             args: [],
         });
 
-        // Cache for 5 minutes
-        await cache.set(cacheKey, result.rows, 300);
+        // Format response with nested address object
+        const clinics = result.rows.map((row: any) => ({
+            id: row.id,
+            name: row.name,
+            ruc: row.ruc,
+            address_id: row.address_id,
+            created_at: row.created_at,
+            updated_at: row.updated_at,
+            address: row.province ? {
+                province: row.province,
+                canton: row.canton,
+                parish: row.parish,
+                street: row.street,
+                reference: row.reference,
+                country: row.country,
+                city: row.city,
+            } : undefined,
+        }));
 
-        return ApiResponse.success(result.rows);
+        const response = { clinics };
+
+        // Cache for 5 minutes
+        await cache.set(cacheKey, response, 300);
+
+        return ApiResponse.success(response);
     } catch (error) {
         console.error('Get clinics error:', error);
         return ApiResponse.serverError('Error al obtener clínicas');

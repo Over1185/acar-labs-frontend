@@ -34,10 +34,12 @@ export async function GET(request: NextRequest) {
 
         const result = await db.execute({ sql, args });
 
-        // Cache for 5 minutes
-        await cache.set(cacheKey, result.rows, 300);
+        const response = { services: result.rows };
 
-        return ApiResponse.success(result.rows);
+        // Cache for 5 minutes
+        await cache.set(cacheKey, response, 300);
+
+        return ApiResponse.success(response);
     } catch (error) {
         console.error('Get services error:', error);
         return ApiResponse.serverError('Error al obtener servicios');
