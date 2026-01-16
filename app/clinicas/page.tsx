@@ -18,15 +18,39 @@ export default function ClinicasPage() {
         const fetchClinics = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('/api/clinics');
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+                const response = await fetch(`${apiUrl}/public/clinics`);
 
                 if (!response.ok) {
                     throw new Error('Error al cargar las clínicas');
                 }
 
                 const data = await response.json();
-                setClinics(data.clinics || []);
-                setFilteredClinics(data.clinics || []);
+                
+                // Extract clinics data - handle different response formats
+                let clinicsData = [];
+                if (data.data && Array.isArray(data.data)) {
+                    clinicsData = data.data;
+                } else if (Array.isArray(data)) {
+                    clinicsData = data;
+                } else if (data.clinics) {
+                    clinicsData = data.clinics;
+                } else if (data.results) {
+                    clinicsData = data.results;
+                }
+
+                // Map clinics to include address object (even if empty for now)
+                const mappedClinics = clinicsData.map((clinic: any) => ({
+                    ...clinic,
+                    address: clinic.address || {
+                        city: 'Por confirmar',
+                        province: 'Por confirmar',
+                        address: ''
+                    }
+                }));
+
+                setClinics(mappedClinics);
+                setFilteredClinics(mappedClinics);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Error desconocido');
             } finally {
@@ -50,12 +74,11 @@ export default function ClinicasPage() {
     useEffect(() => {
         let filtered = clinics;
 
-        // Filter by search term
+        // Filter by search term - only search by name and address
         if (searchTerm) {
             filtered = filtered.filter(
                 clinic =>
                     clinic.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    clinic.ruc.includes(searchTerm) ||
                     clinic.address?.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
                     clinic.address?.province.toLowerCase().includes(searchTerm.toLowerCase())
             );
