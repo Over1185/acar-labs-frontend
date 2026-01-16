@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface User {
     id: number;
@@ -13,12 +13,18 @@ interface User {
 
 export default function Header() {
     const router = useRouter();
+    const pathname = usePathname();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [user, setUser] = useState<User | null>(null);
     const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    // No renderizar el header en rutas de clínica
+    if (pathname.startsWith('/clinic/')) {
+        return null;
+    }
 
     useEffect(() => {
         const handleScroll = () => {

@@ -1,8 +1,17 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export default function Footer() {
+    const pathname = usePathname();
     const currentYear = new Date().getFullYear();
+
+    // No renderizar el footer en rutas de clínica
+    if (pathname.startsWith('/clinic/')) {
+        return null;
+    }
 
     return (
         <footer className="bg-[#003366] dark:bg-[#0a1929] border-t border-[#00509e]/30 dark:border-gray-800/50">

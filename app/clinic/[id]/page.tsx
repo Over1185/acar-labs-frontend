@@ -7,7 +7,6 @@ import Link from 'next/link';
 interface Clinic {
     id: number;
     name: string;
-    ruc: string;
     status: string;
     address?: {
         province: string;
@@ -15,6 +14,10 @@ interface Clinic {
         city: string;
         canton: string;
     };
+    employees?: {
+        id: number;
+        role: string;
+    }
 }
 
 interface Service {
@@ -66,6 +69,8 @@ export default function ClinicDetailsPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<Tab>('citas');
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [userRole, setUserRole] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchClinicData = async () => {
@@ -76,7 +81,7 @@ export default function ClinicDetailsPage() {
                     return;
                 }
 
-                const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api/v1.0';
+                const apiUrl = process.env.NEXT_PUBLIC_API_URL;
                 const clinicIdNumber = Number(clinicId);
 
                 // Step 1: Select clinic (this generates a new token with clinic_id)
@@ -127,6 +132,11 @@ export default function ClinicDetailsPage() {
                         
                         if (clinicEmployee && clinicEmployee.clinic) {
                             setClinic(clinicEmployee.clinic);
+                            
+                            // Set user role from clinicEmployee
+                            if (clinicEmployee.role) {
+                                setUserRole(clinicEmployee.role.name || '');
+                            }
 
                             // Extract services
                             if (clinicEmployee.clinic.services) {
@@ -155,147 +165,160 @@ export default function ClinicDetailsPage() {
     }, [clinicId, router]);
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a1929]">
-            {/* Professional Clinic Header */}
-            <div className="bg-gradient-to-r from-[#003366] via-[#004080] to-[#00509e] dark:from-slate-900 dark:via-blue-900 dark:to-slate-800 text-white">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <div className="flex items-start justify-between mb-8">
-                        <div>
-                            <h1 className="text-4xl md:text-5xl font-bold mb-4">{clinic?.name}</h1>
-                            <p className="text-blue-100 text-lg">Laboratorio de Análisis Clínicos</p>
-                        </div>
-                        <div className="text-right">
-                            <div className="text-5xl font-bold text-blue-200 opacity-20">
-                                {clinic?.name.charAt(0).toUpperCase()}
-                            </div>
-                        </div>
-                    </div>
-                    
-                    {/* Clinic Info Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-                            <div className="flex items-center gap-3 mb-2">
-                                <svg className="w-6 h-6 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <p className="text-blue-100 text-sm">RUC</p>
-                            </div>
-                            <p className="text-white text-xl font-semibold">{clinic?.ruc}</p>
-                        </div>
-
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-                            <div className="flex items-center gap-3 mb-2">
-                                <svg className="w-6 h-6 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <p className="text-blue-100 text-sm">Estado</p>
-                            </div>
-                            <p className="text-white text-xl font-semibold">
-                                {clinic?.status === 'active' ? 'Activa' : 'Pendiente'}
-                            </p>
-                        </div>
-
-                        <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-                            <div className="flex items-center gap-3 mb-2">
-                                <svg className="w-6 h-6 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <p className="text-blue-100 text-sm">Atención</p>
-                            </div>
-                            <p className="text-white text-xl font-semibold">24/7</p>
-                        </div>
-                    </div>
+        <div className="min-h-screen bg-white dark:bg-[#0a1929] flex">
+            {/* Sidebar - Full Height */}
+            <div className={`${sidebarOpen ? 'w-80' : 'w-24'} transition-all duration-300 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex flex-col`}>
+                <div className="p-4 sticky top-0 bg-white dark:bg-gray-800 z-10 border-b border-gray-200 dark:border-gray-700">
+                    {/* Toggle Button */}
+                    <button
+                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                        className="w-full flex items-center justify-center p-3 rounded-lg bg-[#003366] hover:bg-[#00509e] dark:bg-blue-600 dark:hover:bg-blue-700 text-white transition-colors"
+                    >
+                        <svg className={`w-6 h-6 transition-transform ${sidebarOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
                 </div>
-            </div>
 
-            {/* Main Content */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                {/* Back Button */}
-                <Link
-                    href="/perfil"
-                    className="inline-flex items-center gap-2 mb-8 text-[#003366] dark:text-blue-400 hover:underline font-medium"
-                >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Volver al Perfil
-                </Link>
-
-                {/* Tab Navigation - Modern Style */}
-                <div className="flex gap-2 mb-8 border-b border-gray-200 dark:border-gray-700">
+                {/* Menu Items */}
+                <nav className="p-4 space-y-2 flex-1">
                     <button
                         onClick={() => setActiveTab('citas')}
-                        className={`px-6 py-4 font-semibold transition-all relative flex items-center gap-2 ${
+                        className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${
                             activeTab === 'citas'
-                                ? 'text-[#003366] dark:text-blue-400'
-                                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                                ? 'bg-[#003366] text-white dark:bg-blue-600'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
+                        title={!sidebarOpen ? 'Citas' : ''}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                         </svg>
-                        Citas
-                        {activeTab === 'citas' && (
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#003366] dark:bg-blue-400 rounded-t-lg"></div>
-                        )}
+                        {sidebarOpen && <span>Citas</span>}
                     </button>
 
                     <button
                         onClick={() => setActiveTab('servicios')}
-                        className={`px-6 py-4 font-semibold transition-all relative flex items-center gap-2 ${
+                        className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${
                             activeTab === 'servicios'
-                                ? 'text-[#003366] dark:text-blue-400'
-                                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                                ? 'bg-[#003366] text-white dark:bg-blue-600'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
+                        title={!sidebarOpen ? 'Servicios' : ''}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7 12a5 5 0 1110 0A5 5 0 017 12z" />
                         </svg>
-                        Servicios
-                        {activeTab === 'servicios' && (
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#003366] dark:bg-blue-400 rounded-t-lg"></div>
-                        )}
+                        {sidebarOpen && <span>Servicios</span>}
                     </button>
 
                     <button
                         onClick={() => setActiveTab('laboratorio')}
-                        className={`px-6 py-4 font-semibold transition-all relative flex items-center gap-2 ${
+                        className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${
                             activeTab === 'laboratorio'
-                                ? 'text-[#003366] dark:text-blue-400'
-                                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                                ? 'bg-[#003366] text-white dark:bg-blue-600'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
+                        title={!sidebarOpen ? 'Laboratorio' : ''}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.452a6 6 0 00-3.86.454l-.312.049a6 6 0 00-3.86-.454l-2.387.452a2 2 0 00-1.022.547m19.5-3.757l-23.5 3.757" />
                         </svg>
-                        Laboratorio
-                        {activeTab === 'laboratorio' && (
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#003366] dark:bg-blue-400 rounded-t-lg"></div>
-                        )}
+                        {sidebarOpen && <span>Laboratorio</span>}
                     </button>
 
                     <button
                         onClick={() => setActiveTab('facturas')}
-                        className={`px-6 py-4 font-semibold transition-all relative flex items-center gap-2 ${
+                        className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${
                             activeTab === 'facturas'
-                                ? 'text-[#003366] dark:text-blue-400'
-                                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+                                ? 'bg-[#003366] text-white dark:bg-blue-600'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                         }`}
+                        title={!sidebarOpen ? 'Facturas' : ''}
                     >
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                         </svg>
-                        Facturas
-                        {activeTab === 'facturas' && (
-                            <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#003366] dark:bg-blue-400 rounded-t-lg"></div>
-                        )}
+                        {sidebarOpen && <span>Facturas</span>}
+                    </button>
+                </nav>
+
+                {/* Close Button at Bottom */}
+                <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                    <button
+                        onClick={() => window.close()}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all font-medium"
+                        title={!sidebarOpen ? 'Cerrar' : ''}
+                    >
+                        <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        {sidebarOpen && <span>Cerrar</span>}
                     </button>
                 </div>
+            </div>
 
-                {/* Tab Content */}
-                <div className="mt-8">
-                    {/* Citas Tab */}
-                    {activeTab === 'citas' && (
+            {/* Main Content Area */}
+            <div className="flex-1 overflow-y-auto flex flex-col">
+                {/* Professional Clinic Header */}
+                <div className="bg-gradient-to-r from-[#003366] via-[#004080] to-[#00509e] dark:from-slate-900 dark:via-blue-900 dark:to-slate-800 text-white flex-shrink-0">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                        <div className="flex items-start justify-between mb-8">
+                            <div>
+                                <h1 className="text-4xl md:text-5xl font-bold mb-4">{clinic?.name}</h1>
+                                <p className="text-blue-100 text-lg">Laboratorio de Análisis Clínicos</p>
+                            </div>
+                            <div className="text-right">
+                                <div className="text-5xl font-bold text-blue-200 opacity-20">
+                                    {clinic?.name.charAt(0).toUpperCase()}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        {/* Clinic Info Cards */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <svg className="w-6 h-6 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p className="text-blue-100 text-sm">ROL</p>
+                                </div>
+                                <p className="text-white text-xl font-semibold">{userRole || 'Sin asignar'}</p>
+                            </div>
+
+                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <svg className="w-6 h-6 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p className="text-blue-100 text-sm">Estado</p>
+                                </div>
+                                <p className="text-white text-xl font-semibold">
+                                    {clinic?.status === 'active' ? 'Activa' : 'Pendiente'}
+                                </p>
+                            </div>
+
+                            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                                <div className="flex items-center gap-3 mb-2">
+                                    <svg className="w-6 h-6 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <p className="text-blue-100 text-sm">Atención</p>
+                                </div>
+                                <p className="text-white text-xl font-semibold">24/7</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Content Area */}
+                <div className="flex-1 overflow-y-auto">
+                    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                        {/* Tab Content */}
+                        <div className="mt-8">
+                            {/* Citas Tab */}
+                            {activeTab === 'citas' && (
                         <div>
                             <div className="mb-8">
                                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Citas Agendadas</h2>
@@ -354,12 +377,12 @@ export default function ClinicDetailsPage() {
                                     <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">Agenda tu primera cita ahora</p>
                                 </div>
                             )}
-                        </div>
-                    )}
+                            </div>
+                        )}
 
-                    {/* Servicios Tab */}
-                    {activeTab === 'servicios' && (
-                        <div>
+                        {/* Servicios Tab */}
+                        {activeTab === 'servicios' && (
+                            <div>
                             <div className="mb-8">
                                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Servicios Disponibles</h2>
                                 <p className="text-gray-600 dark:text-gray-400">Todos los análisis y servicios que ofrecemos</p>
@@ -402,12 +425,12 @@ export default function ClinicDetailsPage() {
                                     <p className="text-gray-600 dark:text-gray-400 text-lg">No hay servicios disponibles</p>
                                 </div>
                             )}
-                        </div>
-                    )}
+                            </div>
+                        )}
 
-                    {/* Laboratorio Tab */}
-                    {activeTab === 'laboratorio' && (
-                        <div>
+                        {/* Laboratorio Tab */}
+                        {activeTab === 'laboratorio' && (
+                            <div>
                             <div className="mb-8">
                                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Resultados de Laboratorio</h2>
                                 <p className="text-gray-600 dark:text-gray-400">Consulta los resultados de tus análisis</p>
@@ -449,12 +472,12 @@ export default function ClinicDetailsPage() {
                                     <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">Los resultados aparecerán aquí cuando estén listos</p>
                                 </div>
                             )}
-                        </div>
-                    )}
+                            </div>
+                        )}
 
-                    {/* Facturas Tab */}
-                    {activeTab === 'facturas' && (
-                        <div>
+                        {/* Facturas Tab */}
+                        {activeTab === 'facturas' && (
+                            <div>
                             <div className="mb-8">
                                 <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Facturas</h2>
                                 <p className="text-gray-600 dark:text-gray-400">Descarga tus recibos y facturas</p>
@@ -506,8 +529,10 @@ export default function ClinicDetailsPage() {
                                     <p className="text-gray-600 dark:text-gray-400 text-lg">No hay facturas disponibles</p>
                                 </div>
                             )}
+                            </div>
+                        )}
                         </div>
-                    )}
+                    </div>
                 </div>
             </div>
         </div>

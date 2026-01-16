@@ -233,9 +233,9 @@ export default function ProfilePage() {
                                 {user.employees && user.employees.length > 0 ? (
                                     <div className="space-y-3">
                                         {user.employees.map((employee) => (
-                                            <Link
+                                            <div
                                                 key={employee.id}
-                                                href={`/clinic/${employee.clinic.id}`}
+                                                onClick={() => window.open(`http://localhost:3000/clinic/${employee.clinic.id}`, '_blank')}
                                                 className="block p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-lg hover:shadow-lg hover:border-blue-400 dark:hover:border-blue-600 transition-all cursor-pointer"
                                             >
                                                 <div className="flex items-start justify-between">
@@ -266,7 +266,7 @@ export default function ProfilePage() {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                                     </svg>
                                                 </div>
-                                            </Link>
+                                            </div>
                                         ))}
                                     </div>
                                 ) : (
