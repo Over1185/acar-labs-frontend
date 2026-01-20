@@ -8,6 +8,7 @@ interface Service {
     price: number;
 }
 
+
 interface ServiceCardProps {
     service: Service;
 }
