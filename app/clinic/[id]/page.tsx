@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import ServiciosTab from './components/ServiciosTab';
+import CitasTab from './components/CitasTab';
 
 interface Clinic {
     id: number;
@@ -260,8 +262,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('home')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'home'
-                                ? 'bg-[#003366] text-white dark:bg-blue-600'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white dark:bg-blue-600'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                             }`}
                         title={!sidebarOpen ? 'Home' : ''}
                     >
@@ -274,8 +276,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('citas')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'citas'
-                                ? 'bg-[#003366] text-white dark:bg-blue-600'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white dark:bg-blue-600'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                             }`}
                         title={!sidebarOpen ? 'Citas' : ''}
                     >
@@ -288,8 +290,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('servicios')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'servicios'
-                                ? 'bg-[#003366] text-white dark:bg-blue-600'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white dark:bg-blue-600'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                             }`}
                         title={!sidebarOpen ? 'Servicios' : ''}
                     >
@@ -302,8 +304,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('laboratorio')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'laboratorio'
-                                ? 'bg-[#003366] text-white dark:bg-blue-600'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white dark:bg-blue-600'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                             }`}
                         title={!sidebarOpen ? 'Laboratorio' : ''}
                     >
@@ -316,8 +318,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('facturas')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'facturas'
-                                ? 'bg-[#003366] text-white dark:bg-blue-600'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white dark:bg-blue-600'
+                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                             }`}
                         title={!sidebarOpen ? 'Facturas' : ''}
                     >
@@ -331,8 +333,8 @@ export default function ClinicDetailsPage() {
                         <button
                             onClick={() => setActiveTab('empleados')}
                             className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'empleados'
-                                    ? 'bg-[#003366] text-white dark:bg-blue-600'
-                                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                ? 'bg-[#003366] text-white dark:bg-blue-600'
+                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                                 }`}
                             title={!sidebarOpen ? 'Empleados' : ''}
                         >
@@ -535,111 +537,42 @@ export default function ClinicDetailsPage() {
 
                             {/* Citas Tab */}
                             {activeTab === 'citas' && (
-                                <div>
-                                    <div className="mb-8">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Citas Agendadas</h2>
-                                        <p className="text-gray-600 dark:text-gray-400">Gestiona todas tus citas y appointments</p>
+                                <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                                        <div>
+                                            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                                Gestión de Citas
+                                            </h2>
+                                            <p className="text-gray-600 dark:text-gray-400">
+                                                Administra las solicitudes y agenda de {clinic?.name}
+                                            </p>
+                                        </div>
+
+                                        {/* Botón opcional por si quieres agregar funcionalidad de crear cita luego */}
+                                        <button className="inline-flex items-center justify-center px-5 py-2.5 bg-[#003366] dark:bg-blue-600 text-white font-medium rounded-lg hover:bg-[#00509e] transition-colors shadow-sm">
+                                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                                            </svg>
+                                            Nueva Cita
+                                        </button>
                                     </div>
 
-                                    {appointments.length > 0 ? (
-                                        <div className="grid gap-6">
-                                            {appointments.map((appointment) => (
-                                                <div
-                                                    key={appointment.id}
-                                                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow"
-                                                >
-                                                    <div className="flex items-start justify-between mb-4">
-                                                        <div>
-                                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                                {appointment.patient_name}
-                                                            </h3>
-                                                            <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
-                                                                {appointment.service}
-                                                            </p>
-                                                        </div>
-                                                        <span className={`px-4 py-2 rounded-full text-sm font-semibold ${appointment.status === 'confirmed'
-                                                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
-                                                                : appointment.status === 'pending'
-                                                                    ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400'
-                                                                    : 'bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300'
-                                                            }`}>
-                                                            {appointment.status === 'confirmed' ? 'Confirmada' : appointment.status === 'pending' ? 'Pendiente' : 'Cancelada'}
-                                                        </span>
-                                                    </div>
-                                                    <div className="flex gap-6 text-sm">
-                                                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                                            </svg>
-                                                            {appointment.date}
-                                                        </div>
-                                                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                                            </svg>
-                                                            {appointment.time}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-12 text-center border-2 border-dashed border-blue-200 dark:border-blue-800">
-                                            <svg className="w-16 h-16 text-blue-400 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
-                                            <p className="text-gray-600 dark:text-gray-400 text-lg">No hay citas agendadas</p>
-                                            <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">Agenda tu primera cita ahora</p>
-                                        </div>
-                                    )}
+                                    <CitasTab appointments={appointments} />
                                 </div>
                             )}
 
                             {/* Servicios Tab */}
                             {activeTab === 'servicios' && (
-                                <div>
+                                <div className="animate-in fade-in duration-500">
                                     <div className="mb-8">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Servicios Disponibles</h2>
-                                        <p className="text-gray-600 dark:text-gray-400">Todos los análisis y servicios que ofrecemos</p>
+                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                            Nuestros Servicios
+                                        </h2>
+                                        <p className="text-gray-600 dark:text-gray-400">
+                                            Gestión de exámenes y análisis disponibles en {clinic?.name}
+                                        </p>
                                     </div>
-
-                                    {services.length > 0 ? (
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                            {services.map((service) => (
-                                                <div
-                                                    key={service.id}
-                                                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg hover:border-[#003366] dark:hover:border-blue-500 transition-all cursor-pointer group"
-                                                >
-                                                    <div className="flex items-start justify-between mb-4">
-                                                        <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/20 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                                                            <svg className="w-6 h-6 text-[#003366] dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
-                                                            </svg>
-                                                        </div>
-                                                        <span className="text-2xl font-bold text-[#003366] dark:text-blue-400">
-                                                            ${service.price.toFixed(2)}
-                                                        </span>
-                                                    </div>
-                                                    <h3 className="font-semibold text-gray-900 dark:text-white mb-2 text-lg">
-                                                        {service.name}
-                                                    </h3>
-                                                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
-                                                        {service.description}
-                                                    </p>
-                                                    <button className="w-full bg-[#003366] hover:bg-[#00509e] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-colors">
-                                                        Agendar Cita
-                                                    </button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ) : (
-                                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-12 text-center border-2 border-dashed border-blue-200 dark:border-blue-800">
-                                            <svg className="w-16 h-16 text-blue-400 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7 12a5 5 0 1110 0A5 5 0 017 12z" />
-                                            </svg>
-                                            <p className="text-gray-600 dark:text-gray-400 text-lg">No hay servicios disponibles</p>
-                                        </div>
-                                    )}
+                                    <ServiciosTab services={services} />
                                 </div>
                             )}
 
@@ -668,8 +601,8 @@ export default function ClinicDetailsPage() {
                                                             </p>
                                                         </div>
                                                         <span className={`px-4 py-2 rounded-full text-sm font-semibold ${result.status === 'ready'
-                                                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
-                                                                : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400'
+                                                            ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
+                                                            : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400'
                                                             }`}>
                                                             {result.status === 'ready' ? 'Disponible' : 'En Proceso'}
                                                         </span>
@@ -714,10 +647,10 @@ export default function ClinicDetailsPage() {
                                                             </div>
                                                             <div>
                                                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                                                    {employee.name || 'Empleado'}
+                                                                    {employee.user?.name || 'Empleado'}
                                                                 </h3>
                                                                 <p className="text-gray-600 dark:text-gray-400 text-sm">
-                                                                    {employee.email || 'Sin email'}
+                                                                    {employee.user?.email || 'Sin email'}
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -729,7 +662,7 @@ export default function ClinicDetailsPage() {
                                                         <div>
                                                             <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Estado</p>
                                                             <p className="font-semibold text-gray-900 dark:text-white text-sm">
-                                                                {employee.status === 'active' ? '✓ Activo' : '✕ Inactivo'}
+                                                                {employee.status === 'active' ? '✓ Activo' : employee.status === 'rejected' ? '✕ rechazada' : employee.status === 'pending' ? '⏳ Pendiente' : 'Sin estado'}
                                                             </p>
                                                         </div>
                                                         <div>
@@ -833,8 +766,8 @@ export default function ClinicDetailsPage() {
                                                             </p>
                                                         </div>
                                                         <span className={`px-4 py-2 rounded-full text-sm font-semibold ${invoice.status === 'paid'
-                                                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
-                                                                : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'
+                                                            ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
+                                                            : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'
                                                             }`}>
                                                             {invoice.status === 'paid' ? 'Pagada' : 'Pendiente'}
                                                         </span>
