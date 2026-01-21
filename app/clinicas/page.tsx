@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Clinic } from '@/lib/api';
 import ClinicCard from '@/components/ui/ClinicCard';
 import SearchBar from '@/components/ui/SearchBar';
 import Link from 'next/link'; // Importado para la navegación
 
 export default function ClinicasPage() {
-    const [clinics, setClinics] = useState<Clinic[]>([]);
-    const [filteredClinics, setFilteredClinics] = useState<Clinic[]>([]);
+    const [clinics, setClinics] = useState<Array<any>>([]);
+    const [filteredClinics, setFilteredClinics] = useState<Array<any>>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
