@@ -1,5 +1,17 @@
 import Link from 'next/link';
-import type { Clinic } from '@/lib/api';
+
+interface ClinicAddress {
+    province?: string;
+    country?: string;
+    city?: string;
+    canton?: string;
+}
+
+interface Clinic {
+    id: number | string;
+    name: string;
+    address?: ClinicAddress;
+}
 
 interface ClinicCardProps {
     clinic: Clinic;
@@ -10,13 +22,15 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
     return (
         <Link
             href={`/clinicas/${clinic.id}`}
-            className={`group block bg-white dark:bg-[var(--bg-surface)] rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--brand-deep-blue)] dark:hover:border-[var(--brand-slate-blue)] transition-all duration-300 hover:shadow-xl hover:shadow-[var(--brand-deep-blue)]/10 ${featured ? 'md:col-span-2 md:row-span-2' : ''
-                }`}
+            className={`group block bg-white dark:bg-[var(--bg-surface)] rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--brand-deep-blue)] dark:hover:border-[var(--brand-slate-blue)] transition-all duration-300 hover:shadow-xl hover:shadow-[var(--brand-deep-blue)]/10 ${
+                featured ? 'md:col-span-2 md:row-span-2' : ''
+            }`}
         >
             {/* Image Placeholder */}
             <div
-                className={`relative bg-gradient-to-br from-[var(--brand-deep-blue)] to-[var(--brand-slate-blue)] ${featured ? 'h-48 md:h-64' : 'h-40'
-                    }`}
+                className={`relative bg-gradient-to-br from-[var(--brand-deep-blue)] to-[var(--brand-slate-blue)] ${
+                    featured ? 'h-48 md:h-64' : 'h-40'
+                }`}
             >
                 {/* Decorative Pattern */}
                 <div className="absolute inset-0 opacity-10">
@@ -28,7 +42,7 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
                     </svg>
                 </div>
 
-                {/* Medical Cross Icon */}
+                {/* Medical Icon */}
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-16 h-16 md:w-20 md:h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                         <svg
@@ -82,8 +96,14 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
                                 d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                             />
                         </svg>
+
                         <span className="line-clamp-2">
-                            {[clinic.address.province, clinic.address.country || 'Ecuador', clinic.address.city, clinic.address.canton]
+                            {[
+                                clinic.address.province,
+                                clinic.address.country || 'Ecuador',
+                                clinic.address.city,
+                                clinic.address.canton
+                            ]
                                 .filter(Boolean)
                                 .join(', ')}
                         </span>
@@ -102,12 +122,7 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
                             stroke="currentColor"
                             viewBox="0 0 24 24"
                         >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M9 5l7 7-7 7"
-                            />
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                         </svg>
                     </div>
                 </div>

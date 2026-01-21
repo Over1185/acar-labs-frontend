@@ -1,5 +1,13 @@
 import Link from 'next/link';
-import type { Service } from '@/lib/api';
+
+interface Service {
+    id: number | string;
+    name: string;
+    description?: string;
+    estimated_time?: string;
+    price: number;
+}
+
 
 interface ServiceCardProps {
     service: Service;
@@ -33,9 +41,11 @@ export default function ServiceCard({ service }: ServiceCardProps) {
                 {service.name}
             </h3>
 
-            <p className="mt-2 text-sm text-[var(--text-main)] opacity-70 line-clamp-2">
-                {service.description}
-            </p>
+            {service.description && (
+                <p className="mt-2 text-sm text-[var(--text-main)] opacity-70 line-clamp-2">
+                    {service.description}
+                </p>
+            )}
 
             {/* Meta */}
             <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-color)]">
@@ -53,7 +63,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
                             d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
-                    <span>{service.estimated_time}</span>
+                    <span>{service.estimated_time || 'No especificado'}</span>
                 </div>
 
                 <span className="text-lg font-bold text-[var(--brand-deep-blue)] dark:text-[var(--link-color)]">

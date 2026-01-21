@@ -1,12 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Service } from '@/lib/api';
 import ServiceCard from '@/components/ui/ServiceCard';
 
 export default function ServiciosPage() {
-    const [services, setServices] = useState<Service[]>([]);
-    const [filteredServices, setFilteredServices] = useState<Service[]>([]);
+    const [services, setServices] = useState<any[]>([]);
+    const [filteredServices, setFilteredServices] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [searchTerm, setSearchTerm] = useState('');
