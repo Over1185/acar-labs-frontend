@@ -16,10 +16,7 @@ export const metadata: Metadata = {
   keywords: "citas médicas, clínicas Ecuador, hospitales, laboratorios, salud, ACAR Labs",
   authors: [{ name: "ACAR Studio" }],
   icons: {
-    icon: [
-      { url: '/Icon-Black.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: light)' },
-      { url: '/Icon-White.svg', type: 'image/svg+xml', media: '(prefers-color-scheme: dark)' },
-    ],
+    icon: '/Icon.svg',
   },
   openGraph: {
     title: "ACAR Labs | Gestión de Citas Médicas",

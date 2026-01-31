@@ -242,14 +242,14 @@ export default function ClinicDetailsPage() {
     };
 
     return (
-        <div className="min-h-screen bg-white dark:bg-[#0a1929] flex">
+        <div className="min-h-screen bg-white flex">
             {/* Sidebar - Full Height */}
-            <div className={`${sidebarOpen ? 'w-80' : 'w-24'} transition-all duration-300 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto flex flex-col`}>
-                <div className="p-4 sticky top-0 bg-white dark:bg-gray-800 z-10 border-b border-gray-200 dark:border-gray-700">
+            <div className={`${sidebarOpen ? 'w-80' : 'w-24'} transition-all duration-300 bg-white border-r border-gray-200 overflow-y-auto flex flex-col`}>
+                <div className="p-4 sticky top-0 bg-white z-10 border-b border-gray-200">
                     {/* Toggle Button */}
                     <button
                         onClick={() => setSidebarOpen(!sidebarOpen)}
-                        className="w-full flex items-center justify-center p-3 rounded-lg bg-[#003366] hover:bg-[#00509e] dark:bg-blue-600 dark:hover:bg-blue-700 text-white transition-colors"
+                        className="w-full flex items-center justify-center p-3 rounded-lg bg-[#003366] hover:bg-[#00509e] text-white transition-colors"
                     >
                         <svg className={`w-6 h-6 transition-transform ${sidebarOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -262,8 +262,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('home')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'home'
-                            ? 'bg-[#003366] text-white dark:bg-blue-600'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white'
+                            : 'text-gray-700 hover:bg-gray-100'
                             }`}
                         title={!sidebarOpen ? 'Home' : ''}
                     >
@@ -276,8 +276,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('citas')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'citas'
-                            ? 'bg-[#003366] text-white dark:bg-blue-600'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white'
+                            : 'text-gray-700 hover:bg-gray-100'
                             }`}
                         title={!sidebarOpen ? 'Citas' : ''}
                     >
@@ -290,8 +290,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('servicios')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'servicios'
-                            ? 'bg-[#003366] text-white dark:bg-blue-600'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white'
+                            : 'text-gray-700 hover:bg-gray-100'
                             }`}
                         title={!sidebarOpen ? 'Servicios' : ''}
                     >
@@ -304,8 +304,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('laboratorio')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'laboratorio'
-                            ? 'bg-[#003366] text-white dark:bg-blue-600'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white'
+                            : 'text-gray-700 hover:bg-gray-100'
                             }`}
                         title={!sidebarOpen ? 'Laboratorio' : ''}
                     >
@@ -318,8 +318,8 @@ export default function ClinicDetailsPage() {
                     <button
                         onClick={() => setActiveTab('facturas')}
                         className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'facturas'
-                            ? 'bg-[#003366] text-white dark:bg-blue-600'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                            ? 'bg-[#003366] text-white'
+                            : 'text-gray-700 hover:bg-gray-100'
                             }`}
                         title={!sidebarOpen ? 'Facturas' : ''}
                     >
@@ -333,8 +333,8 @@ export default function ClinicDetailsPage() {
                         <button
                             onClick={() => setActiveTab('empleados')}
                             className={`w-full flex items-center gap-3 px-4 py-4 rounded-lg transition-all font-medium ${activeTab === 'empleados'
-                                ? 'bg-[#003366] text-white dark:bg-blue-600'
-                                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                ? 'bg-[#003366] text-white'
+                                : 'text-gray-700 hover:bg-gray-100'
                                 }`}
                             title={!sidebarOpen ? 'Empleados' : ''}
                         >
@@ -348,10 +348,10 @@ export default function ClinicDetailsPage() {
                 </nav>
 
                 {/* Close Button at Bottom */}
-                <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+                <div className="p-4 border-t border-gray-200 bg-white">
                     <button
                         onClick={() => window.close()}
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all font-medium"
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-all font-medium"
                         title={!sidebarOpen ? 'Cerrar' : ''}
                     >
                         <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -365,7 +365,7 @@ export default function ClinicDetailsPage() {
             {/* Main Content Area */}
             <div className="flex-1 overflow-y-auto flex flex-col">
                 {/* Professional Clinic Header */}
-                <div className="bg-gradient-to-r from-[#003366] via-[#004080] to-[#00509e] dark:from-slate-900 dark:via-blue-900 dark:to-slate-800 text-white flex-shrink-0">
+                <div className="bg-gradient-to-r from-[#003366] via-[#004080] to-[#00509e] text-white flex-shrink-0">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                         <div className="flex items-start justify-between mb-8">
                             <div>
@@ -425,107 +425,107 @@ export default function ClinicDetailsPage() {
                             {activeTab === 'home' && (
                                 <div>
                                     <div className="mb-8">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Dashboard</h2>
-                                        <p className="text-gray-600 dark:text-gray-400">Estadísticas y resumen de tu laboratorio</p>
+                                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Dashboard</h2>
+                                        <p className="text-gray-600">Estadísticas y resumen de tu laboratorio</p>
                                     </div>
 
                                     {/* KPI Cards */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                                        <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/20 rounded-lg p-6 border border-blue-200 dark:border-blue-700">
+                                        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
                                             <div className="flex items-center justify-between mb-2">
-                                                <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">Total de Citas</p>
-                                                <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <p className="text-sm font-semibold text-blue-600">Total de Citas</p>
+                                                <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                                                 </svg>
                                             </div>
-                                            <p className="text-3xl font-bold text-gray-900 dark:text-white">{appointments.length}</p>
-                                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Este mes</p>
+                                            <p className="text-3xl font-bold text-gray-900">{appointments.length}</p>
+                                            <p className="text-xs text-gray-600 mt-2">Este mes</p>
                                         </div>
 
-                                        <div className="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900/30 dark:to-green-800/20 rounded-lg p-6 border border-green-200 dark:border-green-700">
+                                        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
                                             <div className="flex items-center justify-between mb-2">
-                                                <p className="text-sm font-semibold text-green-600 dark:text-green-400">Servicios Activos</p>
-                                                <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <p className="text-sm font-semibold text-green-600">Servicios Activos</p>
+                                                <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7 12a5 5 0 1110 0A5 5 0 017 12z" />
                                                 </svg>
                                             </div>
-                                            <p className="text-3xl font-bold text-gray-900 dark:text-white">{services.length}</p>
-                                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Disponibles</p>
+                                            <p className="text-3xl font-bold text-gray-900">{services.length}</p>
+                                            <p className="text-xs text-gray-600 mt-2">Disponibles</p>
                                         </div>
 
-                                        <div className="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900/30 dark:to-purple-800/20 rounded-lg p-6 border border-purple-200 dark:border-purple-700">
+                                        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
                                             <div className="flex items-center justify-between mb-2">
-                                                <p className="text-sm font-semibold text-purple-600 dark:text-purple-400">Resultados Procesados</p>
-                                                <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <p className="text-sm font-semibold text-purple-600">Resultados Procesados</p>
+                                                <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.452a6 6 0 00-3.86.454l-.312.049a6 6 0 00-3.86-.454l-2.387.452a2 2 0 00-1.022.547m19.5-3.757l-23.5 3.757" />
                                                 </svg>
                                             </div>
-                                            <p className="text-3xl font-bold text-gray-900 dark:text-white">{labResults.length}</p>
-                                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Pendientes</p>
+                                            <p className="text-3xl font-bold text-gray-900">{labResults.length}</p>
+                                            <p className="text-xs text-gray-600 mt-2">Pendientes</p>
                                         </div>
 
-                                        <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/30 dark:to-orange-800/20 rounded-lg p-6 border border-orange-200 dark:border-orange-700">
+                                        <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6 border border-orange-200">
                                             <div className="flex items-center justify-between mb-2">
-                                                <p className="text-sm font-semibold text-orange-600 dark:text-orange-400">Facturas Pendientes</p>
-                                                <svg className="w-5 h-5 text-orange-600 dark:text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <p className="text-sm font-semibold text-orange-600">Facturas Pendientes</p>
+                                                <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                                 </svg>
                                             </div>
-                                            <p className="text-3xl font-bold text-gray-900 dark:text-white">{invoices.filter(inv => inv.status !== 'paid').length}</p>
-                                            <p className="text-xs text-gray-600 dark:text-gray-400 mt-2">Por pagar</p>
+                                            <p className="text-3xl font-bold text-gray-900">{invoices.filter(inv => inv.status !== 'paid').length}</p>
+                                            <p className="text-xs text-gray-600 mt-2">Por pagar</p>
                                         </div>
                                     </div>
 
                                     {/* Quick Info */}
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                                        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
-                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Información de la Clínica</h3>
+                                        <div className="bg-white rounded-lg p-6 border border-gray-200">
+                                            <h3 className="text-lg font-semibold text-gray-900 mb-4">Información de la Clínica</h3>
                                             <div className="space-y-3">
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-gray-600 dark:text-gray-400">Nombre:</span>
-                                                    <span className="font-semibold text-gray-900 dark:text-white">{clinic?.name}</span>
+                                                    <span className="text-gray-600">Nombre:</span>
+                                                    <span className="font-semibold text-gray-900">{clinic?.name}</span>
                                                 </div>
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-gray-600 dark:text-gray-400">Estado:</span>
-                                                    <span className={`inline-flex items-center gap-2 font-semibold ${clinic?.status === 'active' ? 'text-green-600 dark:text-green-400' : 'text-yellow-600 dark:text-yellow-400'}`}>
-                                                        <span className={`w-2 h-2 rounded-full ${clinic?.status === 'active' ? 'bg-green-600 dark:bg-green-400' : 'bg-yellow-600 dark:bg-yellow-400'}`}></span>
+                                                    <span className="text-gray-600">Estado:</span>
+                                                    <span className={`inline-flex items-center gap-2 font-semibold ${clinic?.status === 'active' ? 'text-green-600' : 'text-yellow-600'}`}>
+                                                        <span className={`w-2 h-2 rounded-full ${clinic?.status === 'active' ? 'bg-green-600' : 'bg-yellow-600'}`}></span>
                                                         {clinic?.status === 'active' ? 'Activa' : 'Pendiente'}
                                                     </span>
                                                 </div>
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-gray-600 dark:text-gray-400">Tu Rol:</span>
-                                                    <span className="font-semibold text-gray-900 dark:text-white">{userRole || 'Sin asignar'}</span>
+                                                    <span className="text-gray-600">Tu Rol:</span>
+                                                    <span className="font-semibold text-gray-900">{userRole || 'Sin asignar'}</span>
                                                 </div>
                                             </div>
                                         </div>
 
-                                        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
-                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Tasa de Finalización</h3>
+                                        <div className="bg-white rounded-lg p-6 border border-gray-200">
+                                            <h3 className="text-lg font-semibold text-gray-900 mb-4">Tasa de Finalización</h3>
                                             <div className="space-y-4">
                                                 <div>
                                                     <div className="flex items-center justify-between mb-2">
-                                                        <span className="text-sm text-gray-600 dark:text-gray-400">Citas Completadas</span>
-                                                        <span className="font-semibold text-gray-900 dark:text-white">92%</span>
+                                                        <span className="text-sm text-gray-600">Citas Completadas</span>
+                                                        <span className="font-semibold text-gray-900">92%</span>
                                                     </div>
-                                                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                                    <div className="w-full bg-gray-200 rounded-full h-2">
                                                         <div className="bg-green-500 h-2 rounded-full" style={{ width: '92%' }}></div>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center justify-between mb-2">
-                                                        <span className="text-sm text-gray-600 dark:text-gray-400">Resultados Procesados</span>
-                                                        <span className="font-semibold text-gray-900 dark:text-white">78%</span>
+                                                        <span className="text-sm text-gray-600">Resultados Procesados</span>
+                                                        <span className="font-semibold text-gray-900">78%</span>
                                                     </div>
-                                                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                                    <div className="w-full bg-gray-200 rounded-full h-2">
                                                         <div className="bg-blue-500 h-2 rounded-full" style={{ width: '78%' }}></div>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div className="flex items-center justify-between mb-2">
-                                                        <span className="text-sm text-gray-600 dark:text-gray-400">Facturas Pagadas</span>
-                                                        <span className="font-semibold text-gray-900 dark:text-white">85%</span>
+                                                        <span className="text-sm text-gray-600">Facturas Pagadas</span>
+                                                        <span className="font-semibold text-gray-900">85%</span>
                                                     </div>
-                                                    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                                    <div className="w-full bg-gray-200 rounded-full h-2">
                                                         <div className="bg-purple-500 h-2 rounded-full" style={{ width: '85%' }}></div>
                                                     </div>
                                                 </div>
@@ -540,16 +540,16 @@ export default function ClinicDetailsPage() {
                                 <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                                     <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                                         <div>
-                                            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                            <h2 className="text-3xl font-bold text-gray-900 mb-2">
                                                 Gestión de Citas
                                             </h2>
-                                            <p className="text-gray-600 dark:text-gray-400">
+                                            <p className="text-gray-600">
                                                 Administra las solicitudes y agenda de {clinic?.name}
                                             </p>
                                         </div>
 
                                         {/* Botón opcional por si quieres agregar funcionalidad de crear cita luego */}
-                                        <button className="inline-flex items-center justify-center px-5 py-2.5 bg-[#003366] dark:bg-blue-600 text-white font-medium rounded-lg hover:bg-[#00509e] transition-colors shadow-sm">
+                                        <button className="inline-flex items-center justify-center px-5 py-2.5 bg-[#003366] text-white font-medium rounded-lg hover:bg-[#00509e] transition-colors shadow-sm">
                                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                                             </svg>
@@ -565,10 +565,10 @@ export default function ClinicDetailsPage() {
                             {activeTab === 'servicios' && (
                                 <div className="animate-in fade-in duration-500">
                                     <div className="mb-8">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                                        <h2 className="text-3xl font-bold text-gray-900 mb-2">
                                             Nuestros Servicios
                                         </h2>
-                                        <p className="text-gray-600 dark:text-gray-400">
+                                        <p className="text-gray-600">
                                             Gestión de exámenes y análisis disponibles en {clinic?.name}
                                         </p>
                                     </div>
@@ -580,8 +580,8 @@ export default function ClinicDetailsPage() {
                             {activeTab === 'laboratorio' && (
                                 <div>
                                     <div className="mb-8">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Resultados de Laboratorio</h2>
-                                        <p className="text-gray-600 dark:text-gray-400">Consulta los resultados de tus análisis</p>
+                                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Resultados de Laboratorio</h2>
+                                        <p className="text-gray-600">Consulta los resultados de tus análisis</p>
                                     </div>
 
                                     {labResults.length > 0 ? (
@@ -589,20 +589,20 @@ export default function ClinicDetailsPage() {
                                             {labResults.map((result) => (
                                                 <div
                                                     key={result.id}
-                                                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                                                    className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
                                                 >
                                                     <div className="flex items-start justify-between">
                                                         <div>
-                                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                                                            <h3 className="text-lg font-semibold text-gray-900 mb-2">
                                                                 {result.name}
                                                             </h3>
-                                                            <p className="text-gray-600 dark:text-gray-400 text-sm">
+                                                            <p className="text-gray-600 text-sm">
                                                                 Fecha: {result.date}
                                                             </p>
                                                         </div>
                                                         <span className={`px-4 py-2 rounded-full text-sm font-semibold ${result.status === 'ready'
-                                                            ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
-                                                            : 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-400'
+                                                            ? 'bg-green-100 text-green-800'
+                                                            : 'bg-yellow-100 text-yellow-800'
                                                             }`}>
                                                             {result.status === 'ready' ? 'Disponible' : 'En Proceso'}
                                                         </span>
@@ -611,12 +611,12 @@ export default function ClinicDetailsPage() {
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-12 text-center border-2 border-dashed border-blue-200 dark:border-blue-800">
+                                        <div className="bg-blue-50 rounded-lg p-12 text-center border-2 border-dashed border-blue-200">
                                             <svg className="w-16 h-16 text-blue-400 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.452a6 6 0 00-3.86.454l-.312.049a6 6 0 00-3.86-.454l-2.387.452a2 2 0 00-1.022.547m19.5-3.757l-23.5 3.757" />
                                             </svg>
-                                            <p className="text-gray-600 dark:text-gray-400 text-lg">No hay resultados disponibles</p>
-                                            <p className="text-gray-500 dark:text-gray-500 text-sm mt-2">Los resultados aparecerán aquí cuando estén listos</p>
+                                            <p className="text-gray-600 text-lg">No hay resultados disponibles</p>
+                                            <p className="text-gray-500 text-sm mt-2">Los resultados aparecerán aquí cuando estén listos</p>
                                         </div>
                                     )}
                                 </div>
@@ -627,8 +627,8 @@ export default function ClinicDetailsPage() {
                             {activeTab === 'empleados' && userRole === 'OWNER' && (
                                 <div>
                                     <div className="mb-8">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Gestión de Empleados</h2>
-                                        <p className="text-gray-600 dark:text-gray-400">Administra los empleados de tu clínica</p>
+                                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Gestión de Empleados</h2>
+                                        <p className="text-gray-600">Administra los empleados de tu clínica</p>
                                     </div>
 
                                     {clinic?.employees && clinic.employees.length > 0 ? (
@@ -636,45 +636,45 @@ export default function ClinicDetailsPage() {
                                             {clinic.employees.map((employee: any) => (
                                                 <div
                                                     key={employee.id}
-                                                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                                                    className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
                                                 >
                                                     <div className="flex items-start justify-between mb-4">
                                                         <div className="flex items-center gap-4">
-                                                            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900/30 dark:to-blue-800/20 rounded-full flex items-center justify-center">
-                                                                <svg className="w-6 h-6 text-[#003366] dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
+                                                                <svg className="w-6 h-6 text-[#003366]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                                 </svg>
                                                             </div>
                                                             <div>
-                                                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                                <h3 className="text-lg font-semibold text-gray-900">
                                                                     {employee.user?.name || 'Empleado'}
                                                                 </h3>
-                                                                <p className="text-gray-600 dark:text-gray-400 text-sm">
+                                                                <p className="text-gray-600 text-sm">
                                                                     {employee.user?.email || 'Sin email'}
                                                                 </p>
                                                             </div>
                                                         </div>
-                                                        <span className="px-4 py-2 rounded-full text-sm font-semibold bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400">
+                                                        <span className="px-4 py-2 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
                                                             {employee.role?.name || 'Sin rol'}
                                                         </span>
                                                     </div>
-                                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-gray-200">
                                                         <div>
-                                                            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Estado</p>
-                                                            <p className="font-semibold text-gray-900 dark:text-white text-sm">
+                                                            <p className="text-xs text-gray-600 mb-1">Estado</p>
+                                                            <p className="font-semibold text-gray-900 text-sm">
                                                                 {employee.status === 'active' ? '✓ Activo' : employee.status === 'rejected' ? '✕ rechazada' : employee.status === 'pending' ? '⏳ Pendiente' : 'Sin estado'}
                                                             </p>
                                                         </div>
                                                         <div>
-                                                            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Especialidad</p>
-                                                            <p className="font-semibold text-gray-900 dark:text-white text-sm">{employee.specialty || 'General'}</p>
+                                                            <p className="text-xs text-gray-600 mb-1">Especialidad</p>
+                                                            <p className="font-semibold text-gray-900 text-sm">{employee.specialty || 'General'}</p>
                                                         </div>
                                                         <div>
-                                                            <p className="text-xs text-gray-600 dark:text-gray-400 mb-1">Teléfono</p>
-                                                            <p className="font-semibold text-gray-900 dark:text-white text-sm">{employee.phone || '-'}</p>
+                                                            <p className="text-xs text-gray-600 mb-1">Teléfono</p>
+                                                            <p className="font-semibold text-gray-900 text-sm">{employee.phone || '-'}</p>
                                                         </div>
                                                         <div className="flex items-end gap-2">
-                                                            <button className="flex-1 bg-[#003366] hover:bg-[#00509e] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-3 rounded-lg transition-colors text-sm">
+                                                            <button className="flex-1 bg-[#003366] hover:bg-[#00509e] text-white font-semibold py-2 px-3 rounded-lg transition-colors text-sm">
                                                                 Editar
                                                             </button>
                                                         </div>
@@ -683,19 +683,19 @@ export default function ClinicDetailsPage() {
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-12 text-center border-2 border-dashed border-blue-200 dark:border-blue-800">
+                                        <div className="bg-blue-50 rounded-lg p-12 text-center border-2 border-dashed border-blue-200">
                                             <svg className="w-16 h-16 text-blue-400 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.856-1.487M15 10a3 3 0 11-6 0 3 3 0 016 0zM18.5 20H20v-2a3 3 0 00-.5-1.5M5 20v-2a3 3 0 015.856-1.487M7 10a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
-                                            <p className="text-gray-600 dark:text-gray-400 text-lg">No hay empleados registrados</p>
-                                            <button className="mt-4 bg-[#003366] hover:bg-[#00509e] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+                                            <p className="text-gray-600 text-lg">No hay empleados registrados</p>
+                                            <button className="mt-4 bg-[#003366] hover:bg-[#00509e] text-white font-semibold py-2 px-6 rounded-lg transition-colors">
                                                 Agregar Empleado
                                             </button>
                                         </div>
                                     )}
                                     {/* Agregar Empleado */}
-                                    <div className="mb-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-                                        <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+                                    <div className="mb-10 bg-white border border-gray-200 rounded-lg p-6">
+                                        <h3 className="text-xl font-bold mb-4 text-gray-900">
                                             Agregar empleado
                                         </h3>
 
@@ -705,7 +705,7 @@ export default function ClinicDetailsPage() {
                                                 placeholder="Correo del usuario"
                                                 value={searchEmail}
                                                 onChange={(e) => setSearchEmail(e.target.value)}
-                                                className="flex-1 px-4 py-2 border rounded-lg dark:bg-gray-900 dark:border-gray-600"
+                                                className="flex-1 px-4 py-2 border rounded-lg"
                                             />
                                             <button
                                                 onClick={handleSearchUser}
@@ -722,7 +722,7 @@ export default function ClinicDetailsPage() {
                                             {searchResults.map(user => (
                                                 <div
                                                     key={user.id}
-                                                    className="flex items-center justify-between border p-4 rounded-lg dark:border-gray-700"
+                                                    className="flex items-center justify-between border p-4 rounded-lg"
                                                 >
                                                     <div>
                                                         <p className="font-semibold">{user.name}</p>
@@ -745,8 +745,8 @@ export default function ClinicDetailsPage() {
                             {activeTab === 'facturas' && (
                                 <div>
                                     <div className="mb-8">
-                                        <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Facturas</h2>
-                                        <p className="text-gray-600 dark:text-gray-400">Descarga tus recibos y facturas</p>
+                                        <h2 className="text-3xl font-bold text-gray-900 mb-2">Facturas</h2>
+                                        <p className="text-gray-600">Descarga tus recibos y facturas</p>
                                     </div>
 
                                     {invoices.length > 0 ? (
@@ -754,29 +754,29 @@ export default function ClinicDetailsPage() {
                                             {invoices.map((invoice) => (
                                                 <div
                                                     key={invoice.id}
-                                                    className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow"
+                                                    className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition-shadow"
                                                 >
                                                     <div className="flex items-start justify-between mb-4">
                                                         <div>
-                                                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                                            <h3 className="text-lg font-semibold text-gray-900">
                                                                 Factura #{invoice.number}
                                                             </h3>
-                                                            <p className="text-gray-600 dark:text-gray-400 text-sm mt-1">
+                                                            <p className="text-gray-600 text-sm mt-1">
                                                                 Fecha: {invoice.date}
                                                             </p>
                                                         </div>
                                                         <span className={`px-4 py-2 rounded-full text-sm font-semibold ${invoice.status === 'paid'
-                                                            ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400'
-                                                            : 'bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400'
+                                                            ? 'bg-green-100 text-green-800'
+                                                            : 'bg-red-100 text-red-800'
                                                             }`}>
                                                             {invoice.status === 'paid' ? 'Pagada' : 'Pendiente'}
                                                         </span>
                                                     </div>
                                                     <div className="flex items-center justify-between">
-                                                        <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                                                        <span className="text-2xl font-bold text-gray-900">
                                                             ${invoice.total.toFixed(2)}
                                                         </span>
-                                                        <button className="flex items-center gap-2 bg-[#003366] hover:bg-[#00509e] dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                                                        <button className="flex items-center gap-2 bg-[#003366] hover:bg-[#00509e] text-white font-semibold py-2 px-4 rounded-lg transition-colors">
                                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                                             </svg>
@@ -787,11 +787,11 @@ export default function ClinicDetailsPage() {
                                             ))}
                                         </div>
                                     ) : (
-                                        <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-12 text-center border-2 border-dashed border-blue-200 dark:border-blue-800">
+                                        <div className="bg-blue-50 rounded-lg p-12 text-center border-2 border-dashed border-blue-200">
                                             <svg className="w-16 h-16 text-blue-400 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                                             </svg>
-                                            <p className="text-gray-600 dark:text-gray-400 text-lg">No hay facturas disponibles</p>
+                                            <p className="text-gray-600 text-lg">No hay facturas disponibles</p>
                                         </div>
                                     )}
                                 </div>

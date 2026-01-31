@@ -84,7 +84,7 @@ export default function ClinicasPage() {
     }, [searchTerm, selectedProvince, clinics]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-[#0a1929] dark:to-[#1a2332]">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
 
             {/* Hero */}
             <section className="relative bg-gradient-to-br from-[#003366] to-[#00509e] pt-24 pb-16">
@@ -110,7 +110,7 @@ export default function ClinicasPage() {
                     <select
                         value={selectedProvince}
                         onChange={(e) => setSelectedProvince(e.target.value)}
-                        className="px-4 py-2 rounded-full border bg-white dark:bg-gray-800"
+                        className="px-4 py-2 rounded-full border bg-white"
                     >
                         <option value="all">Todas las provincias</option>
                         {provinces.map(province => (
@@ -126,7 +126,7 @@ export default function ClinicasPage() {
                                 setSearchTerm('');
                                 setSelectedProvince('all');
                             }}
-                            className="px-4 py-2 rounded-full bg-gray-200 dark:bg-gray-700"
+                            className="px-4 py-2 rounded-full bg-gray-200"
                         >
                             Limpiar filtros
                         </button>
@@ -165,7 +165,7 @@ export default function ClinicasPage() {
 
                 {/* Registrar clínica */}
                 {!loading && (
-                    <div className="mt-16 p-8 bg-white dark:bg-[#1a2332] rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div className="mt-16 p-8 bg-white rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
                         <div>
                             <h3 className="text-xl font-bold">
                                 ¿Eres dueño de una clínica?

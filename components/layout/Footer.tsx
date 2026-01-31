@@ -14,21 +14,21 @@ export default function Footer() {
     }
 
     return (
-        <footer className="bg-[#003366] dark:bg-[#0a1929] border-t border-[#00509e]/30 dark:border-gray-800/50">
+        <footer className="bg-[#003366] border-t border-[#00509e]/30">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {/* Brand Column */}
                     <div className="lg:col-span-1">
                         <Link href="/" className="inline-block">
                             <Image
-                                src="/ACAR Labs-White.svg"
+                                src="/Letras.svg"
                                 alt="ACAR Labs"
                                 width={120}
                                 height={35}
-                                className="h-8 w-auto"
+                                className="h-8 w-auto brightness-0 invert"
                             />
                         </Link>
-                        <p className="mt-4 text-sm text-white/80 dark:text-gray-300">
+                        <p className="mt-4 text-sm text-white/80">
                             Tu plataforma de confianza para gestionar citas médicas en Ecuador.
                             Conectamos pacientes con los mejores profesionales de la salud.
                         </p>
@@ -38,7 +38,7 @@ export default function Footer() {
                                 href="https://facebook.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                className="text-white/70 hover:text-white transition-all"
                                 aria-label="Facebook"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -49,7 +49,7 @@ export default function Footer() {
                                 href="https://instagram.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                className="text-white/70 hover:text-white transition-all"
                                 aria-label="Instagram"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -60,7 +60,7 @@ export default function Footer() {
                                 href="https://twitter.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                className="text-white/70 hover:text-white transition-all"
                                 aria-label="Twitter/X"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -71,7 +71,7 @@ export default function Footer() {
                                 href="https://linkedin.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                className="text-white/70 hover:text-white transition-all"
                                 aria-label="LinkedIn"
                             >
                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -83,14 +83,14 @@ export default function Footer() {
 
                     {/* Quick Links */}
                     <div>
-                        <h3 className="text-sm font-bold text-white dark:text-gray-200 uppercase tracking-wider">
+                        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
                             Enlaces Rápidos
                         </h3>
                         <ul className="mt-4 space-y-3">
                             <li>
                                 <Link
                                     href="/clinicas"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Buscar Clínicas
                                 </Link>
@@ -98,7 +98,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/servicios"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Servicios Médicos
                                 </Link>
@@ -106,7 +106,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/especialidades"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Especialidades
                                 </Link>
@@ -114,7 +114,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/nosotros"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Nosotros
                                 </Link>
@@ -122,7 +122,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/contacto"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Contacto
                                 </Link>
@@ -132,14 +132,14 @@ export default function Footer() {
 
                     {/* For Patients */}
                     <div>
-                        <h3 className="text-sm font-bold text-white dark:text-gray-200 uppercase tracking-wider">
+                        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
                             Para Pacientes
                         </h3>
                         <ul className="mt-4 space-y-3">
                             <li>
                                 <Link
                                     href="/registro"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Registrarse
                                 </Link>
@@ -147,7 +147,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/login"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Iniciar Sesión
                                 </Link>
@@ -155,7 +155,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/mis-citas"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Mis Citas
                                 </Link>
@@ -163,7 +163,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/historial"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Historial Médico
                                 </Link>
@@ -171,7 +171,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/ayuda"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Ayuda
                                 </Link>
@@ -181,14 +181,14 @@ export default function Footer() {
 
                     {/* Legal */}
                     <div>
-                        <h3 className="text-sm font-bold text-white dark:text-gray-200 uppercase tracking-wider">
+                        <h3 className="text-sm font-bold text-white uppercase tracking-wider">
                             Legal
                         </h3>
                         <ul className="mt-4 space-y-3">
                             <li>
                                 <Link
                                     href="/privacidad"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Política de Privacidad
                                 </Link>
@@ -196,7 +196,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/terminos"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Términos de Uso
                                 </Link>
@@ -204,7 +204,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/cookies"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Política de Cookies
                                 </Link>
@@ -212,7 +212,7 @@ export default function Footer() {
                             <li>
                                 <Link
                                     href="/seguridad"
-                                    className="text-sm text-white/80 hover:text-white dark:text-gray-300 dark:hover:text-white transition-all"
+                                    className="text-sm text-white/80 hover:text-white transition-all"
                                 >
                                     Seguridad
                                 </Link>
@@ -222,27 +222,27 @@ export default function Footer() {
                 </div>
 
                 {/* Bottom Bar */}
-                <div className="mt-12 pt-8 border-t border-white/10 dark:border-gray-800">
+                <div className="mt-12 pt-8 border-t border-white/10">
                     <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-sm text-white/70 dark:text-gray-400">
+                        <p className="text-sm text-white/70">
                             © {currentYear} ACAR Labs. Todos los derechos reservados.
                         </p>
                         <div className="flex gap-6">
                             <Link
                                 href="/privacidad"
-                                className="text-sm text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                className="text-sm text-white/70 hover:text-white transition-all"
                             >
                                 Privacidad
                             </Link>
                             <Link
                                 href="/terminos"
-                                className="text-sm text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                className="text-sm text-white/70 hover:text-white transition-all"
                             >
                                 Términos
                             </Link>
                             <Link
                                 href="/cookies"
-                                className="text-sm text-white/70 hover:text-white dark:text-gray-400 dark:hover:text-white transition-all"
+                                className="text-sm text-white/70 hover:text-white transition-all"
                             >
                                 Cookies
                             </Link>
@@ -253,3 +253,4 @@ export default function Footer() {
         </footer>
     );
 }
+

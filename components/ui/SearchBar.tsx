@@ -48,7 +48,7 @@ export default function SearchBar({ variant = 'hero', onSearch }: SearchBarProps
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Buscar clínica, servicio..."
-                        className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[var(--border-color)] bg-white dark:bg-[var(--bg-surface)] text-[var(--text-main)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--btn-primary-bg)] transition-all"
+                        className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-[var(--border-color)] bg-white text-[var(--text-main)] placeholder:text-[var(--text-secondary)] focus:outline-none focus:ring-2 focus:ring-[var(--btn-primary-bg)] transition-all"
                     />
                 </div>
                 <button
@@ -64,14 +64,14 @@ export default function SearchBar({ variant = 'hero', onSearch }: SearchBarProps
     return (
         <form
             onSubmit={handleSubmit}
-            className="w-full max-w-4xl mx-auto bg-white dark:bg-[var(--bg-surface)] rounded-2xl shadow-2xl shadow-black/10 p-2"
+            className="w-full max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl shadow-black/10 p-2"
         >
             <div className="flex flex-col md:flex-row gap-2">
                 {/* Search Query */}
                 <div className="relative flex-1">
                     <div className="absolute left-4 top-1/2 -translate-y-1/2">
                         <svg
-                            className="w-5 h-5 text-[var(--brand-deep-blue)] dark:text-[var(--brand-slate-blue)]"
+                            className="w-5 h-5 text-[var(--brand-deep-blue)]"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"

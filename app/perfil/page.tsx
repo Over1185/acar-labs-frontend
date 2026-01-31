@@ -87,15 +87,15 @@ export default function ProfilePage() {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-[#0a1929] dark:to-[#1a2332] flex items-center justify-center pt-20">
-                <div className="w-16 h-16 border-4 border-[#003366]/20 border-t-[#003366] dark:border-blue-500/20 dark:border-t-blue-500 rounded-full animate-spin"></div>
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 flex items-center justify-center pt-20">
+                <div className="w-16 h-16 border-4 border-[#003366]/20 border-t-[#003366] rounded-full animate-spin"></div>
             </div>
         );
     }
 
     if (error || !user) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-[#0a1929] dark:to-[#1a2332] pt-24 text-center">
+            <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 pt-24 text-center">
                 <p className="text-red-600 mb-4">{error || 'No se encontró el perfil'}</p>
                 <Link href="/" className="px-6 py-2 bg-red-600 text-white rounded-full">Volver al inicio</Link>
             </div>
@@ -103,43 +103,43 @@ export default function ProfilePage() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-[#0a1929] dark:to-[#1a2332] pt-24 pb-12">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 pt-24 pb-12">
             <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Back Button */}
-                <Link href="/" className="inline-flex items-center gap-2 mb-8 text-[#003366] dark:text-blue-400 hover:underline">
+                <Link href="/" className="inline-flex items-center gap-2 mb-8 text-[#003366] hover:underline">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
                     Volver
                 </Link>
 
-                <div className="bg-white dark:bg-[#1a2332] rounded-2xl shadow-lg overflow-hidden">
+                <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
                     {/* Header Background */}
-                    <div className="h-32 bg-gradient-to-r from-[#003366] to-[#00509e] dark:from-blue-600 dark:to-blue-700"></div>
+                    <div className="h-32 bg-gradient-to-r from-[#003366] to-[#00509e]"></div>
 
                     <div className="px-6 sm:px-8 pb-8">
                         {/* Avatar and Name */}
                         <div className="flex flex-col sm:flex-row items-start sm:items-end gap-6 -mt-16 mb-8">
-                            <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-[#003366] to-[#00509e] dark:from-blue-600 dark:to-blue-700 flex items-center justify-center text-5xl font-bold text-white border-4 border-white dark:border-[#1a2332] shadow-lg">
+                            <div className="w-32 h-32 rounded-2xl bg-gradient-to-br from-[#003366] to-[#00509e] flex items-center justify-center text-5xl font-bold text-white border-4 border-white shadow-lg">
                                 {user.name.charAt(0).toUpperCase()}
                             </div>
                             <div className="flex-1">
-                                <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{user.name}</h1>
+                                <h1 className="text-3xl font-bold text-gray-900 mb-2">{user.name}</h1>
                             </div>
                         </div>
 
                         <div className="space-y-6">
                             {/* Información Personal */}
-                            <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Información Personal</h2>
+                            <div className="border-t border-gray-200 pt-6">
+                                <h2 className="text-lg font-semibold text-gray-900 mb-4">Información Personal</h2>
                                 <div className="space-y-4">
-                                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                         <div className="flex items-center gap-3">
-                                            <p className="text-sm text-gray-600 dark:text-gray-400">Correo: <span className="text-gray-900 dark:text-white font-medium">{user.email}</span></p>
+                                            <p className="text-sm text-gray-600">Correo: <span className="text-gray-900 font-medium">{user.email}</span></p>
                                         </div>
                                     </div>
-                                    <div className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-                                        <p className="text-sm text-gray-600 dark:text-gray-400">Estado Usuario: 
+                                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                        <p className="text-sm text-gray-600">Estado Usuario:
                                             <span className={user.is_active ? "text-green-600 ml-2" : "text-red-600 ml-2"}>
                                                 {user.is_active ? "Activo" : "Inactivo"}
                                             </span>
@@ -149,41 +149,39 @@ export default function ProfilePage() {
                             </div>
 
                             {/* Sección Clínicas con Lógica de Bloqueo */}
-                            <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Clínicas Asociadas</h2>
+                            <div className="border-t border-gray-200 pt-6">
+                                <h2 className="text-lg font-semibold text-gray-900 mb-4">Clínicas Asociadas</h2>
                                 {user.employees && user.employees.length > 0 ? (
                                     <div className="space-y-3">
                                         {user.employees.map((employee) => {
                                             const isActive = isClinicActive(employee.clinic.status);
-                                            
+
                                             return (
                                                 <div
                                                     key={employee.id}
                                                     // Bloqueo de clic si no está activa
                                                     onClick={() => isActive && window.open(`/clinic/${employee.clinic.id}`, '_blank')}
-                                                    className={`block p-4 border rounded-lg transition-all ${
-                                                        isActive 
-                                                        ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-blue-200 dark:border-blue-800 hover:shadow-lg hover:border-blue-400 cursor-pointer" 
-                                                        : "bg-gray-100 dark:bg-gray-800/40 border-gray-200 dark:border-gray-700 cursor-not-allowed grayscale opacity-80"
-                                                    }`}
+                                                    className={`block p-4 border rounded-lg transition-all ${isActive
+                                                        ? "bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 hover:shadow-lg hover:border-blue-400 cursor-pointer"
+                                                        : "bg-gray-100 border-gray-200 cursor-not-allowed grayscale opacity-80"
+                                                        }`}
                                                 >
                                                     <div className="flex items-start justify-between">
                                                         <div className="flex-1">
-                                                            <p className="text-sm font-semibold text-gray-600 dark:text-gray-400">Clínica</p>
-                                                            <p className={`font-bold text-lg ${isActive ? "text-gray-900 dark:text-white" : "text-gray-500"}`}>
+                                                            <p className="text-sm font-semibold text-gray-600">Clínica</p>
+                                                            <p className={`font-bold text-lg ${isActive ? "text-gray-900" : "text-gray-500"}`}>
                                                                 {employee.clinic.name} {!isActive && "(Inactiva)"}
                                                             </p>
                                                             <p className="text-sm text-gray-500">RUC: {employee.clinic.ruc}</p>
-                                                            
+
                                                             <div className="flex items-center gap-2 mt-3">
-                                                                <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-400 text-xs font-semibold rounded-full">
+                                                                <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                                                                     {employee.role.name}
                                                                 </span>
-                                                                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
-                                                                    isActive 
-                                                                    ? "bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-400" 
-                                                                    : "bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-400"
-                                                                }`}>
+                                                                <span className={`px-3 py-1 text-xs font-semibold rounded-full ${isActive
+                                                                    ? "bg-green-100 text-green-800"
+                                                                    : "bg-red-100 text-red-800"
+                                                                    }`}>
                                                                     {isActive ? 'Activo' : 'Inactivo'}
                                                                 </span>
                                                             </div>

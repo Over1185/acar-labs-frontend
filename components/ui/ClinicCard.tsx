@@ -22,15 +22,13 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
     return (
         <Link
             href={`/clinicas/${clinic.id}`}
-            className={`group block bg-white dark:bg-[var(--bg-surface)] rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--brand-deep-blue)] dark:hover:border-[var(--brand-slate-blue)] transition-all duration-300 hover:shadow-xl hover:shadow-[var(--brand-deep-blue)]/10 ${
-                featured ? 'md:col-span-2 md:row-span-2' : ''
-            }`}
+            className={`group block bg-white rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--brand-deep-blue)] transition-all duration-300 hover:shadow-xl hover:shadow-[var(--brand-deep-blue)]/10 ${featured ? 'md:col-span-2 md:row-span-2' : ''
+                }`}
         >
             {/* Image Placeholder */}
             <div
-                className={`relative bg-gradient-to-br from-[var(--brand-deep-blue)] to-[var(--brand-slate-blue)] ${
-                    featured ? 'h-48 md:h-64' : 'h-40'
-                }`}
+                className={`relative bg-gradient-to-br from-[var(--brand-deep-blue)] to-[var(--brand-slate-blue)] ${featured ? 'h-48 md:h-64' : 'h-40'
+                    }`}
             >
                 {/* Decorative Pattern */}
                 <div className="absolute inset-0 opacity-10">
@@ -70,7 +68,7 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
 
             {/* Content */}
             <div className="p-5">
-                <h3 className="text-lg font-bold text-[var(--text-heading)] group-hover:text-[var(--brand-deep-blue)] dark:group-hover:text-[var(--link-color)] transition-colors line-clamp-1">
+                <h3 className="text-lg font-bold text-[var(--text-heading)] group-hover:text-[var(--brand-deep-blue)] transition-colors line-clamp-1">
                     {clinic.name}
                 </h3>
 
@@ -112,12 +110,12 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
 
                 {/* CTA */}
                 <div className="flex items-center justify-between mt-4 pt-4 border-t border-[var(--border-color)]">
-                    <span className="text-sm font-medium text-[var(--brand-deep-blue)] dark:text-[var(--link-color)]">
+                    <span className="text-sm font-medium text-[var(--brand-deep-blue)]">
                         Ver servicios
                     </span>
-                    <div className="w-8 h-8 rounded-full bg-[var(--bg-surface)] dark:bg-[#2a2a3e] flex items-center justify-center group-hover:bg-[var(--brand-deep-blue)] dark:group-hover:bg-[var(--brand-slate-blue)] transition-colors">
+                    <div className="w-8 h-8 rounded-full bg-[var(--bg-surface)] flex items-center justify-center group-hover:bg-[var(--brand-deep-blue)] transition-colors">
                         <svg
-                            className="w-4 h-4 text-[var(--brand-deep-blue)] dark:text-[var(--link-color)] group-hover:text-white transition-colors"
+                            className="w-4 h-4 text-[var(--brand-deep-blue)] group-hover:text-white transition-colors"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"

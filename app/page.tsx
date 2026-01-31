@@ -76,7 +76,7 @@ export default function Home() {
           <div className="flex justify-center mb-8 animate-fade-in">
             <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-xl">
               <Image
-                src="/Icon-White.svg"
+                src="/Icon.svg"
                 alt="ACAR Labs"
                 width={48}
                 height={48}
@@ -167,7 +167,7 @@ export default function Home() {
               <Link
                 key={service.id}
                 href={`/servicios?q=${encodeURIComponent(service.name)}`}
-                className="group flex flex-col items-center p-6 bg-white dark:bg-[var(--bg-surface)] rounded-2xl border border-[var(--border-color)] hover:border-[var(--btn-primary-bg)] transition-all hover:shadow-lg"
+                className="group flex flex-col items-center p-6 bg-white rounded-2xl border border-[var(--border-color)] hover:border-[var(--btn-primary-bg)] transition-all hover:shadow-lg"
               >
                 <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">
                   {service.icon}
@@ -222,7 +222,7 @@ export default function Home() {
               <Link
                 key={clinic.id}
                 href={`/clinicas/${clinic.id}`}
-                className="group block bg-white dark:bg-[var(--bg-surface)] rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--btn-primary-bg)] transition-all duration-300 hover:shadow-xl"
+                className="group block bg-white rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--btn-primary-bg)] transition-all duration-300 hover:shadow-xl"
               >
                 {/* Image Placeholder */}
                 <div className="relative h-40 bg-gradient-to-br from-[#003366] to-[#4A708B]">

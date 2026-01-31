@@ -31,14 +31,14 @@ export default function RegisterClinicPage() {
         reference: '',
         city: '',
         country: 'Ecuador',
-        plan_id: '' 
+        plan_id: ''
     });
 
     // Carga de planes usando 'auth_token' para coincidir con tu Login
     useEffect(() => {
         const fetchPlans = async () => {
             const token = localStorage.getItem('auth_token');
-            
+
             if (!token) {
                 setError("No se detectó sesión activa. Por favor, inicia sesión.");
                 setLoadingPlans(false);
@@ -59,7 +59,7 @@ export default function RegisterClinicPage() {
 
                 const data = await response.json();
                 const plansData = data.data || data;
-                
+
                 if (Array.isArray(plansData)) {
                     setAvailablePlans(plansData.filter((p: Plan) => p.is_active));
                 }
@@ -136,9 +136,9 @@ export default function RegisterClinicPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-[#0a1929] pt-24 pb-12 px-4">
+        <div className="min-h-screen bg-gray-50 pt-24 pb-12 px-4">
             <div className="max-w-4xl mx-auto">
-                
+
                 {/* Stepper */}
                 <div className="flex justify-center mb-8 gap-4 items-center font-semibold">
                     <span className={step === 1 ? "text-blue-600" : "text-gray-400"}>1. Datos de Clínica</span>
@@ -153,30 +153,30 @@ export default function RegisterClinicPage() {
                 )}
 
                 {step === 1 ? (
-                    <div className="bg-white dark:bg-[#1a2332] p-8 rounded-2xl shadow-xl space-y-6">
-                        <h2 className="text-2xl font-bold dark:text-white border-b pb-4">Información General</h2>
+                    <div className="bg-white p-8 rounded-2xl shadow-xl space-y-6">
+                        <h2 className="text-2xl font-bold border-b pb-4">Información General</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="space-y-2">
-                                <label className="text-sm font-medium dark:text-gray-300">Nombre de la Clínica</label>
-                                <input required name="name" value={formData.name} onChange={handleChange} placeholder="Ej: Clínica Central" className="w-full p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700" />
+                                <label className="text-sm font-medium">Nombre de la Clínica</label>
+                                <input required name="name" value={formData.name} onChange={handleChange} placeholder="Ej: Clínica Central" className="w-full p-3 border rounded-xl" />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium dark:text-gray-300">RUC</label>
-                                <input required name="ruc" value={formData.ruc} onChange={handleChange} placeholder="17XXXXXXXX001" className="w-full p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700" />
+                                <label className="text-sm font-medium">RUC</label>
+                                <input required name="ruc" value={formData.ruc} onChange={handleChange} placeholder="17XXXXXXXX001" className="w-full p-3 border rounded-xl" />
                             </div>
                         </div>
 
-                        <h2 className="text-2xl font-bold dark:text-white border-b pb-4 pt-4">Ubicación Detallada</h2>
+                        <h2 className="text-2xl font-bold border-b pb-4 pt-4">Ubicación Detallada</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <input required name="province" placeholder="Provincia" value={formData.province} onChange={handleChange} className="p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700" />
-                            <input required name="canton" placeholder="Cantón" value={formData.canton} onChange={handleChange} className="p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700" />
-                            <input required name="parish" placeholder="Parroquia" value={formData.parish} onChange={handleChange} className="p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700" />
-                            <input required name="city" placeholder="Ciudad" value={formData.city} onChange={handleChange} className="p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700" />
-                            <input required name="street" placeholder="Calle Principal y Nro" value={formData.street} onChange={handleChange} className="p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700 md:col-span-2" />
-                            <input name="reference" placeholder="Referencia (Ej: Junto al parque)" value={formData.reference} onChange={handleChange} className="p-3 border rounded-xl dark:bg-gray-800 dark:text-white dark:border-gray-700 md:col-span-3" />
+                            <input required name="province" placeholder="Provincia" value={formData.province} onChange={handleChange} className="p-3 border rounded-xl" />
+                            <input required name="canton" placeholder="Cantón" value={formData.canton} onChange={handleChange} className="p-3 border rounded-xl" />
+                            <input required name="parish" placeholder="Parroquia" value={formData.parish} onChange={handleChange} className="p-3 border rounded-xl" />
+                            <input required name="city" placeholder="Ciudad" value={formData.city} onChange={handleChange} className="p-3 border rounded-xl" />
+                            <input required name="street" placeholder="Calle Principal y Nro" value={formData.street} onChange={handleChange} className="p-3 border rounded-xl md:col-span-2" />
+                            <input name="reference" placeholder="Referencia (Ej: Junto al parque)" value={formData.reference} onChange={handleChange} className="p-3 border rounded-xl md:col-span-3" />
                         </div>
-                        
-                        <button 
+
+                        <button
                             onClick={() => setStep(2)}
                             className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-lg transition-all"
                         >
@@ -186,19 +186,19 @@ export default function RegisterClinicPage() {
                 ) : (
                     <div className="space-y-8">
                         {loadingPlans ? (
-                            <div className="text-center py-10 dark:text-white animate-pulse">Cargando planes...</div>
+                            <div className="text-center py-10 animate-pulse">Cargando planes...</div>
                         ) : (
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 {availablePlans.map((plan) => (
                                     <div
                                         key={plan.id}
                                         onClick={() => setFormData({ ...formData, plan_id: plan.id.toString() })}
-                                        className={`p-6 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center ${formData.plan_id === plan.id.toString() ? 'border-blue-600 bg-blue-50 dark:bg-blue-900/30 ring-2 ring-blue-500' : 'border-gray-200 bg-white dark:bg-[#1a2332] dark:border-gray-700'}`}
+                                        className={`p-6 rounded-2xl border-2 transition-all cursor-pointer flex flex-col items-center ${formData.plan_id === plan.id.toString() ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-500' : 'border-gray-200 bg-white'}`}
                                     >
-                                        <h3 className="text-lg font-bold dark:text-white mb-2">{plan.name}</h3>
-                                        <p className="text-3xl font-black text-blue-600 dark:text-blue-400">${plan.price}</p>
+                                        <h3 className="text-lg font-bold mb-2">{plan.name}</h3>
+                                        <p className="text-3xl font-black text-blue-600">${plan.price}</p>
                                         <p className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mb-4">{plan.billing_cycle}</p>
-                                        <div className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                                        <div className="text-xs text-gray-500 text-center">
                                             {plan.features.slice(0, 3).map((f, i) => <p key={i}>• {f}</p>)}
                                         </div>
                                     </div>
@@ -207,7 +207,7 @@ export default function RegisterClinicPage() {
                         )}
 
                         <div className="flex gap-4">
-                            <button onClick={() => setStep(1)} className="flex-1 py-4 bg-gray-200 dark:bg-gray-700 dark:text-white font-bold rounded-xl transition-all">Volver</button>
+                            <button onClick={() => setStep(1)} className="flex-1 py-4 bg-gray-200 font-bold rounded-xl transition-all">Volver</button>
                             <button
                                 onClick={handleSubmit}
                                 disabled={loading || !formData.plan_id}

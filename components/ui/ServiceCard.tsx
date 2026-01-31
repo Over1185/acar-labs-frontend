@@ -17,7 +17,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
     return (
         <Link
             href={`/servicios/${service.id}`}
-            className="group block bg-white dark:bg-[var(--bg-surface)] rounded-xl p-5 border border-[var(--border-color)] hover:border-[var(--brand-deep-blue)] dark:hover:border-[var(--brand-slate-blue)] transition-all duration-300 hover:shadow-lg hover:shadow-[var(--brand-deep-blue)]/5"
+            className="group block bg-white rounded-xl p-5 border border-[var(--border-color)] hover:border-[var(--brand-deep-blue)] transition-all duration-300 hover:shadow-lg hover:shadow-[var(--brand-deep-blue)]/5"
         >
             {/* Icon */}
             <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[var(--brand-deep-blue)] to-[var(--brand-slate-blue)] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
@@ -37,7 +37,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
             </div>
 
             {/* Content */}
-            <h3 className="text-base font-bold text-[var(--text-heading)] group-hover:text-[var(--brand-deep-blue)] dark:group-hover:text-[var(--link-color)] transition-colors">
+            <h3 className="text-base font-bold text-[var(--text-heading)] group-hover:text-[var(--brand-deep-blue)] transition-colors">
                 {service.name}
             </h3>
 
@@ -66,7 +66,7 @@ export default function ServiceCard({ service }: ServiceCardProps) {
                     <span>{service.estimated_time || 'No especificado'}</span>
                 </div>
 
-                <span className="text-lg font-bold text-[var(--brand-deep-blue)] dark:text-[var(--link-color)]">
+                <span className="text-lg font-bold text-[var(--brand-deep-blue)]">
                     ${service.price.toFixed(2)}
                 </span>
             </div>

@@ -59,8 +59,8 @@ export default function ServiciosPage() {
     }, [searchTerm, priceFilter, services]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 dark:from-[#0a1929] dark:to-[#1a2332]">
-            <section className="relative bg-gradient-to-br from-[#003366] to-[#00509e] dark:from-[#0a1929] dark:to-[#1a2332] pt-24 pb-16 md:pt-32 md:pb-20">
+        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
+            <section className="relative bg-gradient-to-br from-[#003366] to-[#00509e] pt-24 pb-16 md:pt-32 md:pb-20">
                 <div className="absolute inset-0 opacity-10">
                     <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                         <pattern id="services-pattern" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -85,7 +85,7 @@ export default function ServiciosPage() {
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 placeholder="Buscar servicios médicos..."
-                                className="w-full px-6 py-4 pl-14 rounded-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-xl"
+                                className="w-full px-6 py-4 pl-14 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-xl"
                             />
                             <svg
                                 className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400"
@@ -109,7 +109,7 @@ export default function ServiciosPage() {
                 <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                     <div className="flex items-center gap-2">
                         <svg
-                            className="w-5 h-5 text-gray-600 dark:text-gray-400"
+                            className="w-5 h-5 text-gray-600"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -121,7 +121,7 @@ export default function ServiciosPage() {
                                 d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
                             />
                         </svg>
-                        <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                        <span className="text-sm font-medium text-gray-700">
                             Filtrar por precio:
                         </span>
                     </div>
@@ -130,8 +130,8 @@ export default function ServiciosPage() {
                         <button
                             onClick={() => setPriceFilter('all')}
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'all'
-                                    ? 'bg-[#003366] dark:bg-blue-600 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                                ? 'bg-[#003366] text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                 }`}
                         >
                             Todos
@@ -139,8 +139,8 @@ export default function ServiciosPage() {
                         <button
                             onClick={() => setPriceFilter('low')}
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'low'
-                                    ? 'bg-[#003366] dark:bg-blue-600 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                                ? 'bg-[#003366] text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                 }`}
                         >
                             Menos de $50
@@ -148,8 +148,8 @@ export default function ServiciosPage() {
                         <button
                             onClick={() => setPriceFilter('medium')}
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'medium'
-                                    ? 'bg-[#003366] dark:bg-blue-600 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                                ? 'bg-[#003366] text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                 }`}
                         >
                             $50 - $150
@@ -157,8 +157,8 @@ export default function ServiciosPage() {
                         <button
                             onClick={() => setPriceFilter('high')}
                             className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'high'
-                                    ? 'bg-[#003366] dark:bg-blue-600 text-white'
-                                    : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
+                                ? 'bg-[#003366] text-white'
+                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                                 }`}
                         >
                             Más de $150
@@ -167,13 +167,13 @@ export default function ServiciosPage() {
                 </div>
 
                 <div className="mb-6">
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-sm text-gray-600">
                         {loading ? (
                             'Cargando servicios...'
                         ) : (
                             <>
                                 Mostrando{' '}
-                                <span className="font-semibold text-[#003366] dark:text-blue-400">
+                                <span className="font-semibold text-[#003366]">
                                     {filteredServices.length}
                                 </span>{' '}
                                 {filteredServices.length === 1 ? 'servicio' : 'servicios'}
@@ -185,12 +185,12 @@ export default function ServiciosPage() {
 
                 {loading && (
                     <div className="flex items-center justify-center py-20">
-                        <div className="w-16 h-16 border-4 border-[#003366]/20 border-t-[#003366] dark:border-blue-500/20 dark:border-t-blue-500 rounded-full animate-spin"></div>
+                        <div className="w-16 h-16 border-4 border-[#003366]/20 border-t-[#003366] rounded-full animate-spin"></div>
                     </div>
                 )}
 
                 {error && (
-                    <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-6 text-center">
+                    <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center">
                         <svg
                             className="w-12 h-12 text-red-500 mx-auto mb-3"
                             fill="none"
@@ -204,17 +204,17 @@ export default function ServiciosPage() {
                                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                             />
                         </svg>
-                        <h3 className="text-lg font-semibold text-red-800 dark:text-red-300 mb-2">
+                        <h3 className="text-lg font-semibold text-red-800 mb-2">
                             Error al cargar los servicios
                         </h3>
-                        <p className="text-red-600 dark:text-red-400">{error}</p>
+                        <p className="text-red-600">{error}</p>
                     </div>
                 )}
 
                 {!loading && !error && filteredServices.length === 0 && (
                     <div className="text-center py-20">
                         <svg
-                            className="w-20 h-20 text-gray-400 dark:text-gray-600 mx-auto mb-4"
+                            className="w-20 h-20 text-gray-400 mx-auto mb-4"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -226,10 +226,10 @@ export default function ServiciosPage() {
                                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                             />
                         </svg>
-                        <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                        <h3 className="text-xl font-semibold text-gray-700 mb-2">
                             No se encontraron servicios
                         </h3>
-                        <p className="text-gray-600 dark:text-gray-400">
+                        <p className="text-gray-600">
                             {searchTerm || priceFilter !== 'all'
                                 ? 'Intenta ajustar los filtros de búsqueda'
                                 : 'Aún no hay servicios disponibles'}

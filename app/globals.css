@@ -30,10 +30,11 @@
   --bg-surface-hover: #F1F5F9;
   /* Hover state */
 
-  --text-main: #334155;
-  /* Gris azulado oscuro */
-  --text-secondary: #64748B;
-  /* Gris azulado medio */
+  /* Colores mejorados para legibilidad */
+  --text-main: #0F172A;
+  /* Slate 900 - Casi negro */
+  --text-secondary: #334155;
+  /* Slate 700 - Gris oscuro */
   --text-heading: #003366;
   /* Azul Marino (color logo) */
 
@@ -66,52 +67,7 @@
   --primary: var(--brand-deep-blue);
 }
 
-/* ========== DARK MODE ========== */
-[data-theme="dark"],
-.dark {
-  --bg-page: #0A0A0A;
-  /* Negro profundo */
-  --bg-surface: #1A1A1A;
-  /* Gris muy oscuro */
-  --bg-surface-hover: #252525;
-  /* Hover state */
 
-  --text-main: #E5E7EB;
-  /* Gris muy claro */
-  --text-secondary: #9CA3AF;
-  /* Gris medio */
-  --text-heading: #FFFFFF;
-  /* Blanco puro (como logo) */
-
-  --border-color: #2A2A2A;
-  /* Bordes oscuros */
-  --border-hover: #3F3F3F;
-  /* Bordes hover */
-
-  --btn-primary-bg: #A7C7E7;
-  /* Azul Hielo (logo oscuro) */
-  --btn-primary-hover: #8FB5D9;
-  /* Hover más intenso */
-  --btn-secondary-bg: #4A708B;
-  /* Azul pizarra */
-  --btn-secondary-hover: #5A80A0;
-  /* Hover secundario */
-  --btn-text: #0A0A0A;
-  /* Texto oscuro en botones claros */
-
-  --link-color: #A7C7E7;
-  /* Links azul hielo */
-  --link-hover: #FFFFFF;
-
-  --shadow-sm: rgba(0, 0, 0, 0.2);
-  --shadow-md: rgba(0, 0, 0, 0.3);
-  --shadow-lg: rgba(0, 0, 0, 0.4);
-
-  /* Variables compatibilidad */
-  --background: var(--bg-page);
-  --foreground: var(--text-main);
-  --primary: var(--brand-ice-blue);
-}
 
 @theme inline {
   --color-background: var(--background);
@@ -145,10 +101,7 @@
   color: #FFFFFF;
 }
 
-.dark ::selection {
-  background-color: #A7C7E7;
-  color: #0A0A0A;
-}
+
 
 /* Smooth scrolling */
 html {
