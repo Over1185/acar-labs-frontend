@@ -240,9 +240,7 @@ export default function ClinicDetailsPage() {
                         onClick={() => setSidebarOpen(!sidebarOpen)}
                         className="w-full flex items-center justify-center p-3 rounded-lg bg-[#003366] hover:bg-[#00509e] text-white transition-colors"
                     >
-                        <svg className={`w-6 h-6 transition-transform ${sidebarOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                        </svg>
+                        <svg fill="none" stroke="currentColor" className={`w-6 h-6 transition-transform ${sidebarOpen ? 'rotate-180' : ''}`} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m15 19-7-7 7-7" strokeWidth={2} /></svg>
                     </button>
                 </div>
 
