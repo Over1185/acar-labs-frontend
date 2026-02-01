@@ -37,7 +37,7 @@ export default function ContactoPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-semibold text-gray-900">Oficina Principal</h4>
-                                        <p className="text-gray-600 mt-1">Av. Amazonas y Naciones Unidas<br />Quito, Ecuador</p>
+                                        <p className="text-gray-600 mt-1">Eugenio Espejo y Colon<br />Esmeraldas, Ecuador</p>
                                     </div>
                                 </div>
 
@@ -49,7 +49,7 @@ export default function ContactoPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-semibold text-gray-900">Email</h4>
-                                        <p className="text-gray-600 mt-1">contacto@acarlabs.com</p>
+                                        <p className="text-gray-600 mt-1">info@acarlabs.com</p>
                                         <p className="text-gray-600">soporte@acarlabs.com</p>
                                     </div>
                                 </div>
@@ -62,8 +62,8 @@ export default function ContactoPage() {
                                     </div>
                                     <div>
                                         <h4 className="font-semibold text-gray-900">Teléfono</h4>
-                                        <p className="text-gray-600 mt-1">+593 2 123 4567</p>
-                                        <p className="text-gray-600">099 123 4567</p>
+                                        <p className="text-gray-600 mt-1">+593 95 985 9969</p>
+                                        <p className="text-gray-600">+593 98 863 3917</p>
                                     </div>
                                 </div>
                             </div>

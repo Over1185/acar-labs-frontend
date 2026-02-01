@@ -19,7 +19,7 @@ export default function PrivacidadPage() {
                         <section>
                             <h2 className="text-xl font-bold text-gray-900 mb-3">1. Introducción</h2>
                             <p>
-                                En ACAR Labs ("nosotros", "nuestro"), respetamos su privacidad y estamos comprometidos con la protección de sus datos personales. Esta política de privacidad le informará sobre cómo cuidamos sus datos personales cuando visita nuestro sitio web o utiliza nuestros servicios de gestión de citas médicas.
+                                En ACAR Labs (&quot;nosotros&quot;, &quot;nuestro&quot;), respetamos su privacidad y estamos comprometidos con la protección de sus datos personales. Esta política de privacidad le informará sobre cómo cuidamos sus datos personales cuando visita nuestro sitio web o utiliza nuestros servicios de gestión de citas médicas.
                             </p>
                         </section>
 
@@ -66,7 +66,7 @@ export default function PrivacidadPage() {
                         <section>
                             <h2 className="text-xl font-bold text-gray-900 mb-3">6. Contacto</h2>
                             <p>
-                                Si tiene alguna pregunta sobre esta política de privacidad o nuestras prácticas de privacidad, por favor contáctenos a través de nuestro formulario de contacto o enviando un correo a privacidad@acarlabs.com.
+                                Si tiene alguna pregunta sobre esta política de privacidad o nuestras prácticas de privacidad, por favor contáctenos a través de nuestro formulario de contacto o enviando un correo a info@acarlabs.com.
                             </p>
                         </section>
                     </div>

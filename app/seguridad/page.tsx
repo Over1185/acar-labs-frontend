@@ -61,7 +61,7 @@ export default function SeguridadPage() {
                         <section>
                             <h2 className="text-xl font-bold text-gray-900 mb-3">5. Reporte de Vulnerabilidades</h2>
                             <p>
-                                Si usted es un investigador de seguridad o un usuario y cree que ha encontrado una vulnerabilidad de seguridad en nuestra plataforma, le agradecemos que nos lo notifique de inmediato. Por favor, envíe un correo electrónico a seguridad@acarlabs.com con los detalles del problema. Revisaremos su informe y tomaremos las medidas necesarias para abordar cualquier problema legítimo.
+                                Si usted es un investigador de seguridad o un usuario y cree que ha encontrado una vulnerabilidad de seguridad en nuestra plataforma, le agradecemos que nos lo notifique de inmediato. Por favor, envíe un correo electrónico a soporte@acarlabs.com con los detalles del problema. Revisaremos su informe y tomaremos las medidas necesarias para abordar cualquier problema legítimo.
                             </p>
                         </section>
 
