@@ -1,250 +1,181 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import ServiceCard from '@/components/ui/ServiceCard';
 
 export default function ServiciosPage() {
     const [services, setServices] = useState<Array<any>>([]);
-    const [filteredServices, setFilteredServices] = useState<Array<any>>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    
     const [searchTerm, setSearchTerm] = useState('');
-    const [priceFilter, setPriceFilter] = useState<'all' | 'low' | 'medium' | 'high'>('all');
+    const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
+    const [selectedExams, setSelectedExams] = useState<string[]>([]);
+    
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
 
     useEffect(() => {
         const fetchServices = async () => {
             try {
                 setLoading(true);
-                const response = await fetch('/api/services');
+                const response = await fetch(`${API_URL}/public/clinics`);
+                if (!response.ok) throw new Error('Error al obtener datos');
+                
+                const res = await response.json();
+                const clinics = res.data || [];
 
-                if (!response.ok) {
-                    throw new Error('Error al cargar los servicios');
-                }
-
-                const data = await response.json();
-                setServices(data.services || []);
-                setFilteredServices(data.services || []);
+                // AJUSTE AQUÍ: Mapeamos el clinic_id para que llegue al ServiceCard
+                const allServices = clinics.flatMap((clinic: any) => 
+                    (clinic.services || []).map((s: any) => ({
+                        ...s,
+                        clinic_name: clinic.name,
+                        clinic_id: clinic.id, // <--- ESTO ES LO QUE FALTABA
+                        cleanName: s.name.trim()
+                    }))
+                );
+                setServices(allServices);
             } catch (err) {
-                setError(err instanceof Error ? err.message : 'Error desconocido');
+                setError("No se pudieron cargar los servicios médicos.");
             } finally {
                 setLoading(false);
             }
         };
+        if (API_URL) fetchServices();
+    }, [API_URL]);
 
-        fetchServices();
-    }, []);
+    const examTypes = useMemo(() => {
+        const names = services.map(s => s.cleanName);
+        return Array.from(new Set(names)).sort();
+    }, [services]);
 
-    useEffect(() => {
-        let filtered = services;
+    const filteredServices = useMemo(() => {
+        return services.filter(service => {
+            const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesExams = selectedExams.length === 0 || selectedExams.includes(service.cleanName);
 
-        if (searchTerm) {
-            filtered = filtered.filter(
-                service =>
-                    service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    service.description.toLowerCase().includes(searchTerm.toLowerCase())
-            );
-        }
+            const price = parseFloat(service.price);
+            let matchesPrice = true;
+            if (selectedPrice === 'low') matchesPrice = price < 50;
+            if (selectedPrice === 'medium') matchesPrice = price >= 50 && price < 150;
+            if (selectedPrice === 'high') matchesPrice = price >= 150;
 
-        if (priceFilter !== 'all') {
-            filtered = filtered.filter(service => {
-                const price = service.price;
-                if (priceFilter === 'low') return price < 50;
-                if (priceFilter === 'medium') return price >= 50 && price < 150;
-                if (priceFilter === 'high') return price >= 150;
-                return true;
-            });
-        }
+            return matchesSearch && matchesExams && matchesPrice;
+        });
+    }, [services, searchTerm, selectedExams, selectedPrice]);
 
-        setFilteredServices(filtered);
-    }, [searchTerm, priceFilter, services]);
+    const toggleExam = (examName: string) => {
+        setSelectedExams(prev => 
+            prev.includes(examName) ? prev.filter(e => e !== examName) : [...prev, examName]
+        );
+    };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
-            <section className="relative bg-gradient-to-br from-[#003366] to-[#00509e] pt-24 pb-16 md:pt-32 md:pb-20">
-                <div className="absolute inset-0 opacity-10">
-                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <pattern id="services-pattern" width="10" height="10" patternUnits="userSpaceOnUse">
-                            <path d="M 0 5 Q 2.5 3 5 5 T 10 5" fill="none" stroke="white" strokeWidth="0.5" />
-                        </pattern>
-                        <rect width="100" height="100" fill="url(#services-pattern)" />
-                    </svg>
+        <div className="min-h-screen bg-gray-50 pb-20">
+            <header className="bg-[#003366] pt-24 pb-12 px-4 text-center">
+                <h1 className="text-3xl font-bold text-white mb-6 tracking-tight">Servicios Médicos Disponibles</h1>
+                <div className="max-w-2xl mx-auto">
+                    <input
+                        type="text"
+                        placeholder="Buscar por nombre de examen..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full p-4 rounded-2xl shadow-lg outline-none text-gray-800 focus:ring-2 focus:ring-blue-400"
+                    />
                 </div>
+            </header>
 
-                <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                        Nuestros Servicios
-                    </h1>
-                    <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
-                        Ofrecemos una amplia gama de servicios médicos de alta calidad para cuidar tu salud y la de tu familia
-                    </p>
-
-                    <div className="max-w-2xl mx-auto">
-                        <div className="relative">
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                placeholder="Buscar servicios médicos..."
-                                className="w-full px-6 py-4 pl-14 rounded-full bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 shadow-xl"
-                            />
-                            <svg
-                                className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                                />
+            <main className="max-w-7xl mx-auto px-4 mt-8 flex flex-col lg:flex-row gap-8">
+                <aside className="w-full lg:w-72 shrink-0 space-y-6">
+                    <div className="flex flex-col" ref={dropdownRef}>
+                        <h3 className="font-bold text-[#003366] mb-2 text-lg">Tipo de Examen</h3>
+                        <button 
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                            className="w-full p-3 bg-white border border-gray-200 rounded-xl text-sm shadow-sm flex justify-between items-center hover:border-blue-400 transition-all"
+                        >
+                            <span className="text-gray-600 truncate">
+                                {selectedExams.length === 0 ? "Seleccionar exámenes" : `${selectedExams.length} seleccionados`}
+                            </span>
+                            <svg className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
-                        </div>
-                    </div>
-                </div>
-            </section>
+                        </button>
 
-            <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <div className="mb-8 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                    <div className="flex items-center gap-2">
-                        <svg
-                            className="w-5 h-5 text-gray-600"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-                            />
-                        </svg>
-                        <span className="text-sm font-medium text-gray-700">
-                            Filtrar por precio:
-                        </span>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3">
-                        <button
-                            onClick={() => setPriceFilter('all')}
-                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'all'
-                                ? 'bg-[#003366] text-white'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                }`}
-                        >
-                            Todos
-                        </button>
-                        <button
-                            onClick={() => setPriceFilter('low')}
-                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'low'
-                                ? 'bg-[#003366] text-white'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                }`}
-                        >
-                            Menos de $50
-                        </button>
-                        <button
-                            onClick={() => setPriceFilter('medium')}
-                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'medium'
-                                ? 'bg-[#003366] text-white'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                }`}
-                        >
-                            $50 - $150
-                        </button>
-                        <button
-                            onClick={() => setPriceFilter('high')}
-                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${priceFilter === 'high'
-                                ? 'bg-[#003366] text-white'
-                                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                }`}
-                        >
-                            Más de $150
-                        </button>
-                    </div>
-                </div>
-
-                <div className="mb-6">
-                    <p className="text-sm text-gray-600">
-                        {loading ? (
-                            'Cargando servicios...'
-                        ) : (
-                            <>
-                                Mostrando{' '}
-                                <span className="font-semibold text-[#003366]">
-                                    {filteredServices.length}
-                                </span>{' '}
-                                {filteredServices.length === 1 ? 'servicio' : 'servicios'}
-                                {(searchTerm || priceFilter !== 'all') && <> de {services.length} totales</>}
-                            </>
+                        {isDropdownOpen && (
+                            <div className="relative mt-2 bg-white border border-gray-100 rounded-xl shadow-inner max-h-60 overflow-y-auto p-2 space-y-1">
+                                {examTypes.map(exam => (
+                                    <label key={exam} className="flex items-center gap-3 p-2 rounded-lg hover:bg-blue-50 cursor-pointer group">
+                                        <input 
+                                            type="checkbox"
+                                            checked={selectedExams.includes(exam)}
+                                            onChange={() => toggleExam(exam)}
+                                            className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                        />
+                                        <span className={`text-sm ${selectedExams.includes(exam) ? 'font-bold text-blue-600' : 'text-gray-600 group-hover:text-blue-500'}`}>
+                                            {exam}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
                         )}
-                    </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-gray-100 mt-4">
+                        <h3 className="font-bold text-[#003366] mb-2 text-lg">Rango de Precio</h3>
+                        <select 
+                            value={selectedPrice || ''} 
+                            onChange={(e) => setSelectedPrice(e.target.value || null)}
+                            className="w-full p-3 bg-white border border-gray-200 rounded-xl text-sm shadow-sm outline-none cursor-pointer hover:border-blue-400 transition-colors"
+                        >
+                            <option value="">Cualquier precio</option>
+                            <option value="low">Menos de $50</option>
+                            <option value="medium">$50 - $150</option>
+                            <option value="high">Más de $150</option>
+                        </select>
+                    </div>
+                </aside>
+
+                <div className="flex-1">
+                    {(selectedExams.length > 0 || selectedPrice) && (
+                        <div className="mb-6 flex flex-wrap gap-2 items-center">
+                            {selectedExams.map(exam => (
+                                <button key={exam} onClick={() => toggleExam(exam)} className="bg-blue-50 text-blue-600 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-red-50 transition-colors">
+                                    {exam} <span>✕</span>
+                                </button>
+                            ))}
+                            {selectedPrice && (
+                                <button onClick={() => setSelectedPrice(null)} className="bg-green-50 text-green-700 px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-red-50 transition-colors">
+                                    Precio <span>✕</span>
+                                </button>
+                            )}
+                        </div>
+                    )}
+
+                    {loading ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 animate-pulse">
+                            {[1, 2, 3].map(i => <div key={i} className="h-48 bg-gray-200 rounded-2xl" />)}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                            {filteredServices.map((service, idx) => (
+                                <ServiceCard key={`${service.id}-${idx}`} service={service} />
+                            ))}
+                        </div>
+                    )}
                 </div>
-
-                {loading && (
-                    <div className="flex items-center justify-center py-20">
-                        <div className="w-16 h-16 border-4 border-[#003366]/20 border-t-[#003366] rounded-full animate-spin"></div>
-                    </div>
-                )}
-
-                {error && (
-                    <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center">
-                        <svg
-                            className="w-12 h-12 text-red-500 mx-auto mb-3"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                            />
-                        </svg>
-                        <h3 className="text-lg font-semibold text-red-800 mb-2">
-                            Error al cargar los servicios
-                        </h3>
-                        <p className="text-red-600">{error}</p>
-                    </div>
-                )}
-
-                {!loading && !error && filteredServices.length === 0 && (
-                    <div className="text-center py-20">
-                        <svg
-                            className="w-20 h-20 text-gray-400 mx-auto mb-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={1.5}
-                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                            />
-                        </svg>
-                        <h3 className="text-xl font-semibold text-gray-700 mb-2">
-                            No se encontraron servicios
-                        </h3>
-                        <p className="text-gray-600">
-                            {searchTerm || priceFilter !== 'all'
-                                ? 'Intenta ajustar los filtros de búsqueda'
-                                : 'Aún no hay servicios disponibles'}
-                        </p>
-                    </div>
-                )}
-
-                {!loading && !error && filteredServices.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredServices.map((service) => (
-                            <ServiceCard key={service.id} service={service} />
-                        ))}
-                    </div>
-                )}
-            </section>
+            </main>
         </div>
     );
 }
