@@ -1,16 +1,17 @@
+import Link from 'next/link';
+import Image from 'next/image';
+
 export default function NosotrosPage() {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
             <section className="relative bg-gradient-to-br from-[#003366] to-[#00509e] pt-24 pb-16 md:pt-32 md:pb-20">
-                <div className="absolute inset-0 opacity-10">
-                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                        <defs>
-                            <pattern id="about-pattern" width="20" height="20" patternUnits="userSpaceOnUse">
-                                <circle cx="10" cy="10" r="2" fill="white" />
-                            </pattern>
-                        </defs>
-                        <rect width="100" height="100" fill="url(#about-pattern)" />
-                    </svg>
+                <div className="absolute inset-0 opacity-25">
+                    <Image
+                        src="/images/about-me/Banner.avif"
+                        alt="Decorative background"
+                        fill
+                        className="object-cover"
+                    />
                 </div>
 
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -127,24 +128,24 @@ export default function NosotrosPage() {
             <section className="bg-gradient-to-br from-[#003366] to-[#00509e] py-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-                        Desarrollado por ACAR Studio
+                        Desarrollado por ACAR
                     </h2>
                     <p className="text-xl text-white/90 max-w-3xl mx-auto mb-8">
                         Un equipo apasionado por crear soluciones tecnológicas que mejoran la vida de las personas
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <a
+                        <Link
                             href="/contacto"
                             className="inline-flex items-center justify-center px-8 py-3 bg-white text-[#003366] font-semibold rounded-full hover:bg-gray-100 transition-all shadow-lg"
                         >
                             Contáctanos
-                        </a>
-                        <a
+                        </Link>
+                        <Link
                             href="/clinicas"
                             className="inline-flex items-center justify-center px-8 py-3 border-2 border-white text-white font-semibold rounded-full hover:bg-white hover:text-[#003366] transition-all"
                         >
                             Ver Clínicas
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>

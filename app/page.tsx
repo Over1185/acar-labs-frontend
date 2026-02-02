@@ -55,8 +55,13 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#003366] via-[#004C7F] to-[#4A708B]">
         {/* Decorative Pattern */}
-        <div className="absolute inset-0 opacity-[0.07]">
-          <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><defs><pattern id="hero-grid" width="10" height="10" patternUnits="userSpaceOnUse"><path fill="none" stroke="#fff" strokeWidth=".5" d="M10 0H0v10"/></pattern></defs><path fill="url(#hero-grid)" d="M0 0h100v100H0z"/></svg>
+        <div className="absolute inset-0 opacity-[0.5]">
+          <Image
+            src="/images/main/Banner.avif"
+            alt="Decorative pattern"
+            fill
+            className="object-cover"
+          />
         </div>
 
         {/* Decorative Circles */}
@@ -109,7 +114,7 @@ export default function Home() {
 
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg fill="none" stroke="currentColor" className="w-6 h-6 text-white/60" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m19 14-7 7m0 0-7-7m7 7V3" strokeWidth={2}/></svg>
+          <svg fill="none" stroke="currentColor" className="w-6 h-6 text-white/60" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m19 14-7 7m0 0-7-7m7 7V3" strokeWidth={2} /></svg>
         </div>
       </section>
 
@@ -182,7 +187,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-medium text-[var(--link-color)] border border-[var(--link-color)] rounded-full hover:bg-[var(--btn-primary-bg)] hover:text-[var(--btn-text)] hover:border-[var(--btn-primary-bg)] transition-all"
             >
               Ver todas
-              <svg fill="none" stroke="currentColor" className="w-4 h-4" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 7 7-7 7" strokeWidth={2}/></svg>
+              <svg fill="none" stroke="currentColor" className="w-4 h-4" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 7 7-7 7" strokeWidth={2} /></svg>
             </Link>
           </div>
 
@@ -197,7 +202,7 @@ export default function Home() {
                 <div className="relative h-40 bg-gradient-to-br from-[#003366] to-[#4A708B]">
                   {/* Decorative Pattern */}
                   <div className="absolute inset-0 opacity-[0.08]">
-                    <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M0 0h100v100H0z" fill={`url(#grid-${clinic.id})`}/></svg>
+                    <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M0 0h100v100H0z" fill={`url(#grid-${clinic.id})`} /></svg>
                   </div>
 
                   {/* Medical Cross Icon */}
@@ -217,7 +222,7 @@ export default function Home() {
                   {index === 0 && (
                     <div className="absolute top-4 left-4">
                       <span className="inline-flex items-center gap-1 px-3 py-1 bg-[var(--status-success)] text-white text-xs font-semibold rounded-full">
-                        <svg fill="currentColor" className="w-3 h-3" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z"/></svg>
+                        <svg fill="currentColor" className="w-3 h-3" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 0 0 .95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 0 0-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 0 0-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 0 0-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 0 0 .951-.69l1.07-3.292z" /></svg>
                         Destacado
                       </span>
                     </div>
@@ -232,7 +237,7 @@ export default function Home() {
 
                   {/* Location */}
                   <div className="flex items-center gap-2 mt-2 text-sm text-[var(--text-secondary)]">
-                    <svg fill="none" stroke="currentColor" className="w-4 h-4 shrink-0 text-[var(--btn-secondary-bg)]" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657 13.414 20.9a2 2 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0" strokeWidth={2}/><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0" strokeWidth={2}/></svg>
+                    <svg fill="none" stroke="currentColor" className="w-4 h-4 shrink-0 text-[var(--btn-secondary-bg)]" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657 13.414 20.9a2 2 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0" strokeWidth={2} /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0" strokeWidth={2} /></svg>
                     <span className="line-clamp-1">
                       {clinic.address.city}, {clinic.address.province}
                     </span>
@@ -244,7 +249,7 @@ export default function Home() {
                       Ver servicios
                     </span>
                     <div className="w-8 h-8 rounded-full bg-[var(--bg-surface)] flex items-center justify-center group-hover:bg-[var(--btn-primary-bg)] transition-colors">
-                      <svg fill="none" stroke="currentColor" className="w-4 h-4 text-[var(--link-color)] group-hover:text-white transition-colors" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 7 7-7 7" strokeWidth={2}/></svg>
+                      <svg fill="none" stroke="currentColor" className="w-4 h-4 text-[var(--link-color)] group-hover:text-white transition-colors" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m9 5 7 7-7 7" strokeWidth={2} /></svg>
                     </div>
                   </div>
                 </div>
@@ -269,21 +274,21 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <FeatureCard
               icon={
-                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0" strokeWidth={2}/></svg>
+                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-6-6m2-5a7 7 0 1 1-14 0 7 7 0 0 1 14 0" strokeWidth={2} /></svg>
               }
               title="Búsqueda Inteligente"
               description="Encuentra clínicas, hospitales y laboratorios cerca de ti con filtros avanzados por especialidad, ubicación y disponibilidad."
             />
             <FeatureCard
               icon={
-                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2" strokeWidth={2}/></svg>
+                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2" strokeWidth={2} /></svg>
               }
               title="Agenda en Segundos"
               description="Reserva tu cita en pocos clics. Visualiza horarios disponibles en tiempo real y recibe confirmación instantánea."
             />
             <FeatureCard
               icon={
-                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m9 12 2 2 4-4m5.618-4.016A11.96 11.96 0 0 1 12 2.944a11.96 11.96 0 0 1-8.618 3.04A12 12 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016" strokeWidth={2}/></svg>
+                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m9 12 2 2 4-4m5.618-4.016A11.96 11.96 0 0 1 12 2.944a11.96 11.96 0 0 1-8.618 3.04A12 12 0 0 0 3 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016" strokeWidth={2} /></svg>
               }
               title="100% Seguro"
               description="Tu información personal y médica está protegida con los más altos estándares de seguridad y encriptación."
@@ -299,14 +304,14 @@ export default function Home() {
             />
             <FeatureCard
               icon={
-                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4" strokeWidth={2}/></svg>
+                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9 2 2 4-4" strokeWidth={2} /></svg>
               }
               title="Historial Digital"
               description="Accede a tu historial de citas y resultados de laboratorio desde cualquier dispositivo, en cualquier momento."
             />
             <FeatureCard
               icon={
-                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a2 2 0 0 1-1.414-.586m0 0L11 14h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v4z" strokeWidth={2}/></svg>
+                <svg fill="none" stroke="currentColor" className="w-7 h-7" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 8h2a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2v4l-4-4H9a2 2 0 0 1-1.414-.586m0 0L11 14h4a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2v4z" strokeWidth={2} /></svg>
               }
               title="Soporte 24/7"
               description="Nuestro equipo está disponible las 24 horas para ayudarte con cualquier duda o inconveniente que tengas."
@@ -335,7 +340,7 @@ export default function Home() {
               className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-[#003366] font-semibold rounded-full hover:bg-white/95 transition-all shadow-lg hover:shadow-xl"
             >
               Crear cuenta gratis
-              <svg fill="none" stroke="currentColor" className="w-5 h-5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m13 7 5 5m0 0-5 5m5-5H6" strokeWidth={2}/></svg>
+              <svg fill="none" stroke="currentColor" className="w-5 h-5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m13 7 5 5m0 0-5 5m5-5H6" strokeWidth={2} /></svg>
             </Link>
             <Link
               href="/clinicas"
