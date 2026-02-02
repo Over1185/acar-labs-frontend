@@ -231,7 +231,7 @@ export default function UnifiedDashboardPage() {
             const data = await res.json();
             setSearchResults(data.data || []);
         } catch (e) {
-            console.log('Error buscando usuarios');
+            console.error('Error buscando usuarios');
         } finally {
             setSearchLoading(false);
         }

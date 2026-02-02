@@ -4,6 +4,54 @@
 import { useSearchParams, useRouter } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 
+// Componente Popup
+interface PopupProps {
+    type: 'success' | 'error';
+    message: string;
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+function Popup({ type, message, isOpen, onClose }: PopupProps) {
+    if (!isOpen) return null;
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+            <div className="bg-white w-full max-w-sm rounded-3xl shadow-2xl p-6 transform transition-all scale-100 animate-in zoom-in-95 duration-200">
+                <div className="flex flex-col items-center text-center">
+                    {type === 'success' ? (
+                        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                            <svg fill="none" stroke="currentColor" className="w-8 h-8 text-green-600" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m5 13 4 4L19 7" strokeWidth={3}/></svg>
+                        </div>
+                    ) : (
+                        <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                            <svg fill="none" stroke="currentColor" className="w-8 h-8 text-red-600" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" strokeWidth={3}/></svg>
+                        </div>
+                    )}
+
+                    <h3 className={`text-xl font-bold mb-2 ${type === 'success' ? 'text-gray-900' : 'text-red-900'}`}>
+                        {type === 'success' ? '¡Éxito!' : 'Error'}
+                    </h3>
+
+                    <p className="text-gray-600 mb-6">
+                        {message}
+                    </p>
+
+                    <button
+                        onClick={onClose}
+                        className={`w-full py-3 px-6 rounded-xl font-bold text-white transition-all transform active:scale-95 ${type === 'success'
+                                ? 'bg-[#003366] hover:bg-blue-900 shadow-lg shadow-blue-900/20'
+                                : 'bg-red-500 hover:bg-red-600 shadow-lg shadow-red-500/20'
+                            }`}
+                    >
+                        {type === 'success' ? 'Entendido' : 'Cerrar'}
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function CreateAppointmentContent() {
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -16,7 +64,17 @@ function CreateAppointmentContent() {
     const [fecha, setFecha] = useState('');
     const [hora, setHora] = useState('');
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+
+    // Estado del Popup
+    const [popup, setPopup] = useState<{
+        isOpen: boolean;
+        type: 'success' | 'error';
+        message: string;
+    }>({
+        isOpen: false,
+        type: 'success',
+        message: ''
+    });
 
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -27,10 +85,16 @@ function CreateAppointmentContent() {
         }
     }, [clinicId, router]);
 
+    const handleClosePopup = () => {
+        setPopup(prev => ({ ...prev, isOpen: false }));
+        if (popup.type === 'success') {
+            router.push('/servicios');
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);
 
         // Usamos el nombre de token que detectamos en tu localStorage
         const token = localStorage.getItem('auth_token');
@@ -56,13 +120,24 @@ function CreateAppointmentContent() {
             const res = await response.json();
 
             if (response.ok) {
-                alert("¡Cita agendada con éxito!");
-                router.push('/servicios');
+                setPopup({
+                    isOpen: true,
+                    type: 'success',
+                    message: '¡Tu cita ha sido agendada correctamente!'
+                });
             } else {
-                setError(res.message || "Error al procesar la cita");
+                setPopup({
+                    isOpen: true,
+                    type: 'error',
+                    message: res.message || "No se pudo procesar la cita. Por favor intenta de nuevo."
+                });
             }
         } catch (err) {
-            setError("Error de conexión con el servidor");
+            setPopup({
+                isOpen: true,
+                type: 'error',
+                message: "Problema de conexión con el servidor. Verifica tu internet."
+            });
         } finally {
             setLoading(false);
         }
@@ -70,23 +145,23 @@ function CreateAppointmentContent() {
 
     return (
         <div className="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+            <Popup
+                isOpen={popup.isOpen}
+                type={popup.type}
+                message={popup.message}
+                onClose={handleClosePopup}
+            />
 
             {/* Header con identidad visual ACAR Labs */}
             <div className="bg-[#003366] p-8 text-center text-white">
                 <div className="inline-block bg-white/10 p-3 rounded-2xl mb-3">
-                    <svg fill="none" stroke="currentColor" className="w-8 h-8 text-blue-200" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2" strokeWidth={2}/></svg>
+                    <svg fill="none" stroke="currentColor" className="w-8 h-8 text-blue-200" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2" strokeWidth={2} /></svg>
                 </div>
                 <h1 className="text-2xl font-bold tracking-tight">Reservar Cita</h1>
                 <p className="text-blue-200 text-sm mt-1 opacity-90">{clinicName}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                {error && (
-                    <div className="bg-red-50 text-red-600 p-4 rounded-2xl text-xs font-medium border border-red-100 animate-pulse">
-                        {error}
-                    </div>
-                )}
-
                 {/* Resumen del servicio seleccionado */}
                 <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
                     <span className="text-[10px] font-black text-blue-600 uppercase tracking-widest">Clinica</span>
