@@ -4,7 +4,6 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import Image from 'next/image';
 import ServiceCard from '@/components/ui/ServiceCard';
 
 interface Clinic {
@@ -162,7 +161,7 @@ export default function ClinicDetailPage() {
                         <path fill="#FFFFFF" d="M44.7,-76.4C58.9,-69.2,71.8,-59.1,81.6,-46.6C91.4,-34.1,98.1,-19.2,95.8,-4.9C93.5,9.3,82.2,22.9,71.6,35.2C61,47.5,51.1,58.4,39.3,65.8C27.5,73.1,13.7,76.9,-0.8,78.3C-15.3,79.7,-30.6,78.7,-43.8,72.7C-57,66.7,-68.1,55.7,-76.6,42.8C-85.1,29.9,-91.1,15,-90.4,0.4C-89.7,-14.2,-82.3,-28.4,-72.1,-40.1C-61.9,-51.8,-48.9,-60.9,-35.6,-68.5C-22.3,-76.1,-8.7,-82.1,3,-87.3C14.7,-92.5,29.3,-96.9,44.7,-76.4Z" transform="translate(100 100)" />
                     </svg>
                 </div>
-                <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <Link
                         href="/clinicas"
                         className="inline-flex items-center gap-2 text-blue-200 hover:text-white transition-colors mb-6"
@@ -190,7 +189,7 @@ export default function ClinicDetailPage() {
             </div>
 
             {/* Main Content Layout */}
-            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative -mt-20 z-20 pb-20">
+            <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 relative -mt-20 z-20 pb-20">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
                     {/* Sidebar Information */}
@@ -241,7 +240,7 @@ export default function ClinicDetailPage() {
 
                     {/* Services Content */}
                     <div className="lg:col-span-8 xl:col-span-9">
-                        <div className="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100 min-h-[500px]">
+                        <div className="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100 min-h-125">
 
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
                                 <div>

@@ -94,7 +94,7 @@ export default function ClinicasPage() {
                     </svg>
                 </div>
 
-                <div className="max-w-[1600px] mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between">
+                <div className="max-w-400 mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center justify-between">
                     <div className="md:w-1/2 mb-8 md:mb-0">
                         <h1 className="text-4xl md:text-5xl font-bold mb-6">
                             Nuestras Clínicas
@@ -117,7 +117,7 @@ export default function ClinicasPage() {
             </div>
 
             {/* Main Content Container */}
-            <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative -mt-20 z-20 pb-20">
+            <div className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 relative -mt-20 z-20 pb-20">
                 <div className="bg-white rounded-3xl shadow-xl p-6 md:p-10 border border-gray-100">
 
                     {/* Filters & Search Header */}
@@ -138,7 +138,7 @@ export default function ClinicasPage() {
                             <select
                                 value={selectedProvince}
                                 onChange={(e) => setSelectedProvince(e.target.value)}
-                                className="px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-[#003366] appearance-none cursor-pointer min-w-[180px]"
+                                className="px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 outline-none focus:ring-2 focus:ring-[#003366] appearance-none cursor-pointer min-w-45"
                                 style={{ backgroundImage: 'url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right .7em top 50%', backgroundSize: '.65em' }}
                             >
                                 <option value="all">Todas las provincias</option>
