@@ -27,7 +27,7 @@ export default function ClinicCard({ clinic, featured = false }: ClinicCardProps
         >
             {/* Image Placeholder */}
             <div
-                className={`relative bg-gradient-to-br from-[var(--brand-deep-blue)] to-[var(--brand-slate-blue)] ${featured ? 'h-48 md:h-64' : 'h-40'
+                className={`relative bg-linear-to-br from-[var(--brand-deep-blue)] to-[var(--brand-slate-blue)] ${featured ? 'h-48 md:h-64' : 'h-40'
                     }`}
             >
                 {/* Decorative Pattern */}

@@ -8,7 +8,6 @@ function CreateAppointmentContent() {
     const router = useRouter();
 
     // Datos recuperados de la URL (enviados desde el ServiceCard)
-    const serviceName = searchParams.get('serviceName');
     const clinicName = searchParams.get('clinicName');
     const clinicId = searchParams.get('clinicId');
 

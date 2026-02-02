@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <div className="bg-[var(--bg-page)]">
       {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-[#003366] via-[#004C7F] to-[#4A708B]">
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-linear-to-br from-[#003366] via-[#004C7F] to-[#4A708B]">
         {/* Decorative Pattern */}
         <div className="absolute inset-0 opacity-[0.5]">
           <Image
@@ -199,7 +199,7 @@ export default function Home() {
                 className="group block bg-white rounded-2xl overflow-hidden border border-[var(--border-color)] hover:border-[var(--btn-primary-bg)] transition-all duration-300 hover:shadow-xl"
               >
                 {/* Image Placeholder */}
-                <div className="relative h-40 bg-gradient-to-br from-[#003366] to-[#4A708B]">
+                <div className="relative h-40 bg-linear-to-br from-[#003366] to-[#4A708B]">
                   {/* Decorative Pattern */}
                   <div className="absolute inset-0 opacity-[0.08]">
                     <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100"><path d="M0 0h100v100H0z" fill={`url(#grid-${clinic.id})`} /></svg>
@@ -321,7 +321,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-[#003366] via-[#004C7F] to-[#4A708B] relative overflow-hidden">
+      <section className="py-20 bg-linear-to-br from-[#003366] via-[#004C7F] to-[#4A708B] relative overflow-hidden">
         {/* Decorative Elements */}
         <div className="absolute top-0 left-0 w-72 h-72 bg-white/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl" />

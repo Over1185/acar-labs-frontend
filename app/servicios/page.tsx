@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
@@ -105,7 +106,7 @@ export default function ServiciosPage() {
     return (
         <div className="min-h-screen bg-gray-50 pb-20">
             {/* Hero Section - Matching Nosotros Page Style */}
-            <section className="relative bg-gradient-to-br from-[#003366] to-[#00509e] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
+            <section className="relative bg-linear-to-br from-[#003366] to-[#00509e] pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden">
                 <div className="absolute inset-0 opacity-50">
                     <Image
                         src="/images/services/Banner.avif"
@@ -115,7 +116,7 @@ export default function ServiciosPage() {
                     />
                 </div>
 
-                <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+                <div className="relative max-w-400 mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 animate-fade-in-up">
                         Servicios Médicos
                     </h1>
@@ -125,7 +126,7 @@ export default function ServiciosPage() {
 
                     {/* Search Bar - Integrated into Hero */}
                     <div className="max-w-2xl mx-auto relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 to-teal-300 rounded-full opacity-30 group-hover:opacity-50 blur transition duration-200"></div>
+                        <div className="absolute -inset-1 bg-linear-to-r from-blue-400 to-teal-300 rounded-full opacity-30 group-hover:opacity-50 blur transition duration-200"></div>
                         <div className="relative bg-white rounded-full p-2 flex items-center shadow-2xl">
                             <div className="pl-4 text-gray-400">
                                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -144,8 +145,8 @@ export default function ServiciosPage() {
                 </div>
             </section>
 
-            <main className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
-                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 md:p-8 flex flex-col lg:flex-row gap-8 min-h-[500px]">
+            <main className="max-w-400 mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
+                <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 md:p-8 flex flex-col lg:flex-row gap-8 min-h-125">
 
                     {/* Sidebar Filters */}
                     <aside className="w-full lg:w-80 shrink-0 space-y-8 border-b lg:border-b-0 lg:border-r border-gray-100 pb-8 lg:pb-0 lg:pr-8">

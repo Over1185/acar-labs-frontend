@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -84,10 +85,10 @@ export default function ClinicasPage() {
     }, [searchTerm, selectedProvince, clinics]);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30">
+        <div className="min-h-screen bg-linear-to-br from-gray-50 to-blue-50/30">
 
             {/* Hero */}
-            <section className="relative bg-gradient-to-br from-[#003366] to-[#00509e] pt-24 pb-16">
+            <section className="relative bg-linear-to-br from-[#003366] to-[#00509e] pt-24 pb-16">
                 <div className="max-w-7xl mx-auto px-4 text-center">
                     <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
                         Nuestras Clínicas
@@ -185,7 +186,7 @@ export default function ClinicasPage() {
             </section>
 
             {!loading && !error && (
-                <section className="bg-gradient-to-br from-[#003366] to-[#00509e] py-16 text-center text-white">
+                <section className="bg-linear-to-br from-[#003366] to-[#00509e] py-16 text-center text-white">
                     <h2 className="text-3xl font-bold mb-4">
                         ¿No encuentras lo que buscas?
                     </h2>

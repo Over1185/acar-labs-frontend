@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -418,7 +419,7 @@ export default function ClinicDetailsPage() {
 
                                     {/* KPI Cards */}
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                                        <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
+                                        <div className="bg-linear-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
                                             <div className="flex items-center justify-between mb-2">
                                                 <p className="text-sm font-semibold text-blue-600">Total de Citas</p>
                                                 <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -429,7 +430,7 @@ export default function ClinicDetailsPage() {
                                             <p className="text-xs text-gray-600 mt-2">Este mes</p>
                                         </div>
 
-                                        <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
+                                        <div className="bg-linear-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
                                             <div className="flex items-center justify-between mb-2">
                                                 <p className="text-sm font-semibold text-green-600">Servicios Activos</p>
                                                 <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -440,7 +441,7 @@ export default function ClinicDetailsPage() {
                                             <p className="text-xs text-gray-600 mt-2">Disponibles</p>
                                         </div>
 
-                                        <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
+                                        <div className="bg-linear-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
                                             <div className="flex items-center justify-between mb-2">
                                                 <p className="text-sm font-semibold text-purple-600">Resultados Procesados</p>
                                                 <svg className="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -451,7 +452,7 @@ export default function ClinicDetailsPage() {
                                             <p className="text-xs text-gray-600 mt-2">Pendientes</p>
                                         </div>
 
-                                        <div className="bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg p-6 border border-orange-200">
+                                        <div className="bg-linear-to-br from-orange-50 to-orange-100 rounded-lg p-6 border border-orange-200">
                                             <div className="flex items-center justify-between mb-2">
                                                 <p className="text-sm font-semibold text-orange-600">Facturas Pendientes</p>
                                                 <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -629,7 +630,7 @@ export default function ClinicDetailsPage() {
                                                 >
                                                     <div className="flex items-start justify-between mb-4">
                                                         <div className="flex items-center gap-4">
-                                                            <div className="w-12 h-12 bg-gradient-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
+                                                            <div className="w-12 h-12 bg-linear-to-br from-blue-100 to-blue-50 rounded-full flex items-center justify-center">
                                                                 <svg className="w-6 h-6 text-[#003366]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                                                                 </svg>
