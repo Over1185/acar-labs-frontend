@@ -72,12 +72,12 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 text-center">
           {/* Logo Icon */}
           <div className="flex justify-center mb-8 animate-fade-in">
-            <div className="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-xl">
+            <div className="w-20 h-20 bg-white/50 backdrop-blur-sm rounded-2xl flex items-center justify-center shadow-xl">
               <Image
                 src="/Icon.svg"
                 alt="ACAR Labs"
-                width={48}
-                height={48}
+                width={64}
+                height={64}
                 className="w-12 h-12"
               />
             </div>
