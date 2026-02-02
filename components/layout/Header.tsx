@@ -176,9 +176,6 @@ export default function Header() {
                                     <span className={`text-sm font-medium ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
                                         {user.name.split(' ')[0]}
                                     </span>
-                                    <svg className={`w-4 h-4 transition-transform ${isProfileMenuOpen ? 'rotate-180' : ''} ${isScrolled ? 'text-gray-700' : 'text-white'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                                    </svg>
                                 </button>
 
                                 {/* Profile Dropdown */}
