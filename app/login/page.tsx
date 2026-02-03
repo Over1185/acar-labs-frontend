@@ -194,12 +194,12 @@ export default function LoginPage() {
 
                 {/* Forgot Password Link */}
                 <div className="text-center mt-4">
-                    <a
-                        href="#"
+                    <Link
+                        href="/recuperar-contrasena"
                         className="text-sm text-[#003366] hover:underline"
                     >
                         ¿Olvidaste tu contraseña?
-                    </a>
+                    </Link>
                 </div>
 
                 {/* Footer */}
