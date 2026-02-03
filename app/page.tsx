@@ -38,15 +38,70 @@ async function getFeaturedClinics() {
   }
 }
 
-// Mock data for popular services
-const popularServices = [
-  { id: 1, name: "Análisis de Sangre", icon: "🩸", count: 150 },
-  { id: 2, name: "Rayos X", icon: "🦴", count: 89 },
-  { id: 3, name: "Medicina General", icon: "🩺", count: 234 },
-  { id: 4, name: "Ecografía", icon: "📊", count: 67 },
-  { id: 5, name: "Cardiología", icon: "❤️", count: 45 },
-  { id: 6, name: "Laboratorio Clínico", icon: "🔬", count: 178 },
-];
+// Helper to fetch popular services from clinics data
+async function getPopularServices() {
+  try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    const res = await fetch(`${apiUrl}/public/clinics`, { next: { revalidate: 60 } });
+
+    if (!res.ok) return [];
+
+    const data = await res.json();
+    let clinics: any[] = [];
+
+    if (Array.isArray(data?.data)) clinics = data.data;
+    else if (Array.isArray(data)) clinics = data;
+    else if (Array.isArray(data?.clinics)) clinics = data.clinics;
+
+    // Aggregate services
+    const serviceCounts: Record<string, number> = {};
+
+    clinics.forEach(clinic => {
+      if (Array.isArray(clinic.services)) {
+        clinic.services.forEach((s: any) => {
+          if (s.name) {
+            const name = s.name.trim();
+            serviceCounts[name] = (serviceCounts[name] || 0) + 1;
+          }
+        });
+      }
+    });
+
+    // Helper for icons
+    function getServiceIcon(name: string) {
+      const n = name.toLowerCase();
+      if (n.includes('sangre') || n.includes('hemograma') || n.includes('hemat')) return "🩸";
+      if (n.includes('rayos') || n.includes('radi')) return "🦴";
+      if (n.includes('cardio') || n.includes('coraz')) return "❤️";
+      if (n.includes('eco') || n.includes('sonogra')) return "📊";
+      if (n.includes('medicina') || n.includes('consulta') || n.includes('general')) return "🩺";
+      if (n.includes('laboratorio')) return "🔬";
+      if (n.includes('dental') || n.includes('odonto')) return "🦷";
+      if (n.includes('ojo') || n.includes('oftalmo')) return "👁️";
+      if (n.includes('ginec')) return "👩‍⚕️";
+      if (n.includes('pedia')) return "👶";
+      if (n.includes('resona')) return "🧠";
+      if (n.includes('tomo')) return "💻";
+      return "🏥";
+    }
+
+    return Object.entries(serviceCounts)
+      .map(([name, count]) => ({
+        id: name,
+        name,
+        count,
+        icon: getServiceIcon(name)
+      }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 6);
+
+  } catch (error) {
+    console.error("Failed to fetch popular services:", error);
+    return [];
+  }
+}
+
+// Stats data
 
 // Stats data
 const stats = [
@@ -58,6 +113,12 @@ const stats = [
 
 export default async function Home() {
   const featuredClinics = await getFeaturedClinics();
+  const popularServicesData = await getPopularServices();
+
+  // Use fetched services for pills if available, otherwise fallback (or empty)
+  const searchTerms = popularServicesData.length > 0
+    ? popularServicesData.slice(0, 4).map(s => s.name)
+    : ["Análisis de sangre", "Rayos X", "Medicina general", "Ecografía"];
 
   return (
     <div className="bg-(--bg-page)">
@@ -109,7 +170,7 @@ export default async function Home() {
           {/* Popular Searches */}
           <div className="flex flex-wrap justify-center gap-3 text-sm">
             <span className="text-white/60">Búsquedas populares:</span>
-            {["Análisis de sangre", "Rayos X", "Medicina general", "Ecografía"].map((term) => (
+            {searchTerms.map((term) => (
               <Link
                 key={term}
                 href={`/clinicas?q=${encodeURIComponent(term)}`}
@@ -158,23 +219,29 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-            {popularServices.map((service) => (
-              <Link
-                key={service.id}
-                href={`/servicios?q=${encodeURIComponent(service.name)}`}
-                className="group flex flex-col items-center p-6 bg-white rounded-2xl border border-(--border-color) hover:border-(--btn-primary-bg) transition-all hover:shadow-lg"
-              >
-                <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">
-                  {service.icon}
-                </span>
-                <span className="text-sm font-medium text-(--text-heading) text-center">
-                  {service.name}
-                </span>
-                <span className="text-xs text-(--text-secondary) mt-1">
-                  {service.count} clínicas
-                </span>
-              </Link>
-            ))}
+            {popularServicesData.length > 0 ? (
+              popularServicesData.map((service) => (
+                <Link
+                  key={service.id}
+                  href={`/servicios?q=${encodeURIComponent(service.name)}`}
+                  className="group flex flex-col items-center p-6 bg-white rounded-2xl border border-(--border-color) hover:border-(--btn-primary-bg) transition-all hover:shadow-lg"
+                >
+                  <span className="text-4xl mb-3 group-hover:scale-110 transition-transform">
+                    {service.icon}
+                  </span>
+                  <span className="text-sm font-medium text-(--text-heading) text-center line-clamp-2 min-h-[40px] flex items-center">
+                    {service.name}
+                  </span>
+                  <span className="text-xs text-(--text-secondary) mt-1">
+                    {service.count} clínicas
+                  </span>
+                </Link>
+              ))
+            ) : (
+              <div className="col-span-full text-center py-10 opacity-50">
+                <p>No se encontraron servicios populares</p>
+              </div>
+            )}
           </div>
         </div>
       </section>

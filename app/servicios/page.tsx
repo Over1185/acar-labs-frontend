@@ -2,11 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef, Suspense } from 'react';
 import Image from 'next/image';
 import ServiceCard from '@/components/ui/ServiceCard';
+import { useSearchParams } from 'next/navigation';
 
-export default function ServiciosPage() {
+function ServiciosContent() {
+    const searchParams = useSearchParams();
     const [services, setServices] = useState<Array<any>>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -14,6 +16,15 @@ export default function ServiciosPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
     const [selectedExams, setSelectedExams] = useState<string[]>([]);
+
+    useEffect(() => {
+        const query = searchParams.get('q');
+        if (query) {
+            setSearchTerm(query);
+            // Si el query coincide con un tipo de examen, también podríamos seleccionarlo
+            // toggleExam(query); // Opcional, pero setSearchTerm suele ser suficiente para busqueda general
+        }
+    }, [searchParams]);
 
     // Pagination state
     const [currentPage, setCurrentPage] = useState(1);
@@ -337,5 +348,13 @@ export default function ServiciosPage() {
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function ServiciosPage() {
+    return (
+        <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="w-8 h-8 border-4 border-[#003366] border-t-transparent rounded-full animate-spin"></div></div>}>
+            <ServiciosContent />
+        </Suspense>
     );
 }
