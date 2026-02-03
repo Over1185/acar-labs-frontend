@@ -250,7 +250,7 @@ export default function UnifiedDashboardPage() {
     return (
         <div className="min-h-screen bg-gray-50 flex">
             {/* --- SIDEBAR --- */}
-            <aside className={`${sidebarOpen ? 'w-72' : 'w-20'} bg-white border-r border-gray-200 transition-all duration-300 flex flex-col fixed h-full z-20`}>
+            <aside className={`${sidebarOpen ? 'w-72' : 'w-20'} bg-white border-r border-gray-200 transition-all duration-300 flex flex-col fixed h-full z-20 pt-16 md:pt-20`}>
                 <div className="p-4 border-b border-gray-100 flex items-center justify-between h-16">
                     {sidebarOpen && <span className="text-xl font-bold text-[#003366]">ACAR Labs</span>}
                     <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 rounded-lg hover:bg-gray-100 text-gray-500">
@@ -333,7 +333,7 @@ export default function UnifiedDashboardPage() {
             </aside>
 
             {/* --- MAIN CONTENT --- */}
-            <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-72' : 'ml-20'} p-8`}>
+            <main className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-72' : 'ml-20'} p-8 pt-24 md:pt-28`}>
 
                 {/* VIEW: PROFILE */}
                 {currentView === 'profile' && (
@@ -407,8 +407,8 @@ export default function UnifiedDashboardPage() {
                                         key={tab}
                                         onClick={() => setActiveClinicTab(tab as ClinicTab)}
                                         className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${activeClinicTab === tab
-                                                ? 'bg-white text-[#003366] shadow-sm'
-                                                : 'text-gray-500 hover:text-gray-700'
+                                            ? 'bg-white text-[#003366] shadow-sm'
+                                            : 'text-gray-500 hover:text-gray-700'
                                             }`}
                                     >
                                         {tab.charAt(0).toUpperCase() + tab.slice(1)}

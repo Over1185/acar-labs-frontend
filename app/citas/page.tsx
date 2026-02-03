@@ -177,7 +177,7 @@ function CreateAppointmentContent() {
 
 export default function CrearCitaPage() {
     return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 pt-20 md:pt-28">
             <Suspense fallback={
                 <div className="bg-white p-8 rounded-3xl shadow-xl flex flex-col items-center">
                     <div className="w-8 h-8 border-4 border-[#003366] border-t-transparent rounded-full animate-spin mb-4" />
