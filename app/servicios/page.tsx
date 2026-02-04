@@ -16,6 +16,10 @@ function ServiciosContent() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedPrice, setSelectedPrice] = useState<string | null>(null);
     const [selectedExams, setSelectedExams] = useState<string[]>([]);
+    
+    // Filtros de Ubicación
+    const [selectedProvince, setSelectedProvince] = useState<string | null>(null);
+    const [selectedCity, setSelectedCity] = useState<string | null>(null);
 
     useEffect(() => {
         const query = searchParams.get('q');
@@ -38,7 +42,7 @@ function ServiciosContent() {
     // Reset pagination when filters change
     useEffect(() => {
         setCurrentPage(1);
-    }, [searchTerm, selectedPrice, selectedExams]);
+    }, [searchTerm, selectedPrice, selectedExams, selectedProvince, selectedCity]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -66,7 +70,10 @@ function ServiciosContent() {
                         ...s,
                         clinic_name: clinic.name,
                         clinic_id: clinic.id, // <--- ESTO ES LO QUE FALTABA
-                        cleanName: s.name.trim()
+                        cleanName: s.name.trim(),
+                        // Agregamos info de ubicación al servicio
+                        province: clinic.address?.province?.trim() || 'Desconocida',
+                        city: clinic.address?.city?.trim() || 'Desconocida'
                     }))
                 );
                 setServices(allServices);
@@ -84,6 +91,21 @@ function ServiciosContent() {
         return Array.from(new Set(names)).sort();
     }, [services]);
 
+    const provinces = useMemo(() => {
+        const provs = services.map(s => s.province);
+        return Array.from(new Set(provs)).filter(p => p !== 'Desconocida' && p).sort() as string[];
+    }, [services]);
+
+    const cities = useMemo(() => {
+        let relevantServices = services;
+        // Si hay provincia seleccionada, solo mostrar ciudades de esa provincia
+        if (selectedProvince) {
+            relevantServices = services.filter(s => s.province === selectedProvince);
+        }
+        const cts = relevantServices.map(s => s.city);
+        return Array.from(new Set(cts)).filter(c => c !== 'Desconocida' && c).sort() as string[];
+    }, [services, selectedProvince]);
+
     const filteredServices = useMemo(() => {
         return services.filter(service => {
             const matchesSearch = service.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -94,10 +116,14 @@ function ServiciosContent() {
             if (selectedPrice === 'low') matchesPrice = price < 50;
             if (selectedPrice === 'medium') matchesPrice = price >= 50 && price < 150;
             if (selectedPrice === 'high') matchesPrice = price >= 150;
+            
+            // Location Filters
+            const matchesProvince = !selectedProvince || service.province === selectedProvince;
+            const matchesCity = !selectedCity || service.city === selectedCity;
 
-            return matchesSearch && matchesExams && matchesPrice;
+            return matchesSearch && matchesExams && matchesPrice && matchesProvince && matchesCity;
         });
-    }, [services, searchTerm, selectedExams, selectedPrice]);
+    }, [services, searchTerm, selectedExams, selectedPrice, selectedProvince, selectedCity]);
 
     const toggleExam = (examName: string) => {
         setSelectedExams(prev =>
@@ -169,6 +195,40 @@ function ServiciosContent() {
                                 </svg>
                                 Filtros
                             </h3>
+                            
+                            {/* Province Filter */}
+                            <div className="mb-6">
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Provincia</label>
+                                <select 
+                                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#003366]/10 cursor-pointer"
+                                    value={selectedProvince || ''}
+                                    onChange={(e) => {
+                                        setSelectedProvince(e.target.value || null);
+                                        setSelectedCity(null); // Reset city when province changes
+                                    }}
+                                >
+                                    <option value="">Todas las provincias</option>
+                                    {provinces.map(prov => (
+                                        <option key={prov} value={prov}>{prov}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* City Filter */}
+                            <div className="mb-6">
+                                <label className="block text-sm font-semibold text-gray-700 mb-2">Ciudad</label>
+                                <select 
+                                    className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-[#003366]/10 cursor-pointer disabled:opacity-50"
+                                    value={selectedCity || ''}
+                                    onChange={(e) => setSelectedCity(e.target.value || null)}
+                                    disabled={cities.length === 0}
+                                >
+                                    <option value="">Todas las ciudades</option>
+                                    {cities.map(city => (
+                                        <option key={city} value={city}>{city}</option>
+                                    ))}
+                                </select>
+                            </div>
 
                             {/* Exam Type Filter */}
                             <div className="mb-6 relative" ref={dropdownRef}>
@@ -209,9 +269,9 @@ function ServiciosContent() {
                                 <label className="block text-sm font-semibold text-gray-700 mb-2">Rango de Precio</label>
                                 <div className="space-y-3">
                                     {[
-                                        { value: 'low', label: 'Económico (< $50)' },
-                                        { value: 'medium', label: 'Estándar ($50 - $150)' },
-                                        { value: 'high', label: 'Premium (> $150)' }
+                                        { value: 'low', label: 'Económico (< )' },
+                                        { value: 'medium', label: 'Estándar ( - )' },
+                                        { value: 'high', label: 'Premium (> )' }
                                     ].map((option) => (
                                         <label key={option.value} className="flex items-center gap-3 p-3 border border-gray-100 rounded-xl cursor-pointer hover:border-blue-200 hover:bg-blue-50/50 transition-all">
                                             <input
@@ -242,10 +302,31 @@ function ServiciosContent() {
                     <div className="flex-1">
 
                         {/* Active Filters Summary */}
-                        {selectedExams.length > 0 && (
+                        {(selectedExams.length > 0 || selectedProvince || selectedCity) && (
                             <div className="mb-6">
                                 <h4 className="text-sm font-semibold text-gray-500 mb-3 uppercase tracking-wider">Filtros Activos</h4>
                                 <div className="flex flex-wrap gap-2">
+                                    {selectedProvince && (
+                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-xs font-bold rounded-full border border-green-100 animate-fade-in">
+                                            {selectedProvince}
+                                            <button onClick={() => { setSelectedProvince(null); setSelectedCity(null); }} className="hover:text-red-500 transition-colors">
+                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    )}
+                                    {selectedCity && (
+                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-xs font-bold rounded-full border border-green-100 animate-fade-in">
+                                            {selectedCity}
+                                            <button onClick={() => setSelectedCity(null)} className="hover:text-red-500 transition-colors">
+                                                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </span>
+                                    )}
+                                    
                                     {selectedExams.map(exam => (
                                         <span key={exam} className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-[#003366] text-xs font-bold rounded-full border border-blue-100 animate-fade-in">
                                             {exam}
@@ -257,7 +338,7 @@ function ServiciosContent() {
                                         </span>
                                     ))}
                                     <button
-                                        onClick={() => setSelectedExams([])}
+                                        onClick={() => { setSelectedExams([]); setSelectedProvince(null); setSelectedCity(null); }}
                                         className="text-xs text-gray-500 hover:text-[#003366] font-medium underline px-2"
                                     >
                                         Limpiar todos
@@ -337,7 +418,7 @@ function ServiciosContent() {
                                     Intenta ajustar tu búsqueda o limpiar los filtros seleccionados.
                                 </p>
                                 <button
-                                    onClick={() => { setSearchTerm(''); setSelectedExams([]); setSelectedPrice(null); }}
+                                    onClick={() => { setSearchTerm(''); setSelectedExams([]); setSelectedPrice(null); setSelectedProvince(null); setSelectedCity(null); }}
                                     className="mt-4 text-[#003366] font-semibold hover:underline"
                                 >
                                     Limpiar todos los filtros

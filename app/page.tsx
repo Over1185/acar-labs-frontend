@@ -164,7 +164,7 @@ export default async function Home() {
 
           {/* Search Bar */}
           <div className="mb-8">
-            <SearchBar />
+            <SearchBar redirectPath="/servicios" />
           </div>
 
           {/* Popular Searches */}
