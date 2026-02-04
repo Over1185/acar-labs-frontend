@@ -34,13 +34,11 @@ function ResetPasswordContent() {
 
     useEffect(() => {
         if (!token || !email) {
-            setPopup({
-                isOpen: true,
-                type: 'error',
-                message: 'Enlace inválido o incompleto. Por favor solicita uno nuevo.'
-            });
+            router.push('/');
         }
-    }, [token, email]);
+    }, [token, email, router]);
+
+    if (!token || !email) return null;
 
     const handleClosePopup = () => {
         setPopup(prev => ({ ...prev, isOpen: false }));
