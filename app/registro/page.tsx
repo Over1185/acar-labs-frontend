@@ -9,6 +9,7 @@ export default function RegisterPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     // Estado del Popup
     const [popup, setPopup] = useState<{
@@ -63,8 +64,8 @@ export default function RegisterPage() {
             setPopup({ isOpen: true, type: 'error', message: 'La contraseña es requerida' });
             return;
         }
-        if (formData.password.length < 6) {
-            setPopup({ isOpen: true, type: 'error', message: 'La contraseña debe tener al menos 6 caracteres' });
+        if (formData.password.length < 8) {
+            setPopup({ isOpen: true, type: 'error', message: 'La contraseña debe tener al menos 8 caracteres' });
             return;
         }
         if (formData.password !== formData.passwordConfirm) {
@@ -199,7 +200,7 @@ export default function RegisterPage() {
                                 {showPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" className='w-5 h-5' fill="none" viewBox="0 0 24 24"><g id="SVGRepo_iconCarrier" fill="currentColor"><path d="M4.496 7.44a15 15 0 0 0-2.307 2.04 3.68 3.68 0 0 0 0 5.04C3.917 16.391 7.19 19 12 19c1.296 0 2.48-.19 3.552-.502l-1.662-1.663A11 11 0 0 1 12 17c-4.033 0-6.812-2.18-8.341-3.837a1.68 1.68 0 0 1 0-2.326 13 13 0 0 1 2.273-1.96z" /><path d="M8.533 11.478q-.038.256-.039.522a3.5 3.5 0 0 0 4.022 3.461zm6.933.969-3.919-3.919q.22-.027.447-.028a3.5 3.5 0 0 1 3.472 3.947" /><path d="M18.112 15.093a13 13 0 0 0 2.23-1.93 1.68 1.68 0 0 0 0-2.326C18.811 9.18 16.032 7 12 7c-.64 0-1.25.055-1.827.154L8.505 5.486A12.6 12.6 0 0 1 12 5c4.811 0 8.083 2.609 9.81 4.48a3.68 3.68 0 0 1 0 5.04c-.58.629-1.334 1.34-2.263 2.008zM2.008 3.422a1 1 0 1 1 1.414-1.414L22 20.586A1 1 0 1 1 20.586 22z" /></g></svg>
                                 ) : (
-                                    <svg fill="none" stroke="currentColor" className="w-5 h-5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0" strokeWidth={2}/><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7s-8.268-2.943-9.542-7" strokeWidth={2}/></svg>
+                                    <svg fill="none" stroke="currentColor" className="w-5 h-5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0" strokeWidth={2} /><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7s-8.268-2.943-9.542-7" strokeWidth={2} /></svg>
                                 )}
                             </button>
                         </div>
@@ -210,16 +211,30 @@ export default function RegisterPage() {
                         <label htmlFor="passwordConfirm" className="block text-sm font-medium text-gray-900 mb-2">
                             Confirmar Contraseña
                         </label>
-                        <input
-                            id="passwordConfirm"
-                            type="password"
-                            name="passwordConfirm"
-                            value={formData.passwordConfirm}
-                            onChange={handleChange}
-                            placeholder="••••••••"
-                            className="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#003366] transition-all"
-                            disabled={loading}
-                        />
+                        <div className="relative">
+                            <input
+                                id="passwordConfirm"
+                                type={showConfirmPassword ? 'text' : 'password'}
+                                name="passwordConfirm"
+                                value={formData.passwordConfirm}
+                                onChange={handleChange}
+                                placeholder="••••••••"
+                                className="w-full px-4 py-2.5 rounded-lg border border-gray-300 bg-white text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#003366] transition-all pr-12"
+                                disabled={loading}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                                disabled={loading}
+                            >
+                                {showConfirmPassword ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" className='w-5 h-5' fill="none" viewBox="0 0 24 24"><g id="SVGRepo_iconCarrier" fill="currentColor"><path d="M4.496 7.44a15 15 0 0 0-2.307 2.04 3.68 3.68 0 0 0 0 5.04C3.917 16.391 7.19 19 12 19c1.296 0 2.48-.19 3.552-.502l-1.662-1.663A11 11 0 0 1 12 17c-4.033 0-6.812-2.18-8.341-3.837a1.68 1.68 0 0 1 0-2.326 13 13 0 0 1 2.273-1.96z" /><path d="M8.533 11.478q-.038.256-.039.522a3.5 3.5 0 0 0 4.022 3.461zm6.933.969-3.919-3.919q.22-.027.447-.028a3.5 3.5 0 0 1 3.472 3.947" /><path d="M18.112 15.093a13 13 0 0 0 2.23-1.93 1.68 1.68 0 0 0 0-2.326C18.811 9.18 16.032 7 12 7c-.64 0-1.25.055-1.827.154L8.505 5.486A12.6 12.6 0 0 1 12 5c4.811 0 8.083 2.609 9.81 4.48a3.68 3.68 0 0 1 0 5.04c-.58.629-1.334 1.34-2.263 2.008zM2.008 3.422a1 1 0 1 1 1.414-1.414L22 20.586A1 1 0 1 1 20.586 22z" /></g></svg>
+                                ) : (
+                                    <svg fill="none" stroke="currentColor" className="w-5 h-5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0" strokeWidth={2} /><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7s-8.268-2.943-9.542-7" strokeWidth={2} /></svg>
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     {/* Submit Button */}

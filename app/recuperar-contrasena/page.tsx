@@ -45,21 +45,16 @@ export default function RecuperarContrasenaPage() {
             setLoading(true);
             const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-            // TODO: Ajustar el endpoint cuando se confirme la ruta exacta del backend
             const response = await fetch(`${apiUrl}/forgot-password`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({ email }),
             });
 
-            // Si el backend no está listo, simulamos éxito para demostrar funcionalidad
-            if (response.status === 404) {
-                // Simulación para desarrollo
-                console.warn('Endpoint no encontrado. Simulando respuesta exitosa.');
-                await new Promise(resolve => setTimeout(resolve, 1000));
-            } else if (!response.ok) {
+            if (!response.ok) {
                 const data = await response.json();
                 throw new Error(data.message || 'Error al solicitar recuperación');
             }
