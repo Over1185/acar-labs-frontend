@@ -19,6 +19,7 @@ function CreateAppointmentContent() {
     const [fecha, setFecha] = useState('');
     const [hora, setHora] = useState('');
     const [loading, setLoading] = useState(false);
+    const [userId, setUserId] = useState<number | null>(null);
 
     // Estado del Popup
     const [popup, setPopup] = useState<{
@@ -32,6 +33,28 @@ function CreateAppointmentContent() {
     });
 
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+    // Obtener ID del usuario al cargar
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = localStorage.getItem('auth_token');
+            if (!token) return;
+            try {
+                const res = await fetch(`${API_URL}/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.data?.id) {
+                        setUserId(Number(data.data.id));
+                    }
+                }
+            } catch (error) {
+                console.error("Error fetching user", error);
+            }
+        };
+        fetchUser();
+    }, [API_URL]);
 
     // Validación de seguridad: Si no hay ID de clínica o servicio, volvemos a servicios
     useEffect(() => {
@@ -54,10 +77,21 @@ function CreateAppointmentContent() {
         // Usamos el nombre de token que detectamos en tu localStorage
         const token = localStorage.getItem('auth_token');
 
-        // Formato para tu API: "YYYY-MM-DDTHH:mm:ss"
-        const scheduledDate = `${fecha}T${hora}:00`;
+        // Formato para tu API: "YYYY-MM-DD HH:mm:ss"
+        const scheduledDate = `${fecha} ${hora}:00`;
 
         try {
+            const body: any = {
+                scheduled_date: scheduledDate,
+                status: 'pending',
+                clinic_id: Number(clinicId),
+                service_id: Number(serviceId)
+            };
+            
+            if (userId) {
+                body.user_id = userId;
+            }
+
             const response = await fetch(`${API_URL}/appointments`, {
                 method: 'POST',
                 headers: {
@@ -65,12 +99,7 @@ function CreateAppointmentContent() {
                     'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({
-                    scheduled_date: scheduledDate,
-                    status: 'scheduled',
-                    clinic_id: Number(clinicId),
-                    service_id: Number(serviceId)
-                }),
+                body: JSON.stringify(body),
             });
 
             const res = await response.json();
@@ -79,16 +108,18 @@ function CreateAppointmentContent() {
                 setPopup({
                     isOpen: true,
                     type: 'success',
-                    message: res.message || '¡Tu cita ha sido agendada correctamente!'
+                    message: '¡Cita creada exitosamente! Pronto recibirás los detalles en tu correo.'
                 });
             } else {
-                // Manejo detallado de errores de validación de Laravel
-                let errorMessage = res.message || "No se pudo procesar la cita.";
+                // Mensajes de error en Español
+                let errorMessage = "No se pudo agendar la cita.";
                 
                 if (res.errors) {
-                    // Si hay errores de validación específicos, los mostramos
-                    const details = Object.values(res.errors).flat().join(', ');
-                    errorMessage = `${res.message}: ${details}`;
+                    errorMessage = "Por favor verifica los datos enviados (fecha, hora o servicio).";
+                } else if (res.message === 'Unauthenticated.') {
+                    errorMessage = "Tu sesión ha expirado. Por favor inicia sesión nuevamente.";
+                } else {
+                    errorMessage = "Ocurrió un error en el servidor. Intenta más tarde.";
                 }
 
                 setPopup({
