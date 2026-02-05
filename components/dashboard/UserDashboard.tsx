@@ -1,8 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { User, Appointment } from './types';
+import { Plan } from './types_plans';
 import Popup from '@/components/ui/Popup';
 
 interface UserDashboardProps {
@@ -17,6 +19,8 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [loadingAppointments, setLoadingAppointments] = useState(false);
     const [appointmentsError, setAppointmentsError] = useState('');
+    const [plans, setPlans] = useState<Plan[]>([]);
+    const [loadingPlans, setLoadingPlans] = useState(false);
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     // --- Popup State ---
@@ -106,8 +110,37 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
     useEffect(() => {
         if (activeTab === 'appointments') {
             fetchAppointments();
+        } else if (activeTab === 'plans') {
+            fetchPlans();
         }
     }, [activeTab]);
+
+    const fetchPlans = async () => {
+        setLoadingPlans(true);
+        try {
+            const token = localStorage.getItem('auth_token');
+            if (!token) throw new Error('No se encontró sesión activa.');
+
+            const response = await fetch(`${apiUrl}/plans`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Error al cargar los planes');
+            }
+
+            const data = await response.json();
+            setPlans(data.data || []);
+        } catch (err: any) {
+            console.error(err);
+            showPopup('error', err.message || 'No se pudieron cargar los planes.');
+        } finally {
+            setLoadingPlans(false);
+        }
+    };
 
     const fetchAppointments = async () => {
         setLoadingAppointments(true);
@@ -300,7 +333,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                                 <h1 className="text-2xl font-bold text-gray-900">Mis Citas</h1>
                                 <p className="text-gray-500">Historial y próximas consultas médicas.</p>
                             </div>
-                            <Link href="/clinicas" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm">
+                            <Link href="/servicios" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm">
                                 + Nueva Cita
                             </Link>
                         </header>
@@ -378,31 +411,43 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                             <p className="text-gray-500 mt-2 max-w-2xl mx-auto">¿Eres profesional de la salud? Crea tu propia clínica digital y gestiona tus pacientes con nosotros.</p>
                         </header>
 
-                        <div className="grid md:grid-cols-2 gap-8 mb-12">
-                            {/* Card: Register Clinic */}
-                            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-md transition-shadow">
-                                <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6">
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-3m-6 0v-3m6 0v-3" /></svg>
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">Registrar mi Clínica</h3>
-                                <p className="text-gray-500 mb-6">Comienza tu viaje digital. Registra tu consultorio o clínica y accede a todas nuestras herramientas de gestión.</p>
-                                <button className="w-full py-3 bg-blue-600 text-white rounded-xl font-semibold hover:bg-blue-700 transition-colors">
-                                    Registrar Ahora
-                                </button>
+                        {loadingPlans ? (
+                            <div className="flex justify-center p-12">
+                                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                             </div>
+                        ) : (
+                            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                                {plans.map((plan) => (
+                                    <div key={plan.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-md transition-shadow flex flex-col relative overflow-hidden">
+                                        {plan.name.toLowerCase().includes('enterprise') && (
+                                            <div className="absolute top-0 right-0 bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-bl-lg">
+                                                Recomendado
+                                            </div>
+                                        )}
+                                        <div className="mb-4">
+                                            <h3 className="text-xl font-bold text-gray-900">{plan.name}</h3>
+                                            <div className="mt-2 flex items-baseline gap-1">
+                                                <span className="text-3xl font-extrabold text-gray-900">${plan.price}</span>
+                                                <span className="text-gray-500">/{plan.billing_cycle === 'yearly' ? 'año' : 'mes'}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <ul className="space-y-3 mb-8 flex-grow">
+                                            {plan.features.map((feature, idx) => (
+                                                <li key={idx} className="flex items-start gap-3 text-sm text-gray-600">
+                                                    <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                                                    {feature}
+                                                </li>
+                                            ))}
+                                        </ul>
 
-                            {/* Card: View Plans */}
-                            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 hover:shadow-md transition-shadow">
-                                <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6">
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                                </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">Ver Planes y Precios</h3>
-                                <p className="text-gray-500 mb-6">Descubre las funcionalidades premium que tenemos para potenciar tu práctica médica.</p>
-                                <button className="w-full py-3 bg-white border border-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
-                                    Explorar Planes
-                                </button>
+                                        <button className="w-full py-3 bg-[#003366] text-white rounded-xl font-semibold hover:bg-[#004080] transition-colors shadow-md">
+                                            Contratar Plan
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
-                        </div>
+                        )}
                    </div>
                 )}
 
