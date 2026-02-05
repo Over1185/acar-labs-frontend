@@ -63,7 +63,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
 
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
-        
+
         try {
             const token = localStorage.getItem('auth_token');
             if (!token) throw new Error('No se encontró sesión activa.');
@@ -74,8 +74,8 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
 
             // Solo enviar contraseña si el campo "Nueva Contraseña" tiene valor
             if (profileForm.newPassword) {
-                 // Nota: El backend actualmente documenta solo 'password' para la nueva contraseña.
-                 // Si se requiere validación de contraseña actual, se deberá ajustar.
+                // Nota: El backend actualmente documenta solo 'password' para la nueva contraseña.
+                // Si se requiere validación de contraseña actual, se deberá ajustar.
                 payload.password = profileForm.newPassword;
             }
 
@@ -98,10 +98,10 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
             showPopup('success', 'Tu perfil ha sido actualizado correctamente.');
             // Limpiar campos de contraseña
             setProfileForm(prev => ({ ...prev, password: '', newPassword: '' }));
-            
+
             // Notificar a otros componentes (Header) que el usuario se actualizó
             window.dispatchEvent(new Event('user-updated'));
-            
+
         } catch (err: any) {
             showPopup('error', err.message || 'No se pudo actualizar el perfil.');
         }
@@ -196,40 +196,36 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                         </div>
                     </div>
                 </div>
-                
+
                 <nav className="p-4 space-y-1">
                     <button
                         onClick={() => setActiveTab('profile')}
-                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                            activeTab === 'profile' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                        }`}
+                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${activeTab === 'profile' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+                            }`}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                         Mi Perfil
                     </button>
                     <button
                         onClick={() => setActiveTab('appointments')}
-                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                            activeTab === 'appointments' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                        }`}
+                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${activeTab === 'appointments' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+                            }`}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                         Mis Citas
                     </button>
                     <button
                         onClick={() => setActiveTab('results')}
-                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                            activeTab === 'results' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                        }`}
+                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${activeTab === 'results' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+                            }`}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                         Resultados
                     </button>
                     <button
                         onClick={() => setActiveTab('plans')}
-                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
-                            activeTab === 'plans' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
-                        }`}
+                        className={`w-full flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-lg transition-colors ${activeTab === 'plans' ? 'bg-blue-50 text-blue-700' : 'text-gray-700 hover:bg-gray-100'
+                            }`}
                     >
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19.428 15.428a2 2 0 00-1.022-.547l-2.384-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" /></svg>
                         Planes / Clínicas
@@ -249,7 +245,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
 
             {/* --- Main Content Area --- */}
             <main className="flex-1 p-4 md:p-8">
-                
+
                 {/* A. PROFILE TAB */}
                 {activeTab === 'profile' && (
                     <div className="max-w-2xl mx-auto">
@@ -314,7 +310,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div className="pt-4 flex justify-end">
                                     <button
                                         type="submit"
@@ -342,7 +338,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                         </header>
 
                         {loadingAppointments && (
-                             <div className="flex justify-center p-12">
+                            <div className="flex justify-center p-12">
                                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
                             </div>
                         )}
@@ -376,7 +372,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                                                 <td className="px-6 py-4 text-sm font-medium text-gray-900">
                                                     {new Date(apt.scheduled_date).toLocaleDateString()}
                                                     <span className="block text-xs text-gray-500 font-normal mt-0.5">
-                                                        {new Date(apt.scheduled_date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                                                        {new Date(apt.scheduled_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                     </span>
                                                 </td>
                                                 <td className="px-6 py-4 text-sm text-gray-700">
@@ -408,7 +404,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
 
                 {/* C. PLANS / REGISTER TAB */}
                 {activeTab === 'plans' && (
-                   <div className="max-w-4xl mx-auto animate-fade-in">
+                    <div className="max-w-4xl mx-auto animate-fade-in">
                         <header className="mb-8 text-center">
                             <h1 className="text-3xl font-bold text-gray-900">Planes para Profesionales</h1>
                             <p className="text-gray-500 mt-2 max-w-2xl mx-auto">¿Eres profesional de la salud? Crea tu propia clínica digital y gestiona tus pacientes con nosotros.</p>
@@ -434,7 +430,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                                                 <span className="text-gray-500">/{plan.billing_cycle === 'yearly' ? 'año' : 'mes'}</span>
                                             </div>
                                         </div>
-                                        
+
                                         <ul className="space-y-3 mb-8 flex-grow">
                                             {plan.features.map((feature, idx) => (
                                                 <li key={idx} className="flex items-start gap-3 text-sm text-gray-600">
@@ -444,7 +440,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                                             ))}
                                         </ul>
 
-                                        <button 
+                                        <button
                                             onClick={() => handleSelectPlan(plan)}
                                             className="w-full py-3 bg-[#003366] text-white rounded-xl font-semibold hover:bg-[#004080] transition-colors shadow-md"
                                         >
@@ -454,7 +450,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                                 ))}
                             </div>
                         )}
-                   </div>
+                    </div>
                 )}
 
                 {/* D. RESULTS TAB */}
@@ -464,7 +460,7 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                             <h1 className="text-2xl font-bold text-gray-900">Mis Resultados</h1>
                             <p className="text-gray-500">Resultados de laboratorio y exámenes médicos.</p>
                         </header>
-                         <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+                        <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
                             <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-400">
                                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                             </div>
@@ -474,8 +470,8 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
                     </div>
                 )}
             </main>
-            
-            <Popup 
+
+            <Popup
                 isOpen={popup.isOpen}
                 type={popup.type}
                 message={popup.message}

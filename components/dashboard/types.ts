@@ -38,20 +38,25 @@ export interface User {
     employees?: Employee[];
 }
 
+export interface Service {
+    id: number;
+    clinic_id?: number;
+    name: string;
+    description: string;
+    price: number;
+    estimated_time: number;
+    is_active: boolean;
+}
+
 export interface Appointment {
     id: number;
     scheduled_date: string;
-    status: 'scheduled' | 'completed' | 'cancelled';
+    status: 'scheduled' | 'completed' | 'cancelled' | 'pending';
     clinic: {
         id: number;
         name: string;
     };
-    service: {
-        id: number;
-        name: string;
-        price: number;
-        estimated_time: number;
-    };
+    service: Service;
     employee?: {
         name: string;
     };

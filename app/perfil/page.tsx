@@ -61,12 +61,27 @@ export default function UnifiedDashboardPage() {
             const data = await response.json();
             const userData = data.data || data;
             setUser(userData);
-            
-            // Logic to determine initial role based on user data can be added here.
-            // For now, default to 'user' (Patient View).
-            // Example:
-            // if (userData.is_admin) setCurrentRole('admin');
-            
+
+            // Determine Role Logic
+            let detectedRole: DashboardRole = 'user';
+
+            if (userData.employees && userData.employees.length > 0) {
+                // Check the first employee record (assuming single active employment usually)
+                const employee = userData.employees[0];
+                const roleName = employee.role?.name?.toUpperCase();
+
+                if (roleName === 'OWNER') {
+                    detectedRole = 'owner';
+                } else if (roleName === 'ADMIN') {
+                    detectedRole = 'admin';
+                } else {
+                    // Doctor, Nurse, Staff, etc.
+                    detectedRole = 'employee';
+                }
+            }
+
+            setCurrentRole(detectedRole);
+
         } catch (err) {
         } finally {
             setLoading(false);
@@ -77,7 +92,7 @@ export default function UnifiedDashboardPage() {
         try {
             const token = localStorage.getItem('auth_token');
             if (token) {
-                 await fetch(`${apiUrl}/logout`, {
+                await fetch(`${apiUrl}/logout`, {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -101,7 +116,7 @@ export default function UnifiedDashboardPage() {
     }
 
     if (!user) {
-        return null; 
+        return null;
     }
 
     return (
