@@ -14,6 +14,10 @@ export default function ClinicasPage() {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedProvince, setSelectedProvince] = useState<string>('all');
 
+    // Pagination state
+    const [currentPage, setCurrentPage] = useState(1);
+    const ITEMS_PER_PAGE = 9;
+
     // Fetch clinics from API
     useEffect(() => {
         const fetchClinics = async () => {
@@ -82,7 +86,19 @@ export default function ClinicasPage() {
         }
 
         setFilteredClinics(filtered);
+        setCurrentPage(1); // Reset to first page when filters change
     }, [searchTerm, selectedProvince, clinics]);
+
+    // Calculate pagination
+    const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
+    const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
+    const currentClinics = filteredClinics.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredClinics.length / ITEMS_PER_PAGE);
+
+    const handlePageChange = (pageNumber: number) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 300, behavior: 'smooth' }); // Scroll to top of list
+    };
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -188,11 +204,11 @@ export default function ClinicasPage() {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {filteredClinics.map((clinic, index) => (
+                            {currentClinics.map((clinic, index) => (
                                 <ClinicCard
                                     key={clinic.id ?? index}
                                     clinic={clinic}
-                                    featured={index === 0}
+                                    featured={index === 0 && currentPage === 1}
                                 />
                             ))}
                             {filteredClinics.length === 0 && (
@@ -214,6 +230,66 @@ export default function ClinicasPage() {
                                     </button>
                                 </div>
                             )}
+                        </div>
+                    )}
+
+                    {/* Pagination Controls */}
+                    {!loading && filteredClinics.length > ITEMS_PER_PAGE && (
+                        <div className="mt-12 flex justify-center items-center gap-2">
+                            <button
+                                onClick={() => handlePageChange(currentPage - 1)}
+                                disabled={currentPage === 1}
+                                className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 transition-all ${
+                                    currentPage === 1 
+                                        ? 'text-gray-300 cursor-not-allowed' 
+                                        : 'text-[#003366] hover:bg-[#003366] hover:text-white hover:border-[#003366] cursor-pointer'
+                                }`}
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+                            </button>
+
+                            {/* Page Numbers */}
+                            {Array.from({ length: totalPages }).map((_, index) => {
+                                const page = index + 1;
+                                // Simple logic to show limited pages if too many (optional, keeping it simple for now as requested "9 clinics" likely won't result in dozens of pages soon)
+                                if (
+                                    page === 1 ||
+                                    page === totalPages ||
+                                    (page >= currentPage - 1 && page <= currentPage + 1)
+                                ) {
+                                    return (
+                                        <button
+                                            key={page}
+                                            onClick={() => handlePageChange(page)}
+                                            className={`w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all ${
+                                                currentPage === page
+                                                    ? 'bg-[#003366] text-white shadow-md transform scale-110'
+                                                    : 'text-gray-600 hover:bg-gray-100 hover:text-[#003366]'
+                                            }`}
+                                        >
+                                            {page}
+                                        </button>
+                                    );
+                                } else if (
+                                    (page === currentPage - 2 && currentPage > 3) ||
+                                    (page === currentPage + 2 && currentPage < totalPages - 2)
+                                ) {
+                                    return <span key={page} className="text-gray-400">...</span>;
+                                }
+                                return null;
+                            })}
+
+                            <button
+                                onClick={() => handlePageChange(currentPage + 1)}
+                                disabled={currentPage === totalPages}
+                                className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 transition-all ${
+                                    currentPage === totalPages 
+                                        ? 'text-gray-300 cursor-not-allowed' 
+                                        : 'text-[#003366] hover:bg-[#003366] hover:text-white hover:border-[#003366] cursor-pointer'
+                                }`}
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                            </button>
                         </div>
                     )}
                 </div>
