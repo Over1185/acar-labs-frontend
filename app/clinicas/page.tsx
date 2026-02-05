@@ -24,7 +24,7 @@ export default function ClinicasPage() {
             try {
                 setLoading(true);
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                
+
                 // 1. Fetch First Page
                 const response = await fetch(`${apiUrl}/public/clinics?page=1`);
                 if (!response.ok) throw new Error('Error al cargar las clínicas');
@@ -36,9 +36,18 @@ export default function ClinicasPage() {
                 // 2. Extract Data & Pagination Info
                 if (data.data && Array.isArray(data.data)) {
                     allRawClinics = data.data;
-                    // Detect Laravel standard pagination keys
-                    if (data.last_page) lastPage = data.last_page;
-                    else if (data.meta?.last_page) lastPage = data.meta.last_page;
+
+                    // Detect different pagination structures
+                    if (data.pagination?.last_page) {
+                        // Estructura custom: { data: [], pagination: { last_page: 5 } }
+                        lastPage = data.pagination.last_page;
+                    } else if (data.last_page) {
+                        // Estructura Laravel default: { data: [], last_page: 5 }
+                        lastPage = data.last_page;
+                    } else if (data.meta?.last_page) {
+                        // Estructura Laravel Resource: { data: [], meta: { last_page: 5 } }
+                        lastPage = data.meta.last_page;
+                    }
                 } else if (Array.isArray(data)) {
                     // No pagination structure, just array
                     allRawClinics = data;
@@ -50,7 +59,7 @@ export default function ClinicasPage() {
                     for (let i = 2; i <= lastPage; i++) {
                         promises.push(fetch(`${apiUrl}/public/clinics?page=${i}`).then(res => res.json()));
                     }
-                    
+
                     const responses = await Promise.all(promises);
                     responses.forEach((res: any) => {
                         if (res.data && Array.isArray(res.data)) {
@@ -261,11 +270,10 @@ export default function ClinicasPage() {
                             <button
                                 onClick={() => handlePageChange(currentPage - 1)}
                                 disabled={currentPage === 1}
-                                className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 transition-all ${
-                                    currentPage === 1 
-                                        ? 'text-gray-300 cursor-not-allowed' 
+                                className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 transition-all ${currentPage === 1
+                                        ? 'text-gray-300 cursor-not-allowed'
                                         : 'text-[#003366] hover:bg-[#003366] hover:text-white hover:border-[#003366] cursor-pointer'
-                                }`}
+                                    }`}
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
                             </button>
@@ -283,11 +291,10 @@ export default function ClinicasPage() {
                                         <button
                                             key={page}
                                             onClick={() => handlePageChange(page)}
-                                            className={`w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all ${
-                                                currentPage === page
+                                            className={`w-10 h-10 flex items-center justify-center rounded-full font-bold transition-all ${currentPage === page
                                                     ? 'bg-[#003366] text-white shadow-md transform scale-110'
                                                     : 'text-gray-600 hover:bg-gray-100 hover:text-[#003366]'
-                                            }`}
+                                                }`}
                                         >
                                             {page}
                                         </button>
@@ -304,11 +311,10 @@ export default function ClinicasPage() {
                             <button
                                 onClick={() => handlePageChange(currentPage + 1)}
                                 disabled={currentPage === totalPages}
-                                className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 transition-all ${
-                                    currentPage === totalPages 
-                                        ? 'text-gray-300 cursor-not-allowed' 
+                                className={`w-10 h-10 flex items-center justify-center rounded-full border border-gray-200 transition-all ${currentPage === totalPages
+                                        ? 'text-gray-300 cursor-not-allowed'
                                         : 'text-[#003366] hover:bg-[#003366] hover:text-white hover:border-[#003366] cursor-pointer'
-                                }`}
+                                    }`}
                             >
                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                             </button>

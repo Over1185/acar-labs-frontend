@@ -45,24 +45,42 @@ export default function ClinicDetailPage() {
                 setLoading(true);
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-                // Fetch all clinics to get clinic details and its services
-                const response = await fetch(`${apiUrl}/public/clinics`);
-                if (!response.ok) {
-                    throw new Error('Error al cargar la información');
-                }
+                // 1. Fetch First Page
+                const response = await fetch(`${apiUrl}/public/clinics?page=1`);
+                if (!response.ok) throw new Error('Error al cargar la información');
 
                 const data = await response.json();
+                let allRawClinics: any[] = [];
+                let lastPage = 1;
 
-                // Extract clinics data
-                let clinicsData = [];
+                // 2. Extract Data & Pagination Info
                 if (data.data && Array.isArray(data.data)) {
-                    clinicsData = data.data;
+                    allRawClinics = data.data;
+
+                    if (data.pagination?.last_page) lastPage = data.pagination.last_page;
+                    else if (data.last_page) lastPage = data.last_page;
+                    else if (data.meta?.last_page) lastPage = data.meta.last_page;
                 } else if (Array.isArray(data)) {
-                    clinicsData = data;
+                    allRawClinics = data;
+                }
+
+                // 3. Fetch Remaining Pages (if any)
+                if (lastPage > 1) {
+                    const promises = [];
+                    for (let i = 2; i <= lastPage; i++) {
+                        promises.push(fetch(`${apiUrl}/public/clinics?page=${i}`).then(res => res.json()));
+                    }
+
+                    const responses = await Promise.all(promises);
+                    responses.forEach((res: any) => {
+                        if (res.data && Array.isArray(res.data)) {
+                            allRawClinics = [...allRawClinics, ...res.data];
+                        }
+                    });
                 }
 
                 // Find the clinic with the current ID
-                const foundClinic = clinicsData.find((c: any) => c.id === Number(clinicId));
+                const foundClinic = allRawClinics.find((c: any) => c.id === Number(clinicId));
 
                 if (!foundClinic) {
                     throw new Error('Clínica no encontrada');

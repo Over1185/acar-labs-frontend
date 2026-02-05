@@ -58,14 +58,44 @@ function ServiciosContent() {
         const fetchServices = async () => {
             try {
                 setLoading(true);
-                const response = await fetch(`${API_URL}/public/clinics`);
+
+                // 1. Fetch First Page
+                const response = await fetch(`${API_URL}/public/clinics?page=1`);
                 if (!response.ok) throw new Error('Error al obtener datos');
 
-                const res = await response.json();
-                const clinics = res.data || [];
+                const data = await response.json();
+                let allRawClinics: any[] = [];
+                let lastPage = 1;
+
+                // 2. Extract Data & Pagination Info
+                if (data.data && Array.isArray(data.data)) {
+                    allRawClinics = data.data;
+
+                    if (data.pagination?.last_page) lastPage = data.pagination.last_page;
+                    else if (data.last_page) lastPage = data.last_page;
+                    else if (data.meta?.last_page) lastPage = data.meta.last_page;
+
+                } else if (Array.isArray(data)) {
+                    allRawClinics = data;
+                }
+
+                // 3. Fetch Remaining Pages (if any)
+                if (lastPage > 1) {
+                    const promises = [];
+                    for (let i = 2; i <= lastPage; i++) {
+                        promises.push(fetch(`${API_URL}/public/clinics?page=${i}`).then(res => res.json()));
+                    }
+
+                    const responses = await Promise.all(promises);
+                    responses.forEach((res: any) => {
+                        if (res.data && Array.isArray(res.data)) {
+                            allRawClinics = [...allRawClinics, ...res.data];
+                        }
+                    });
+                }
 
                 // AJUSTE AQUÍ: Mapeamos el clinic_id para que llegue al ServiceCard
-                const allServices = clinics.flatMap((clinic: any) =>
+                const allServices = allRawClinics.flatMap((clinic: any) =>
                     (clinic.services || []).map((s: any) => ({
                         ...s,
                         clinic_name: clinic.name,
