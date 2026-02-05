@@ -18,27 +18,49 @@ export default function ClinicasPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const ITEMS_PER_PAGE = 9;
 
-    // Fetch clinics from API
+    // Fetch clinics from API (Handling Backend Pagination)
     useEffect(() => {
-        const fetchClinics = async () => {
+        const fetchAllClinics = async () => {
             try {
                 setLoading(true);
                 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-                const response = await fetch(`${apiUrl}/public/clinics`);
-
-                if (!response.ok) {
-                    throw new Error('Error al cargar las clínicas');
-                }
-
+                
+                // 1. Fetch First Page
+                const response = await fetch(`${apiUrl}/public/clinics?page=1`);
+                if (!response.ok) throw new Error('Error al cargar las clínicas');
                 const data = await response.json();
 
-                let clinicsData: any[] = [];
-                if (Array.isArray(data?.data)) clinicsData = data.data;
-                else if (Array.isArray(data)) clinicsData = data;
-                else if (Array.isArray(data?.clinics)) clinicsData = data.clinics;
-                else if (Array.isArray(data?.results)) clinicsData = data.results;
+                let allRawClinics: any[] = [];
+                let lastPage = 1;
 
-                const mappedClinics = clinicsData.map((clinic) => ({
+                // 2. Extract Data & Pagination Info
+                if (data.data && Array.isArray(data.data)) {
+                    allRawClinics = data.data;
+                    // Detect Laravel standard pagination keys
+                    if (data.last_page) lastPage = data.last_page;
+                    else if (data.meta?.last_page) lastPage = data.meta.last_page;
+                } else if (Array.isArray(data)) {
+                    // No pagination structure, just array
+                    allRawClinics = data;
+                }
+
+                // 3. Fetch Remaining Pages (if any)
+                if (lastPage > 1) {
+                    const promises = [];
+                    for (let i = 2; i <= lastPage; i++) {
+                        promises.push(fetch(`${apiUrl}/public/clinics?page=${i}`).then(res => res.json()));
+                    }
+                    
+                    const responses = await Promise.all(promises);
+                    responses.forEach((res: any) => {
+                        if (res.data && Array.isArray(res.data)) {
+                            allRawClinics = [...allRawClinics, ...res.data];
+                        }
+                    });
+                }
+
+                // 4. Map & Set State
+                const mappedClinics = allRawClinics.map((clinic) => ({
                     ...clinic,
                     address: clinic.address || {
                         city: 'Por confirmar',
@@ -56,7 +78,7 @@ export default function ClinicasPage() {
             }
         };
 
-        fetchClinics();
+        fetchAllClinics();
     }, []);
 
     const provinces = Array.from(
