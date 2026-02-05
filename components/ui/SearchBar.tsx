@@ -101,7 +101,10 @@ export default function SearchBar({ variant = 'hero', onSearch, redirectPath = '
                     <input
                         type="text"
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => {
+                            setQuery(e.target.value);
+                            if (onSearch) onSearch(e.target.value);
+                        }}
                         placeholder="Buscar clínica, servicio..."
                         className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-(--border-color) bg-white text-(--text-main) placeholder:text-(--text-secondary) focus:outline-none focus:ring-2 focus:ring-(--btn-primary-bg) transition-all"
                         autoComplete="off"
@@ -161,7 +164,10 @@ export default function SearchBar({ variant = 'hero', onSearch, redirectPath = '
                     <input
                         type="text"
                         value={query}
-                        onChange={(e) => setQuery(e.target.value)}
+                        onChange={(e) => {
+                            setQuery(e.target.value);
+                            if (onSearch) onSearch(e.target.value);
+                        }}
                         placeholder="¿Qué servicio necesitas?"
                         className="w-full pl-12 pr-4 py-4 rounded-xl border-0 bg-(--bg-surface) text-(--text-main) placeholder:text-(--text-secondary) focus:outline-none focus:ring-2 focus:ring-(--btn-primary-bg) transition-all text-lg"
                         autoComplete="off"
