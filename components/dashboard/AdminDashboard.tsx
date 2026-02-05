@@ -8,10 +8,14 @@ import {
     CreditCard,
     Shield,
     CheckCircle,
-    XCircle
+    XCircle,
+    Activity,
+    Users,
+    Server,
+    AlertTriangle
 } from 'lucide-react';
 import { User as UserType } from './types';
-import { Plan } from './types_plans'; // Assuming this type exists or I need to create it locally
+import { Plan } from './types_plans';
 import Popup from '../ui/Popup';
 
 interface DashboardProps {
@@ -21,6 +25,45 @@ interface DashboardProps {
 
 type Tab = 'overview' | 'plans' | 'users';
 
+// --- MOCK DATA ---
+const MOCK_PLANS: Plan[] = [
+    {
+        id: 1,
+        name: 'Basic',
+        slug: 'basic-plan',
+        price: '29.99',
+        billing_cycle: 'monthly',
+        features: ['Hasta 3 doctores', 'Gestión de citas básica', 'Recordatorios por email'],
+        is_active: true
+    },
+    {
+        id: 2,
+        name: 'Pro',
+        slug: 'pro-plan',
+        price: '79.99',
+        billing_cycle: 'monthly',
+        features: ['Doctores ilimitados', 'Gestión avanzada', 'Recordatorios SMS', 'Facturación integrada'],
+        is_active: true
+    },
+    {
+        id: 3,
+        name: 'Enterprise',
+        slug: 'enterprise',
+        price: '199.99',
+        billing_cycle: 'yearly',
+        features: ['Marca blanca', 'API Access', 'Soporte dedicado 24/7', 'Múltiples sucursales'],
+        is_active: true
+    }
+];
+
+const MOCK_SYSTEM_STATS = {
+    active_clinics: 45,
+    total_users: 328,
+    server_status: 'Healthy',
+    revenue_mtd: 12500,
+    pending_alerts: 2
+};
+
 export default function AdminDashboard({ user, onLogout }: DashboardProps) {
     const [activeTab, setActiveTab] = useState<Tab>('overview');
     const [popup, setPopup] = useState<{ type: 'success' | 'error', message: string } | null>(null);
@@ -28,6 +71,9 @@ export default function AdminDashboard({ user, onLogout }: DashboardProps) {
     // Data State
     const [plans, setPlans] = useState<Plan[]>([]);
     const [loading, setLoading] = useState(false);
+
+    // Stats State
+    const [stats, setStats] = useState(MOCK_SYSTEM_STATS);
 
     // Modal State
     const [showPlanModal, setShowPlanModal] = useState(false);
@@ -40,64 +86,42 @@ export default function AdminDashboard({ user, onLogout }: DashboardProps) {
     });
     const [currentFeature, setCurrentFeature] = useState('');
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-
     useEffect(() => {
+        // Init mock data
         if (activeTab === 'plans') {
-            fetchPlans();
+            setLoading(true);
+            setTimeout(() => {
+                setPlans(MOCK_PLANS);
+                setLoading(false);
+            }, 500);
+        } else if (activeTab === 'overview') {
+            setStats(MOCK_SYSTEM_STATS);
         }
     }, [activeTab]);
-
-    const getAuthHeaders = () => {
-        const token = localStorage.getItem('auth_token');
-        return {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        };
-    };
 
     const showPopup = (type: 'success' | 'error', message: string) => {
         setPopup({ type, message });
         setTimeout(() => setPopup(null), 3000);
     };
 
-    const fetchPlans = async () => {
-        setLoading(true);
-        try {
-            const res = await fetch(`${apiUrl}/plans`, { headers: getAuthHeaders() });
-            const data = await res.json();
-            setPlans(data.data || []);
-        } catch (err) {
-            console.error(err);
-            showPopup('error', 'Error al cargar planes');
-        } finally {
-            setLoading(false);
-        }
-    };
+    // --- MOCK ACTIONS ---
 
     const handleCreatePlan = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            const body = {
+        setLoading(true);
+        setTimeout(() => {
+            const newPlan: Plan = {
+                id: Math.floor(Math.random() * 1000),
                 ...planData,
-                price: parseFloat(planData.price)
+                is_active: true,
+                price: planData.price.toString() // Ensure string format for Plan type if usually string
             };
-
-            const res = await fetch(`${apiUrl}/plans`, {
-                method: 'POST',
-                headers: getAuthHeaders(),
-                body: JSON.stringify(body)
-            });
-
-            if (!res.ok) throw new Error('Error al crear plan');
-
-            showPopup('success', 'Plan creado exitosamente');
+            setPlans([...plans, newPlan]);
+            showPopup('success', 'Plan creado exitosamente (Mock)');
             setShowPlanModal(false);
             setPlanData({ name: '', slug: '', price: '', billing_cycle: 'monthly', features: [] });
-            fetchPlans();
-        } catch (err) {
-            showPopup('error', 'No se pudo crear el plan');
-        }
+            setLoading(false);
+        }, 600);
     };
 
     const addFeature = () => {
@@ -173,15 +197,107 @@ export default function AdminDashboard({ user, onLogout }: DashboardProps) {
 
                 {/* OVERVIEW TAB */}
                 {activeTab === 'overview' && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                            <h3 className="text-gray-500 text-sm font-medium uppercase">Estado del Sistema</h3>
-                            <div className="flex items-center gap-2 mt-2">
-                                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                                <span className="font-bold text-gray-900 text-lg">Operativo</span>
+                    <div className="space-y-6">
+                        {/* Status Cards */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <h3 className="text-gray-500 text-xs font-bold uppercase tracking-wider">Estado del Sistema</h3>
+                                <div className="flex items-center gap-2 mt-3">
+                                    <div className="relative">
+                                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                        <div className="absolute top-0 left-0 w-3 h-3 bg-green-500 rounded-full animate-ping opacity-75"></div>
+                                    </div>
+                                    <span className="font-bold text-gray-900 text-lg">{stats.server_status}</span>
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                                <div>
+                                    <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Clínicas Activas</p>
+                                    <h3 className="text-2xl font-bold text-gray-900">{stats.active_clinics}</h3>
+                                    <span className="text-xs text-green-600 font-medium">+2 esta semana</span>
+                                </div>
+                                <div className="p-3 bg-blue-50 rounded-lg text-blue-600">
+                                    <Activity className="h-6 w-6" />
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                                <div>
+                                    <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Total Usuarios</p>
+                                    <h3 className="text-2xl font-bold text-gray-900">{stats.total_users}</h3>
+                                    <span className="text-xs text-gray-400 font-medium">Global</span>
+                                </div>
+                                <div className="p-3 bg-indigo-50 rounded-lg text-indigo-600">
+                                    <Users className="h-6 w-6" />
+                                </div>
+                            </div>
+
+                            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center justify-between">
+                                <div>
+                                    <p className="text-gray-500 text-xs font-bold uppercase tracking-wider mb-1">Alertas</p>
+                                    <h3 className="text-2xl font-bold text-gray-900">{stats.pending_alerts}</h3>
+                                    <span className="text-xs text-orange-500 font-medium">Requieren atención</span>
+                                </div>
+                                <div className="p-3 bg-orange-50 rounded-lg text-orange-600">
+                                    <AlertTriangle className="h-6 w-6" />
+                                </div>
                             </div>
                         </div>
-                        {/* Placeholders for future stats */}
+
+                        {/* Additional Dashboard Widgets */}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+                                <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                    <Server className="h-5 w-5 text-gray-500" />
+                                    Rendimiento de Infraestructura
+                                </h3>
+                                <div className="space-y-4">
+                                    <div>
+                                        <div className="flex justify-between text-sm mb-1">
+                                            <span className="text-gray-600">CPU Usage</span>
+                                            <span className="font-medium text-gray-900">45%</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 rounded-full h-2">
+                                            <div className="bg-blue-500 h-2 rounded-full" style={{ width: '45%' }}></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex justify-between text-sm mb-1">
+                                            <span className="text-gray-600">Memory</span>
+                                            <span className="font-medium text-gray-900">62%</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 rounded-full h-2">
+                                            <div className="bg-purple-500 h-2 rounded-full" style={{ width: '62%' }}></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div className="flex justify-between text-sm mb-1">
+                                            <span className="text-gray-600">Storage</span>
+                                            <span className="font-medium text-gray-900">28%</span>
+                                        </div>
+                                        <div className="w-full bg-gray-100 rounded-full h-2">
+                                            <div className="bg-green-500 h-2 rounded-full" style={{ width: '28%' }}></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="bg-gradient-to-br from-gray-900 to-gray-800 text-white p-6 rounded-xl shadow-lg flex flex-col justify-between">
+                                <div>
+                                    <h3 className="font-bold text-lg mb-2">Panel de Super Administrador</h3>
+                                    <p className="text-gray-400 text-sm">Tienes acceso total al sistema. Recuerda que los cambios aquí afectan a todas las clínicas.</p>
+                                </div>
+                                <div className="mt-6 flex gap-3">
+                                    <button onClick={() => setActiveTab('plans')} className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                        Gestionar Planes
+                                    </button>
+                                    <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                        Ver Logs
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
 
