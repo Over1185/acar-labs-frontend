@@ -46,10 +46,60 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
         setProfileForm({ ...profileForm, [e.target.name]: e.target.value });
     };
 
+    // Sincronizar profileForm cuando el prop user cambia (ej: tras actualizar en el backend)
+    useEffect(() => {
+        setProfileForm(prev => ({
+            ...prev,
+            name: user.name || '',
+            email: user.email || ''
+        }));
+    }, [user.name, user.email]);
+
     const handleUpdateProfile = async (e: React.FormEvent) => {
         e.preventDefault();
-        showPopup('error', 'Funcionalidad de actualizar perfil pendiente de implementación backend.');
-        // TODO: Implement PUT /me or similar
+        
+        try {
+            const token = localStorage.getItem('auth_token');
+            if (!token) throw new Error('No se encontró sesión activa.');
+
+            const payload: { name: string; password?: string } = {
+                name: profileForm.name,
+            };
+
+            // Solo enviar contraseña si el campo "Nueva Contraseña" tiene valor
+            if (profileForm.newPassword) {
+                 // Nota: El backend actualmente documenta solo 'password' para la nueva contraseña.
+                 // Si se requiere validación de contraseña actual, se deberá ajustar.
+                payload.password = profileForm.newPassword;
+            }
+
+            // Asumiendo ruta PUT /me/{user_id} según documentación BACKEND.md
+            const response = await fetch(`${apiUrl}/me/${user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Error al actualizar el perfil');
+            }
+
+            // Actualización exitosa
+            showPopup('success', 'Tu perfil ha sido actualizado correctamente.');
+            // Limpiar campos de contraseña
+            setProfileForm(prev => ({ ...prev, password: '', newPassword: '' }));
+            
+            // Notificar a otros componentes (Header) que el usuario se actualizó
+            window.dispatchEvent(new Event('user-updated'));
+            
+        } catch (err: any) {
+            console.error(err);
+            showPopup('error', err.message || 'No se pudo actualizar el perfil.');
+        }
     };
 
     // --- Appointments Fetching ---
@@ -74,6 +124,11 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
             });
 
             if (!response.ok) {
+                // Si el backend retorna 404 cuando no hay citas, lo tratamos como lista vacía (sin error)
+                if (response.status === 404) {
+                    setAppointments([]);
+                    return;
+                }
                 const errorData = await response.json().catch(() => ({}));
                 throw new Error(errorData.message || 'Error al cargar citas');
             }

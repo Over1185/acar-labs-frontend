@@ -59,8 +59,19 @@ export default function Header() {
             }
         };
 
+        // Listen for user profile updates from Dashboard
+        const handleUserUpdate = () => {
+             const token = localStorage.getItem('auth_token');
+             if (token) fetchUser(token);
+        };
+
         window.addEventListener('storage', handleStorageChange);
-        return () => window.removeEventListener('storage', handleStorageChange);
+        window.addEventListener('user-updated', handleUserUpdate);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('user-updated', handleUserUpdate);
+        };
     }, []);
 
     const fetchUser = async (token: string) => {

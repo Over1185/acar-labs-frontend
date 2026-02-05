@@ -21,6 +21,17 @@ export default function UnifiedDashboardPage() {
 
     useEffect(() => {
         fetchUser();
+
+        // Escuchar evento de actualización de usuario (disparado desde UserDashboard)
+        const handleUserUpdate = () => {
+            fetchUser();
+        };
+
+        window.addEventListener('user-updated', handleUserUpdate);
+
+        return () => {
+            window.removeEventListener('user-updated', handleUserUpdate);
+        };
     }, []);
 
     const fetchUser = async () => {
