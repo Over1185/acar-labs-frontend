@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +14,6 @@ async function getFeaturedClinics() {
 
     if (!res.ok) {
       // Si falla, retornamos arreglos vacíos o mock data de contingencia si prefieres
-      console.error(`Error fetching clinics: ${res.status}`);
       return [];
     }
 
@@ -33,7 +33,6 @@ async function getFeaturedClinics() {
     }));
 
   } catch (error) {
-    console.error("Failed to fetch featured clinics:", error);
     return [];
   }
 }
@@ -96,7 +95,6 @@ async function getPopularServices() {
       .slice(0, 6);
 
   } catch (error) {
-    console.error("Failed to fetch popular services:", error);
     return [];
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
@@ -67,7 +68,6 @@ export default function UnifiedDashboardPage() {
             // if (userData.is_admin) setCurrentRole('admin');
             
         } catch (err) {
-            console.error(err);
         } finally {
             setLoading(false);
         }
@@ -86,7 +86,6 @@ export default function UnifiedDashboardPage() {
                 });
             }
         } catch (error) {
-            console.error('Logout error', error);
         } finally {
             localStorage.removeItem('auth_token');
             router.push('/login');

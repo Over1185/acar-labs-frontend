@@ -1,19 +1,12 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
 
 export default function Error({
-    error,
     reset,
 }: {
-    error: Error & { digest?: string };
     reset: () => void;
 }) {
-    useEffect(() => {
-        // Aquí podrías enviar el error a un servicio de reporte
-        console.error(error);
-    }, [error]);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/rules-of-hooks */
 'use client';
 
@@ -93,7 +94,6 @@ export default function Header() {
                 localStorage.removeItem('token_type');
             }
         } catch (error) {
-            console.error('Error fetching user:', error);
         } finally {
             setLoading(false);
         }

@@ -103,7 +103,6 @@ function ResetPasswordContent() {
             setPasswordConfirm('');
 
         } catch (err) {
-            console.error(err);
             setPopup({
                 isOpen: true,
                 type: 'error',

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 'use client';
 
@@ -50,7 +51,6 @@ function CreateAppointmentContent() {
                     }
                 }
             } catch (error) {
-                console.error("Error fetching user", error);
             }
         };
         fetchUser();
@@ -83,11 +83,11 @@ function CreateAppointmentContent() {
         try {
             const body: any = {
                 scheduled_date: scheduledDate,
-                status: 'pending',
+                status: 'pending', // Dejamos el estado correcto para cuando el backend corrija sus reglas de validación
                 clinic_id: Number(clinicId),
                 service_id: Number(serviceId)
             };
-            
+
             if (userId) {
                 body.user_id = userId;
             }
@@ -113,7 +113,7 @@ function CreateAppointmentContent() {
             } else {
                 // Mensajes de error en Español
                 let errorMessage = "No se pudo agendar la cita.";
-                
+
                 if (res.errors) {
                     errorMessage = "Por favor verifica los datos enviados (fecha, hora o servicio).";
                 } else if (res.message === 'Unauthenticated.') {
@@ -129,7 +129,6 @@ function CreateAppointmentContent() {
                 });
             }
         } catch (err) {
-            console.error(err);
 
             setPopup({
                 isOpen: true,

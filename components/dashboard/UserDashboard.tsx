@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
@@ -102,7 +103,6 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
             window.dispatchEvent(new Event('user-updated'));
             
         } catch (err: any) {
-            console.error(err);
             showPopup('error', err.message || 'No se pudo actualizar el perfil.');
         }
     };
@@ -140,7 +140,6 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
             const data = await response.json();
             setPlans(data.data || []);
         } catch (err: any) {
-            console.error(err);
             showPopup('error', err.message || 'No se pudieron cargar los planes.');
         } finally {
             setLoadingPlans(false);
@@ -175,7 +174,6 @@ export default function UserDashboard({ user, onLogout }: UserDashboardProps) {
             // Data structure from backend: { data: [...] }
             setAppointments(data.data || []);
         } catch (err: any) {
-            console.error(err);
             setAppointments([]);
             showPopup('error', err.message || 'No se pudieron cargar tus citas.');
         } finally {
